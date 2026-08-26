@@ -1,270 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Saint Matthews Recess Soccer Live Stats</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saint Matthews Recess Soccer Live Stats</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+*{box-sizing:border-box}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1220;
-      color: white;
-    }
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#0b1220;
+color:#fff;
+}
 
-    header {
-      padding: 24px 16px;
-      text-align: center;
-      background: linear-gradient(135deg, #087a4b, #123b72);
-    }
+header{
+padding:24px 16px;
+text-align:center;
+background:linear-gradient(135deg,#087a4b,#123b72);
+}
 
-    h1 {
-      margin: 0 0 6px;
-      font-size: 30px;
-    }
+h1{
+margin:0 0 6px;
+font-size:30px;
+}
 
-    .subtitle {
-      opacity: .9;
-    }
+.subtitle{
+opacity:.9;
+}
 
-    .status {
-      margin-top: 9px;
-      font-size: 14px;
-    }
+.status{
+margin-top:9px;
+font-size:14px;
+}
 
-    .login-area {
-      max-width: 420px;
-      margin: 15px auto;
-      padding: 15px;
-      background: #151f31;
-      border: 1px solid #29364d;
-      border-radius: 16px;
-      text-align: center;
-    }
+.login-area{
+max-width:420px;
+margin:15px auto;
+padding:15px;
+background:#151f31;
+border:1px solid #29364d;
+border-radius:16px;
+text-align:center;
+}
 
-    .login-area input {
-      width: 100%;
-      padding: 12px;
-      margin: 5px 0;
-      border-radius: 10px;
-      border: 0;
-      font-size: 16px;
-    }
+.login-area select,
+.login-area input{
+width:100%;
+padding:12px;
+margin:5px 0;
+border-radius:10px;
+border:0;
+font-size:16px;
+}
 
-    .login-button {
-      width: 100%;
-      margin-top: 8px;
-      background: #16a085;
-      color: white;
-    }
+.login-button{
+width:100%;
+margin-top:8px;
+background:#16a085;
+color:white;
+}
 
-    .logout-button {
-      margin-top: 8px;
-      background: #c0392b;
-      color: white;
-    }
+.logout-button{
+margin-top:8px;
+background:#c0392b;
+color:white;
+}
 
-    .login-message {
-      margin-top: 8px;
-      font-size: 14px;
-    }
+.login-message{
+margin-top:8px;
+font-size:14px;
+}
 
-    .controls {
-      display: flex;
-      gap: 9px;
-      justify-content: center;
-      flex-wrap: wrap;
-      padding: 15px;
-    }
+.controls{
+display:flex;
+gap:9px;
+justify-content:center;
+flex-wrap:wrap;
+padding:15px;
+}
 
-    button {
-      border: 0;
-      border-radius: 12px;
-      padding: 10px 15px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+button{
+border:0;
+border-radius:12px;
+padding:10px 15px;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+}
 
-    .sort {
-      background: white;
-      color: #111;
-    }
+.sort{
+background:white;
+color:#111;
+}
 
-    .section {
-      max-width: 1100px;
-      margin: 0 auto 20px;
-      padding: 0 12px;
-    }
+.section{
+max-width:1100px;
+margin:0 auto 20px;
+padding:0 12px;
+}
 
-    .section h2 {
-      text-align: center;
-      margin: 18px 0 12px;
-      font-size: 26px;
-    }
+.section h2{
+text-align:center;
+margin:18px 0 12px;
+font-size:26px;
+}
 
-    .grid {
-      max-width: 1100px;
-      margin: auto;
-      padding: 0 12px 30px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 14px;
-    }
+.grid{
+max-width:1100px;
+margin:auto;
+padding:0 12px 30px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:14px;
+}
 
-    .card,
-    .rank-card {
-      background: #151f31;
-      border: 1px solid #29364d;
-      border-radius: 18px;
-      padding: 18px;
-    }
+.card,
+.rank-card{
+background:#151f31;
+border:1px solid #29364d;
+border-radius:18px;
+padding:18px;
+}
 
-    .player {
-      font-size: 23px;
-      font-weight: 800;
-      margin-bottom: 14px;
-    }
+.player{
+font-size:23px;
+font-weight:800;
+margin-bottom:14px;
+}
 
-    .stat {
-      display: grid;
-      grid-template-columns: 1fr 48px 48px 48px;
-      align-items: center;
-      gap: 7px;
-      margin: 9px 0;
-    }
+.stat{
+display:grid;
+grid-template-columns:1fr 44px 48px 44px;
+align-items:center;
+gap:7px;
+margin:9px 0;
+}
 
-    .value {
-      text-align: center;
-      font-size: 20px;
-      font-weight: 800;
-    }
+.value{
+text-align:center;
+font-size:20px;
+font-weight:800;
+}
 
-    .plus,
-    .minus {
-      width: 44px;
-      height: 40px;
-      padding: 0;
-      font-size: 22px;
-    }
+.plus,
+.minus{
+width:44px;
+height:40px;
+padding:0;
+font-size:22px;
+}
 
-    .plus {
-      background: #16a085;
-      color: white;
-    }
+.plus{
+background:#16a085;
+color:white;
+}
 
-    .minus {
-      background: #c0392b;
-      color: white;
-    }
+.minus{
+background:#c0392b;
+color:white;
+}
 
-    .total {
-      margin-top: 13px;
-      padding-top: 12px;
-      border-top: 1px solid #334158;
-      font-weight: 800;
-      font-size: 18px;
-    }
+.total{
+margin-top:13px;
+padding-top:12px;
+border-top:1px solid #334158;
+font-weight:800;
+font-size:18px;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #151f31;
-      border-radius: 15px;
-      overflow: hidden;
-    }
+table{
+width:100%;
+border-collapse:collapse;
+background:#151f31;
+border-radius:15px;
+overflow:hidden;
+}
 
-    th,
-    td {
-      padding: 10px;
-      text-align: center;
-      border-bottom: 1px solid #29364d;
-    }
+th,td{
+padding:10px;
+text-align:center;
+border-bottom:1px solid #29364d;
+}
 
-    th {
-      background: #1e2c43;
-    }
+th{
+background:#1e2c43;
+}
 
-    .rank-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 14px;
-    }
+.rank-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:14px;
+}
 
-    .rank-card h3 {
-      margin: 0 0 12px;
-      text-align: center;
-      font-size: 22px;
-    }
+.rank-card h3{
+margin:0 0 12px;
+text-align:center;
+font-size:22px;
+}
 
-    .rank-row {
-      display: grid;
-      grid-template-columns: 38px 1fr 42px 42px;
-      align-items: center;
-      gap: 8px;
-      margin: 8px 0;
-      padding: 8px;
-      border-radius: 12px;
-      background: #1d293d;
-    }
+.rank-row{
+display:grid;
+grid-template-columns:38px 1fr 42px 42px;
+align-items:center;
+gap:8px;
+margin:8px 0;
+padding:8px;
+border-radius:12px;
+background:#1d293d;
+}
 
-    .rank-number {
-      text-align: center;
-      font-size: 20px;
-      font-weight: 900;
-    }
+.rank-number{
+text-align:center;
+font-size:20px;
+font-weight:900;
+}
 
-    .rank-name {
-      font-size: 18px;
-      font-weight: 700;
-    }
+.rank-name{
+font-size:18px;
+font-weight:700;
+}
 
-    .move {
-      width: 42px;
-      height: 38px;
-      padding: 0;
-      font-size: 19px;
-      background: #33465f;
-      color: white;
-    }
+.move{
+width:42px;
+height:38px;
+padding:0;
+font-size:19px;
+background:#33465f;
+color:white;
+}
 
-    .move:disabled {
-      opacity: .3;
-      cursor: not-allowed;
-    }
+.move:disabled{
+opacity:.3;
+cursor:not-allowed;
+}
 
-    .hidden {
-      display: none !important;
-    }
+.hidden{
+display:none!important;
+}
 
-    @media(max-width: 600px) {
-      h1 {
-        font-size: 24px;
-      }
+@media(max-width:600px){
 
-      table {
-        font-size: 12px;
-      }
+h1{
+font-size:24px;
+}
 
-      th,
-      td {
-        padding: 8px 4px;
-      }
-    }
-  </style>
+table{
+font-size:12px;
+}
+
+th,td{
+padding:8px 4px;
+}
+
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>⚽ Saint Matthews Recess Soccer Live Stats</h1>
-  <div class="subtitle">Everyone sees the same score in real time</div>
-  <div class="status" id="status">Connecting...</div>
+
+<h1>⚽ Saint Matthews Recess Soccer Live Stats</h1>
+
+<div class="subtitle">
+Everyone sees the same score in real time
+</div>
+
+<div class="status" id="status">
+Connecting...
+</div>
+
 </header>
 
 
@@ -272,48 +279,72 @@
 
 <div class="login-area">
 
-  <div id="viewerMessage">
-    👀 You are viewing the stats
-  </div>
+<div id="viewerMessage">
+👀 Viewing only
+</div>
 
-  <div id="loginForm">
+<div id="loginForm">
 
-    <input
-      type="email"
-      id="email"
-      placeholder="Editor email"
-    >
+<select id="editorName">
 
-    <input
-      type="password"
-      id="password"
-      placeholder="Password"
-    >
+<option value="">
+Choose your name
+</option>
 
-    <button
-      class="login-button"
-      onclick="editorLogin()">
-      🔐 Editor Login
-    </button>
+<option value="Jack">
+Jack
+</option>
 
-    <div
-      class="login-message"
-      id="loginMessage">
-    </div>
+<option value="Jack (School)">
+Jack (School)
+</option>
 
-  </div>
+<option value="Leonardo">
+Leonardo
+</option>
 
-  <div id="editorInfo" class="hidden">
+<option value="Angelo">
+Angelo
+</option>
 
-    <div id="editorName"></div>
+</select>
 
-    <button
-      class="logout-button"
-      onclick="editorLogout()">
-      Log Out
-    </button>
+<input
+type="password"
+id="pin"
+placeholder="Enter PIN"
+inputmode="numeric"
+>
 
-  </div>
+<button
+class="login-button"
+onclick="editorLogin()">
+
+🔐 Login
+
+</button>
+
+<div
+class="login-message"
+id="loginMessage">
+</div>
+
+</div>
+
+
+<div id="editorInfo" class="hidden">
+
+<div id="loggedInName"></div>
+
+<button
+class="logout-button"
+onclick="editorLogout()">
+
+Log Out
+
+</button>
+
+</div>
 
 </div>
 
@@ -322,25 +353,25 @@
 
 <div class="controls">
 
-  <button class="sort" onclick="sortBy('ga')">
-    Sort: G+A
-  </button>
+<button class="sort" onclick="sortBy('ga')">
+Sort: G+A
+</button>
 
-  <button class="sort" onclick="sortBy('goals')">
-    Sort: Goals
-  </button>
+<button class="sort" onclick="sortBy('goals')">
+Sort: Goals
+</button>
 
-  <button class="sort" onclick="sortBy('assists')">
-    Sort: Assists
-  </button>
+<button class="sort" onclick="sortBy('assists')">
+Sort: Assists
+</button>
 
-  <button class="sort" onclick="sortBy('saves')">
-    Sort: Saves
-  </button>
+<button class="sort" onclick="sortBy('saves')">
+Sort: Saves
+</button>
 
-  <button class="sort" onclick="sortBy('mvp')">
-    Sort: MVPs
-  </button>
+<button class="sort" onclick="sortBy('mvp')">
+Sort: MVPs
+</button>
 
 </div>
 
@@ -349,30 +380,30 @@
 
 <section class="section">
 
-  <h2>📊 Player Stats</h2>
+<h2>📊 Player Stats</h2>
 
-  <table>
+<table>
 
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Player</th>
-        <th>Goals</th>
-        <th>Assists</th>
-        <th>G+A</th>
-        <th>Saves</th>
-        <th>MVPs</th>
-      </tr>
-    </thead>
+<thead>
 
-    <tbody id="leaderboard"></tbody>
+<tr>
+<th>#</th>
+<th>Player</th>
+<th>Goals</th>
+<th>Assists</th>
+<th>G+A</th>
+<th>Saves</th>
+<th>MVPs</th>
+</tr>
 
-  </table>
+</thead>
+
+<tbody id="leaderboard"></tbody>
+
+</table>
 
 </section>
 
-
-<!-- PLAYER CARDS -->
 
 <main class="grid" id="players"></main>
 
@@ -381,19 +412,19 @@
 
 <section class="section">
 
-  <h2>🏆 Ballon d'Or</h2>
+<h2>🏆 Ballon d'Or</h2>
 
-  <div class="rank-grid">
+<div class="rank-grid">
 
-    <div class="rank-card">
+<div class="rank-card">
 
-      <h3>Player Rankings</h3>
+<h3>Player Rankings</h3>
 
-      <div id="ballonRanking"></div>
+<div id="ballonRanking"></div>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 </section>
 
@@ -402,19 +433,19 @@
 
 <section class="section">
 
-  <h2>🛡️ Golden Defense</h2>
+<h2>🛡️ Golden Defense</h2>
 
-  <div class="rank-grid">
+<div class="rank-grid">
 
-    <div class="rank-card">
+<div class="rank-card">
 
-      <h3>Best Defense Rankings</h3>
+<h3>Best Defense Rankings</h3>
 
-      <div id="defenseRanking"></div>
+<div id="defenseRanking"></div>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 </section>
 
@@ -422,896 +453,686 @@
 <!-- FIREBASE -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 
 <script>
 
-const firebaseConfig = {
+const firebaseConfig={
 
-  apiKey: "AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
+apiKey:"AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
 
-  authDomain:
-    "recess-soccer.firebaseapp.com",
+authDomain:"recess-soccer.firebaseapp.com",
 
-  databaseURL:
-    "https://recess-soccer-default-rtdb.firebaseio.com",
+databaseURL:"https://recess-soccer-default-rtdb.firebaseio.com",
 
-  projectId:
-    "recess-soccer",
+projectId:"recess-soccer",
 
-  storageBucket:
-    "recess-soccer.firebasestorage.app",
+storageBucket:"recess-soccer.firebasestorage.app",
 
-  messagingSenderId:
-    "872558689342",
+messagingSenderId:"872558689342",
 
-  appId:
-    "1:872558689342:web:a4dca17e1d6b963ed6656f",
+appId:"1:872558689342:web:a4dca17e1d6b963ed6656f",
 
-  measurementId:
-    "G-HJ16JSL5Q2"
+measurementId:"G-HJ16JSL5Q2"
+
 };
-
 
 firebase.initializeApp(firebaseConfig);
 
+const auth=firebase.auth();
 
-const db = firebase.database();
+const db=firebase.database();
 
-const statsRef = db.ref("players");
+const statsRef=db.ref("players");
 
-const rankingsRef = db.ref("rankings");
-
-const auth = firebase.auth();
+const rankingsRef=db.ref("rankings");
 
 
-/* ==========================================
-   PLAYERS
-========================================== */
+/* PLAYERS */
 
-const playerNames = [
+const playerNames=[
 
-  "Adi",
-  "Aidan",
-  "Artin",
-  "Angelo",
-  "Bryson",
-  "Cameron",
-  "Jack",
-  "John",
-  "Leonardo",
-  "Marc",
-  "Matthew",
-  "Sami",
-  "Nathan",
-  "Theo"
+"Adi",
+"Aidan",
+"Artin",
+"Angelo",
+"Bryson",
+"Cameron",
+"Jack",
+"John",
+"Leonardo",
+"Marc",
+"Matthew",
+"Sami",
+"Nathan",
+"Theo"
 
 ];
 
 
-let players = {};
+let players={};
 
-playerNames.forEach(name => {
+playerNames.forEach(name=>{
 
-  players[name] = {
-
-    goals: 0,
-    assists: 0,
-    saves: 0,
-    mvp: 0
-
-  };
+players[name]={
+goals:0,
+assists:0,
+saves:0,
+mvp:0
+};
 
 });
 
 
-let defenseRanking = [...playerNames];
+let defenseRanking=[...playerNames];
 
-let ballonRanking = [...playerNames];
+let ballonRanking=[...playerNames];
 
-let currentSort = "ga";
+let currentSort="ga";
 
-let isEditor = false;
+let isEditor=false;
 
 
-/* ==========================================
-   EDITOR ACCOUNTS
-========================================== */
+/* AUTHORIZED EDITORS */
 
-const editors = {
+const editors={
 
-  "rip7cwNZCqVtBLniQUSHenTn3me2":
-    "Jack",
+"rip7cwNZCqVtBLniQUSHenTn3me2":"Jack",
 
-  "9ibGMcDM8MSP2kZfryQPybL4YNk2":
-    "Jack",
+"9ibGMcDM8MSP2kZfryQPybL4YNk2":"Jack (School)",
 
-  "LUAansNoqRSh1hu3aauVFj7YLqu2":
-    "Leonardo",
+"lUNSDuP2vSTDD8L1oLOQstlF65C2":"Leonardo",
 
-  "Rcw6DhP7dhWDHvyEozVrltUHOaj2":
-    "Angelo"
+"mLue07ETBShyubAKSRAT17GAWjQ2":"Angelo"
 
 };
 
 
-/* ==========================================
-   LOGIN STATE
-========================================== */
+/* LOGIN EMAILS */
 
-auth.onAuthStateChanged(user => {
+const accounts={
 
-  if (!user) {
+"Jack":"jmaso12.home@gmail.com",
 
-    isEditor = false;
+"Jack (School)":"jack.mason1@stu.ocsb.ca",
 
-    showViewer();
+"Leonardo":"leonardo.ljubicic@stu.ocsb.ca",
 
-    auth.signInAnonymously();
+"Angelo":"Angelo.Champagne@stu.ocsb.ca"
 
-    return;
-
-  }
+};
 
 
-  if (editors[user.uid]) {
+/* AUTH STATE */
 
-    isEditor = true;
+auth.onAuthStateChanged(function(user){
 
-    showEditor(editors[user.uid]);
+if(user && editors[user.uid]){
 
-  } else {
+isEditor=true;
 
-    isEditor = false;
+showEditor(editors[user.uid]);
 
-    showViewer();
+}else{
 
-  }
+isEditor=false;
 
+showViewer();
 
-  render();
+}
+
+render();
 
 });
 
 
-/* ==========================================
-   EDITOR LOGIN
-========================================== */
+/* LOGIN */
 
-function editorLogin() {
+function editorLogin(){
 
-  const email =
-    document.getElementById("email").value.trim();
+const name=
+document.getElementById("editorName").value;
 
-  const password =
-    document.getElementById("password").value;
+const pin=
+document.getElementById("pin").value;
 
+const message=
+document.getElementById("loginMessage");
 
-  const message =
-    document.getElementById("loginMessage");
+if(!name){
 
+message.textContent="Choose your name.";
 
-  if (!email || !password) {
+return;
 
-    message.textContent =
-      "Enter your email and password.";
+}
 
-    return;
+if(!pin){
 
-  }
+message.textContent="Enter your PIN.";
 
+return;
 
-  message.textContent =
-    "Logging in...";
+}
 
+const email=accounts[name];
 
-  auth.signInWithEmailAndPassword(
-    email,
-    password
-  )
+message.textContent="Logging in...";
 
-  .then(() => {
+auth.signInWithEmailAndPassword(email,pin)
 
-    message.textContent = "";
+.then(function(){
 
-  })
+message.textContent="";
 
-  .catch(error => {
+document.getElementById("pin").value="";
 
-    console.error(error);
+})
 
-    message.textContent =
-      "Login failed: " + error.code;
+.catch(function(error){
 
-  });
+console.error(error);
+
+message.textContent=
+"❌ Incorrect name or PIN.";
+
+});
 
 }
 
 
-/* ==========================================
-   LOGOUT
-========================================== */
+/* LOGOUT */
 
-function editorLogout() {
+function editorLogout(){
 
-  auth.signOut();
+auth.signOut();
 
 }
 
 
-/* ==========================================
-   VIEWER DISPLAY
-========================================== */
+/* VIEWER */
 
-function showViewer() {
+function showViewer(){
 
-  document
-    .getElementById("loginForm")
-    .classList.remove("hidden");
+document
+.getElementById("loginForm")
+.classList.remove("hidden");
 
-  document
-    .getElementById("editorInfo")
-    .classList.add("hidden");
+document
+.getElementById("editorInfo")
+.classList.add("hidden");
 
-  document
-    .getElementById("viewerMessage")
-    .textContent =
-      "👀 Viewing only — Editor login required to change stats";
+document
+.getElementById("viewerMessage")
+.textContent=
+"👀 Viewing only — Login to edit";
 
-
-  document
-    .getElementById("status")
-    .textContent =
-      "🟢 Live stats — View only";
+document
+.getElementById("status")
+.textContent=
+"🟢 Live stats — View only";
 
 }
 
 
-/* ==========================================
-   EDITOR DISPLAY
-========================================== */
+/* EDITOR */
 
-function showEditor(name) {
+function showEditor(name){
 
-  document
-    .getElementById("loginForm")
-    .classList.add("hidden");
+document
+.getElementById("loginForm")
+.classList.add("hidden");
 
-  document
-    .getElementById("viewerMessage")
-    .textContent = "";
+document
+.getElementById("viewerMessage")
+.textContent="";
 
-  document
-    .getElementById("editorInfo")
-    .classList.remove("hidden");
+document
+.getElementById("editorInfo")
+.classList.remove("hidden");
 
-  document
-    .getElementById("editorName")
-    .textContent =
-      "🟢 Logged in as " + name + " — Editor";
+document
+.getElementById("loggedInName")
+.textContent=
+"🟢 Logged in as "+name+" — Editor";
 
-
-  document
-    .getElementById("status")
-    .textContent =
-      "🟢 Connected — Editor access";
+document
+.getElementById("status")
+.textContent=
+"🟢 Connected — Editor access";
 
 }
 
 
-/* ==========================================
-   DATABASE
-========================================== */
+/* LOAD PLAYER DATA */
 
-statsRef.on("value", snapshot => {
+statsRef.on("value",function(snapshot){
 
-  const data = snapshot.val();
+const data=snapshot.val();
 
+if(data){
 
-  if (data) {
+playerNames.forEach(function(name){
 
-    playerNames.forEach(name => {
+if(data[name]){
 
-      if (data[name]) {
+players[name]={
 
-        players[name] = {
+goals:data[name].goals||0,
 
-          goals: data[name].goals || 0,
+assists:data[name].assists||0,
 
-          assists: data[name].assists || 0,
+saves:data[name].saves||0,
 
-          saves: data[name].saves || 0,
+mvp:data[name].mvp||0
 
-          mvp: data[name].mvp || 0
+};
 
-        };
+}
 
-      }
+});
 
-    });
+}
 
-  }
-
-
-  render();
+render();
 
 });
 
 
-rankingsRef.on("value", snapshot => {
+/* LOAD RANKINGS */
 
-  const data = snapshot.val();
+rankingsRef.on("value",function(snapshot){
 
+const data=snapshot.val();
 
-  if (data) {
+if(data){
 
-    if (Array.isArray(data.defense)) {
+if(Array.isArray(data.defense)){
 
-      defenseRanking =
-        data.defense.filter(name =>
-          playerNames.includes(name)
-        );
+defenseRanking=
+data.defense.filter(function(name){
 
-    }
+return playerNames.includes(name);
 
+});
 
-    if (Array.isArray(data.ballon)) {
+}
 
-      ballonRanking =
-        data.ballon.filter(name =>
-          playerNames.includes(name)
-        );
+if(Array.isArray(data.ballon)){
 
-    }
+ballonRanking=
+data.ballon.filter(function(name){
 
+return playerNames.includes(name);
 
-    playerNames.forEach(name => {
+});
 
-      if (!defenseRanking.includes(name)) {
+}
 
-        defenseRanking.push(name);
+}
 
-      }
-
-      if (!ballonRanking.includes(name)) {
-
-        ballonRanking.push(name);
-
-      }
-
-    });
-
-  }
-
-
-  render();
+render();
 
 });
 
 
-/* ==========================================
-   SAVE
-========================================== */
+/* SAVE */
 
-function savePlayers() {
+function savePlayers(){
 
-  if (!isEditor) return;
+if(!isEditor)return;
 
-  statsRef.set(players);
+statsRef.set(players);
 
 }
 
 
-function saveRankings() {
+function saveRankings(){
 
-  if (!isEditor) return;
+if(!isEditor)return;
 
-  rankingsRef.set({
+rankingsRef.set({
 
-    defense: defenseRanking,
+defense:defenseRanking,
 
-    ballon: ballonRanking
+ballon:ballonRanking
 
-  });
-
-}
-
-
-/* ==========================================
-   CHANGE STAT
-========================================== */
-
-function changeStat(name, stat, amount) {
-
-  if (!isEditor) return;
-
-  if (!players[name]) return;
-
-
-  players[name][stat] += amount;
-
-
-  if (players[name][stat] < 0) {
-
-    players[name][stat] = 0;
-
-  }
-
-
-  savePlayers();
-
-  render();
+});
 
 }
 
 
-/* ==========================================
-   SORT
-========================================== */
+/* CHANGE STATS */
 
-function sortBy(type) {
+function changeStat(name,stat,amount){
 
-  currentSort = type;
+if(!isEditor)return;
 
-  render();
+players[name][stat]+=amount;
+
+if(players[name][stat]<0){
+
+players[name][stat]=0;
+
+}
+
+savePlayers();
+
+render();
 
 }
 
 
-function getSortedPlayers(type) {
+/* SORT */
 
-  return [...playerNames].sort((a, b) => {
+function sortBy(type){
 
-    const A = players[a];
+currentSort=type;
 
-    const B = players[b];
-
-
-    if (type === "ga")
-
-      return (B.goals + B.assists) -
-             (A.goals + A.assists);
-
-
-    if (type === "goals")
-
-      return B.goals - A.goals;
-
-
-    if (type === "assists")
-
-      return B.assists - A.assists;
-
-
-    if (type === "saves")
-
-      return B.saves - A.saves;
-
-
-    if (type === "mvp")
-
-      return B.mvp - A.mvp;
-
-
-    return 0;
-
-  });
+render();
 
 }
 
 
-/* ==========================================
-   MOVE RANKING
-========================================== */
+function getSortedPlayers(type){
 
-function movePlayer(ranking, index, direction) {
+return [...playerNames].sort(function(a,b){
 
-  if (!isEditor) return;
+const A=players[a];
 
+const B=players[b];
 
-  const newIndex =
-    index + direction;
+if(type==="ga")
+return(B.goals+B.assists)-(A.goals+A.assists);
 
+if(type==="goals")
+return B.goals-A.goals;
 
-  if (
-    newIndex < 0 ||
-    newIndex >= ranking.length
-  ) return;
+if(type==="assists")
+return B.assists-A.assists;
 
+if(type==="saves")
+return B.saves-A.saves;
 
-  const temp =
-    ranking[index];
+if(type==="mvp")
+return B.mvp-A.mvp;
 
+return 0;
 
-  ranking[index] =
-    ranking[newIndex];
-
-
-  ranking[newIndex] =
-    temp;
-
-
-  saveRankings();
-
-  render();
+});
 
 }
 
 
-/* ==========================================
-   PLAYER CARDS
-========================================== */
+/* MOVE RANKINGS */
 
-function renderPlayers() {
+function movePlayer(ranking,index,direction){
 
-  const container =
-    document.getElementById("players");
+if(!isEditor)return;
 
-  container.innerHTML = "";
+const newIndex=index+direction;
 
+if(newIndex<0||
+newIndex>=ranking.length)return;
 
-  const sorted =
-    getSortedPlayers(currentSort);
+const temp=ranking[index];
 
+ranking[index]=ranking[newIndex];
 
-  sorted.forEach(name => {
+ranking[newIndex]=temp;
 
-    const p = players[name];
+saveRankings();
 
-
-    const card =
-      document.createElement("div");
-
-    card.className = "card";
-
-
-    const editButtons = isEditor ? `
-
-      <button
-        class="minus"
-        onclick="changeStat('${name}','goals',-1)">
-        −
-      </button>
-
-      <div class="value">
-        ${p.goals}
-      </div>
-
-      <button
-        class="plus"
-        onclick="changeStat('${name}','goals',1)">
-        +
-      </button>
-
-    ` : `
-
-      <div></div>
-
-      <div class="value">
-        ${p.goals}
-      </div>
-
-      <div></div>
-
-    `;
-
-
-    const assistButtons = isEditor ? `
-
-      <button
-        class="minus"
-        onclick="changeStat('${name}','assists',-1)">
-        −
-      </button>
-
-      <div class="value">
-        ${p.assists}
-      </div>
-
-      <button
-        class="plus"
-        onclick="changeStat('${name}','assists',1)">
-        +
-      </button>
-
-    ` : `
-
-      <div></div>
-
-      <div class="value">
-        ${p.assists}
-      </div>
-
-      <div></div>
-
-    `;
-
-
-    const saveButtons = isEditor ? `
-
-      <button
-        class="minus"
-        onclick="changeStat('${name}','saves',-1)">
-        −
-      </button>
-
-      <div class="value">
-        ${p.saves}
-      </div>
-
-      <button
-        class="plus"
-        onclick="changeStat('${name}','saves',1)">
-        +
-      </button>
-
-    ` : `
-
-      <div></div>
-
-      <div class="value">
-        ${p.saves}
-      </div>
-
-      <div></div>
-
-    `;
-
-
-    const mvpButtons = isEditor ? `
-
-      <button
-        class="minus"
-        onclick="changeStat('${name}','mvp',-1)">
-        −
-      </button>
-
-      <div class="value">
-        ${p.mvp}
-      </div>
-
-      <button
-        class="plus"
-        onclick="changeStat('${name}','mvp',1)">
-        +
-      </button>
-
-    ` : `
-
-      <div></div>
-
-      <div class="value">
-        ${p.mvp}
-      </div>
-
-      <div></div>
-
-    `;
-
-
-    card.innerHTML = `
-
-      <div class="player">
-        ${name}
-      </div>
-
-      <div class="stat">
-
-        <span>⚽ Goals</span>
-
-        ${editButtons}
-
-      </div>
-
-
-      <div class="stat">
-
-        <span>🎯 Assists</span>
-
-        ${assistButtons}
-
-      </div>
-
-
-      <div class="stat">
-
-        <span>🧤 Saves</span>
-
-        ${saveButtons}
-
-      </div>
-
-
-      <div class="stat">
-
-        <span>⭐ MVPs</span>
-
-        ${mvpButtons}
-
-      </div>
-
-
-      <div class="total">
-
-        G+A: ${p.goals + p.assists}
-
-      </div>
-
-    `;
-
-
-    container.appendChild(card);
-
-  });
+render();
 
 }
 
 
-/* ==========================================
-   LEADERBOARD
-========================================== */
+/* PLAYER CARDS */
 
-function renderLeaderboard() {
+function renderPlayers(){
 
-  const table =
-    document.getElementById("leaderboard");
+const container=
+document.getElementById("players");
 
-  table.innerHTML = "";
+container.innerHTML="";
 
+const sorted=
+getSortedPlayers(currentSort);
 
-  const sorted =
-    getSortedPlayers(currentSort);
+sorted.forEach(function(name){
 
+const p=players[name];
 
-  sorted.forEach((name, index) => {
+const card=
+document.createElement("div");
 
-    const p = players[name];
-
-
-    const row =
-      document.createElement("tr");
+card.className="card";
 
 
-    row.innerHTML = `
+function statHTML(label,stat){
 
-      <td>${index + 1}</td>
+if(isEditor){
 
-      <td><strong>${name}</strong></td>
+return`
 
-      <td>${p.goals}</td>
+<div class="stat">
 
-      <td>${p.assists}</td>
+<span>${label}</span>
 
-      <td>${p.goals + p.assists}</td>
+<button
+class="minus"
+onclick="changeStat('${name}','${stat}',-1)">
+−
+</button>
 
-      <td>${p.saves}</td>
+<div class="value">
+${p[stat]}
+</div>
 
-      <td>${p.mvp}</td>
+<button
+class="plus"
+onclick="changeStat('${name}','${stat}',1)">
++
+</button>
 
-    `;
+</div>
 
+`;
 
-    table.appendChild(row);
+}
 
-  });
+return`
+
+<div class="stat">
+
+<span>${label}</span>
+
+<div></div>
+
+<div class="value">
+${p[stat]}
+</div>
+
+<div></div>
+
+</div>
+
+`;
 
 }
 
 
-/* ==========================================
-   RANKINGS
-========================================== */
+card.innerHTML=`
 
-function renderRanking(
-  containerId,
-  ranking
-) {
+<div class="player">
+${name}
+</div>
 
-  const container =
-    document.getElementById(containerId);
+${statHTML("⚽ Goals","goals")}
 
-  container.innerHTML = "";
+${statHTML("🎯 Assists","assists")}
 
+${statHTML("🧤 Saves","saves")}
 
-  ranking.forEach((name, index) => {
+${statHTML("⭐ MVPs","mvp")}
 
-    const row =
-      document.createElement("div");
+<div class="total">
+G+A: ${p.goals+p.assists}
+</div>
 
-    row.className = "rank-row";
+`;
 
+container.appendChild(card);
 
-    if (isEditor) {
-
-      row.innerHTML = `
-
-        <div class="rank-number">
-          ${index + 1}
-        </div>
-
-        <div class="rank-name">
-          ${name}
-        </div>
-
-        <button
-          class="move"
-          onclick="movePlayer(
-            ${containerId === "ballonRanking"
-              ? "ballonRanking"
-              : "defenseRanking"},
-            ${index},
-            -1
-          )"
-          ${index === 0 ? "disabled" : ""}>
-          ▲
-        </button>
-
-        <button
-          class="move"
-          onclick="movePlayer(
-            ${containerId === "ballonRanking"
-              ? "ballonRanking"
-              : "defenseRanking"},
-            ${index},
-            1
-          )"
-          ${index === ranking.length - 1 ? "disabled" : ""}>
-          ▼
-        </button>
-
-      `;
-
-    } else {
-
-      row.innerHTML = `
-
-        <div class="rank-number">
-          ${index + 1}
-        </div>
-
-        <div class="rank-name">
-          ${name}
-        </div>
-
-        <div></div>
-        <div></div>
-
-      `;
-
-    }
-
-
-    container.appendChild(row);
-
-  });
+});
 
 }
 
 
-/* ==========================================
-   RENDER
-========================================== */
+/* LEADERBOARD */
 
-function render() {
+function renderLeaderboard(){
 
-  renderLeaderboard();
+const table=
+document.getElementById("leaderboard");
 
-  renderPlayers();
+table.innerHTML="";
 
-  renderRanking(
-    "ballonRanking",
-    ballonRanking
-  );
+const sorted=
+getSortedPlayers(currentSort);
 
-  renderRanking(
-    "defenseRanking",
-    defenseRanking
-  );
+sorted.forEach(function(name,index){
+
+const p=players[name];
+
+const row=
+document.createElement("tr");
+
+row.innerHTML=`
+
+<td>${index+1}</td>
+
+<td><strong>${name}</strong></td>
+
+<td>${p.goals}</td>
+
+<td>${p.assists}</td>
+
+<td>${p.goals+p.assists}</td>
+
+<td>${p.saves}</td>
+
+<td>${p.mvp}</td>
+
+`;
+
+table.appendChild(row);
+
+});
 
 }
 
+
+/* RANKINGS */
+
+function renderRanking(containerId,ranking){
+
+const container=
+document.getElementById(containerId);
+
+container.innerHTML="";
+
+ranking.forEach(function(name,index){
+
+const row=
+document.createElement("div");
+
+row.className="rank-row";
+
+if(isEditor){
+
+const variableName=
+containerId==="ballonRanking"
+?"ballonRanking"
+:"defenseRanking";
+
+row.innerHTML=`
+
+<div class="rank-number">
+${index+1}
+</div>
+
+<div class="rank-name">
+${name}
+</div>
+
+<button
+class="move"
+onclick="movePlayer(${variableName},${index},-1)"
+${index===0?"disabled":""}>
+▲
+</button>
+
+<button
+class="move"
+onclick="movePlayer(${variableName},${index},1)"
+${index===ranking.length-1?"disabled":""}>
+▼
+</button>
+
+`;
+
+}else{
+
+row.innerHTML=`
+
+<div class="rank-number">
+${index+1}
+</div>
+
+<div class="rank-name">
+${name}
+</div>
+
+<div></div>
+
+<div></div>
+
+`;
+
+}
+
+container.appendChild(row);
+
+});
+
+}
+
+
+/* RENDER */
+
+function render(){
+
+renderLeaderboard();
+
+renderPlayers();
+
+renderRanking(
+"ballonRanking",
+ballonRanking
+);
+
+renderRanking(
+"defenseRanking",
+defenseRanking
+);
+
+}
 
 render();
 
