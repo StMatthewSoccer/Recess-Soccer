@@ -3,256 +3,259 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Saint Matthews Recess Soccer Live Stats</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#0b1220;
-color:#fff;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0b1220;
+  color:#fff;
 }
 
 header{
-padding:24px 16px;
-text-align:center;
-background:linear-gradient(135deg,#087a4b,#123b72);
+  padding:24px 16px;
+  text-align:center;
+  background:linear-gradient(135deg,#087a4b,#123b72);
 }
 
 h1{
-margin:0 0 6px;
-font-size:30px;
+  margin:0 0 6px;
+  font-size:30px;
 }
 
 .subtitle{
-opacity:.9;
+  opacity:.9;
 }
 
 .status{
-margin-top:9px;
-font-size:14px;
+  margin-top:9px;
+  font-size:14px;
 }
 
 .login-area{
-max-width:420px;
-margin:15px auto;
-padding:15px;
-background:#151f31;
-border:1px solid #29364d;
-border-radius:16px;
-text-align:center;
+  max-width:420px;
+  margin:15px auto;
+  padding:15px;
+  background:#151f31;
+  border:1px solid #29364d;
+  border-radius:16px;
+  text-align:center;
 }
 
 .login-area select,
 .login-area input{
-width:100%;
-padding:12px;
-margin:5px 0;
-border-radius:10px;
-border:0;
-font-size:16px;
+  width:100%;
+  padding:12px;
+  margin:5px 0;
+  border-radius:10px;
+  border:0;
+  font-size:16px;
 }
 
 .login-button{
-width:100%;
-margin-top:8px;
-background:#16a085;
-color:white;
+  width:100%;
+  margin-top:8px;
+  background:#16a085;
+  color:white;
 }
 
 .logout-button{
-margin-top:8px;
-background:#c0392b;
-color:white;
+  margin-top:8px;
+  background:#c0392b;
+  color:white;
 }
 
 .login-message{
-margin-top:8px;
-font-size:14px;
+  margin-top:8px;
+  font-size:14px;
 }
 
 .controls{
-display:flex;
-gap:9px;
-justify-content:center;
-flex-wrap:wrap;
-padding:15px;
+  display:flex;
+  gap:9px;
+  justify-content:center;
+  flex-wrap:wrap;
+  padding:15px;
 }
 
 button{
-border:0;
-border-radius:12px;
-padding:10px 15px;
-font-size:16px;
-font-weight:700;
-cursor:pointer;
+  border:0;
+  border-radius:12px;
+  padding:10px 15px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
 }
 
 .sort{
-background:white;
-color:#111;
+  background:white;
+  color:#111;
 }
 
 .section{
-max-width:1100px;
-margin:0 auto 20px;
-padding:0 12px;
+  max-width:1100px;
+  margin:0 auto 20px;
+  padding:0 12px;
 }
 
 .section h2{
-text-align:center;
-margin:18px 0 12px;
-font-size:26px;
+  text-align:center;
+  margin:18px 0 12px;
+  font-size:26px;
 }
 
 .grid{
-max-width:1100px;
-margin:auto;
-padding:0 12px 30px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:14px;
+  max-width:1100px;
+  margin:auto;
+  padding:0 12px 30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:14px;
 }
 
 .card,
 .rank-card{
-background:#151f31;
-border:1px solid #29364d;
-border-radius:18px;
-padding:18px;
+  background:#151f31;
+  border:1px solid #29364d;
+  border-radius:18px;
+  padding:18px;
 }
 
 .player{
-font-size:23px;
-font-weight:800;
-margin-bottom:14px;
+  font-size:23px;
+  font-weight:800;
+  margin-bottom:14px;
 }
 
 .stat{
-display:grid;
-grid-template-columns:1fr 44px 48px 44px;
-align-items:center;
-gap:7px;
-margin:9px 0;
+  display:grid;
+  grid-template-columns:1fr 44px 48px 44px;
+  align-items:center;
+  gap:7px;
+  margin:9px 0;
 }
 
 .value{
-text-align:center;
-font-size:20px;
-font-weight:800;
+  text-align:center;
+  font-size:20px;
+  font-weight:800;
 }
 
 .plus,
 .minus{
-width:44px;
-height:40px;
-padding:0;
-font-size:22px;
+  width:44px;
+  height:40px;
+  padding:0;
+  font-size:22px;
 }
 
 .plus{
-background:#16a085;
-color:white;
+  background:#16a085;
+  color:white;
 }
 
 .minus{
-background:#c0392b;
-color:white;
+  background:#c0392b;
+  color:white;
 }
 
 .total{
-margin-top:13px;
-padding-top:12px;
-border-top:1px solid #334158;
-font-weight:800;
-font-size:18px;
+  margin-top:13px;
+  padding-top:12px;
+  border-top:1px solid #334158;
+  font-weight:800;
+  font-size:18px;
 }
 
 table{
-width:100%;
-border-collapse:collapse;
-background:#151f31;
-border-radius:15px;
-overflow:hidden;
+  width:100%;
+  border-collapse:collapse;
+  background:#151f31;
+  border-radius:15px;
+  overflow:hidden;
 }
 
 th,td{
-padding:10px;
-text-align:center;
-border-bottom:1px solid #29364d;
+  padding:10px;
+  text-align:center;
+  border-bottom:1px solid #29364d;
 }
 
 th{
-background:#1e2c43;
+  background:#1e2c43;
 }
 
 .rank-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:14px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:14px;
 }
 
 .rank-card h3{
-margin:0 0 12px;
-text-align:center;
-font-size:22px;
+  margin:0 0 12px;
+  text-align:center;
+  font-size:22px;
 }
 
 .rank-row{
-display:grid;
-grid-template-columns:38px 1fr 42px 42px;
-align-items:center;
-gap:8px;
-margin:8px 0;
-padding:8px;
-border-radius:12px;
-background:#1d293d;
+  display:grid;
+  grid-template-columns:38px 1fr 42px 42px;
+  align-items:center;
+  gap:8px;
+  margin:8px 0;
+  padding:8px;
+  border-radius:12px;
+  background:#1d293d;
 }
 
 .rank-number{
-text-align:center;
-font-size:20px;
-font-weight:900;
+  text-align:center;
+  font-size:20px;
+  font-weight:900;
 }
 
 .rank-name{
-font-size:18px;
-font-weight:700;
+  font-size:18px;
+  font-weight:700;
 }
 
 .move{
-width:42px;
-height:38px;
-padding:0;
-font-size:19px;
-background:#33465f;
-color:white;
+  width:42px;
+  height:38px;
+  padding:0;
+  font-size:19px;
+  background:#33465f;
+  color:white;
 }
 
 .move:disabled{
-opacity:.3;
-cursor:not-allowed;
+  opacity:.3;
+  cursor:not-allowed;
 }
 
 .hidden{
-display:none!important;
+  display:none !important;
 }
 
 @media(max-width:600px){
 
-h1{
-font-size:24px;
-}
+  h1{
+    font-size:24px;
+  }
 
-table{
-font-size:12px;
-}
+  table{
+    font-size:12px;
+  }
 
-th,td{
-padding:8px 4px;
-}
+  th,td{
+    padding:8px 4px;
+  }
 
 }
 </style>
@@ -349,7 +352,7 @@ Log Out
 </div>
 
 
-<!-- SORT BUTTONS -->
+<!-- SORT -->
 
 <div class="controls">
 
@@ -516,7 +519,7 @@ const playerNames=[
 
 let players={};
 
-playerNames.forEach(name=>{
+playerNames.forEach(function(name){
 
 players[name]={
 goals:0,
@@ -537,11 +540,11 @@ let currentSort="ga";
 let isEditor=false;
 
 
-/* AUTHORIZED EDITORS */
+/* CURRENT EDITOR UIDS */
 
 const editors={
 
-"rip7cwNZCqVtBLniQUSHenTn3me2":"Jack",
+"OQZynBXwJ8RH6tPaAm7YhLXDrpD2":"Jack",
 
 "9ibGMcDM8MSP2kZfryQPybL4YNk2":"Jack (School)",
 
@@ -552,7 +555,7 @@ const editors={
 };
 
 
-/* LOGIN EMAILS */
+/* FIREBASE EMAIL ACCOUNTS */
 
 const accounts={
 
@@ -708,7 +711,7 @@ document
 }
 
 
-/* LOAD PLAYER DATA */
+/* LOAD STATS */
 
 statsRef.on("value",function(snapshot){
 
@@ -1056,7 +1059,7 @@ row.className="rank-row";
 
 if(isEditor){
 
-const variableName=
+const rankingVariable=
 containerId==="ballonRanking"
 ?"ballonRanking"
 :"defenseRanking";
@@ -1073,14 +1076,14 @@ ${name}
 
 <button
 class="move"
-onclick="movePlayer(${variableName},${index},-1)"
+onclick="movePlayer(${rankingVariable},${index},-1)"
 ${index===0?"disabled":""}>
 ▲
 </button>
 
 <button
 class="move"
-onclick="movePlayer(${variableName},${index},1)"
+onclick="movePlayer(${rankingVariable},${index},1)"
 ${index===ranking.length-1?"disabled":""}>
 ▼
 </button>
