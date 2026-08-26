@@ -30,13 +30,15 @@ h1 {
 }
 
 .subtitle {
-  opacity: 0.9;
+  opacity: .9;
 }
 
 .status {
   margin-top: 9px;
   font-size: 14px;
 }
+
+/* LOGIN */
 
 .login-area {
   max-width: 420px;
@@ -76,6 +78,8 @@ h1 {
   font-size: 14px;
 }
 
+/* SORT */
+
 .controls {
   display: flex;
   gap: 9px;
@@ -98,6 +102,8 @@ button {
   color: #111;
 }
 
+/* SECTIONS */
+
 .section {
   max-width: 1100px;
   margin: 0 auto 20px;
@@ -109,6 +115,19 @@ button {
   margin: 18px 0 12px;
   font-size: 26px;
 }
+
+/* TROPHIES */
+
+.trophy-image {
+  display: block;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin: 0 auto 18px;
+  border-radius: 15px;
+}
+
+/* PLAYER CARDS */
 
 .grid {
   max-width: 1100px;
@@ -173,6 +192,8 @@ button {
   font-size: 18px;
 }
 
+/* TABLE */
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -191,6 +212,8 @@ td {
 th {
   background: #1e2c43;
 }
+
+/* RANKINGS */
 
 .rank-grid {
   display: grid;
@@ -236,13 +259,15 @@ th {
 }
 
 .move:disabled {
-  opacity: 0.3;
+  opacity: .3;
   cursor: not-allowed;
 }
 
 .hidden {
   display: none !important;
 }
+
+/* MOBILE */
 
 @media (max-width: 600px) {
 
@@ -257,6 +282,11 @@ th {
   th,
   td {
     padding: 7px 3px;
+  }
+
+  .trophy-image {
+    width: 160px;
+    height: 160px;
   }
 
 }
@@ -426,6 +456,12 @@ Sort: Clean Sheets
 
 <h2>🏆 Ballon d'Or</h2>
 
+<img
+src="Screenshot_20260826-003131.png"
+class="trophy-image"
+alt="Ballon d'Or Trophy"
+>
+
 <div class="rank-grid">
 
 <div class="rank-card">
@@ -446,6 +482,12 @@ Sort: Clean Sheets
 <section class="section">
 
 <h2>🛡️ Golden Defense</h2>
+
+<img
+src="Screenshot_20260826-003116.png"
+class="trophy-image"
+alt="Golden Defense Trophy"
+>
 
 <div class="rank-grid">
 
@@ -479,23 +521,24 @@ const firebaseConfig = {
 
   authDomain: "recess-soccer.firebaseapp.com",
 
-  databaseURL: "https://recess-soccer-default-rtdb.firebaseio.com",
+  databaseURL:
+    "https://recess-soccer-default-rtdb.firebaseio.com",
 
   projectId: "recess-soccer",
 
-  storageBucket: "recess-soccer.firebasestorage.app",
+  storageBucket:
+    "recess-soccer.firebasestorage.app",
 
   messagingSenderId: "872558689342",
 
-  appId: "1:872558689342:web:a4dca17e1d6b963ed6656f",
+  appId:
+    "1:872558689342:web:a4dca17e1d6b963ed6656f",
 
   measurementId: "G-HJ16JSL5Q2"
 
 };
 
-
 firebase.initializeApp(firebaseConfig);
-
 
 const auth = firebase.auth();
 
@@ -530,19 +573,14 @@ const playerNames = [
 
 let players = {};
 
-
 playerNames.forEach(function(name) {
 
   players[name] = {
 
     goals: 0,
-
     assists: 0,
-
     saves: 0,
-
     mvp: 0,
-
     cleanSheets: 0
 
   };
@@ -559,37 +597,45 @@ let currentSort = "ga";
 let isEditor = false;
 
 
-/* CURRENT EDITOR UIDS */
+/* EDITOR UIDS */
 
 const editors = {
 
-  "OQZynBXwJ8RH6tPaAm7YhLXDrpD2": "Jack",
+  "OQZynBXwJ8RH6tPaAm7YhLXDrpD2":
+    "Jack",
 
-  "9ibGMcDM8MSP2kZfryQPybL4YNk2": "Jack (School)",
+  "9ibGMcDM8MSP2kZfryQPybL4YNk2":
+    "Jack (School)",
 
-  "lUNSDuP2vSTDD8L1oLOQstlF65C2": "Leonardo",
+  "lUNSDuP2vSTDD8L1oLOQstlF65C2":
+    "Leonardo",
 
-  "mLue07ETBShyubAKSRAT17GAWjQ2": "Angelo"
+  "mLue07ETBShyubAKSRAT17GAWjQ2":
+    "Angelo"
 
 };
 
 
-/* EMAIL ACCOUNTS */
+/* ACCOUNTS */
 
 const accounts = {
 
-  "Jack": "jmaso12.home@gmail.com",
+  "Jack":
+    "jmaso12.home@gmail.com",
 
-  "Jack (School)": "jack.mason1@stu.ocsb.ca",
+  "Jack (School)":
+    "jack.mason1@stu.ocsb.ca",
 
-  "Leonardo": "leonardo.ljubicic@stu.ocsb.ca",
+  "Leonardo":
+    "leonardo.ljubicic@stu.ocsb.ca",
 
-  "Angelo": "Angelo.Champagne@stu.ocsb.ca"
+  "Angelo":
+    "Angelo.Champagne@stu.ocsb.ca"
 
 };
 
 
-/* AUTH STATE */
+/* AUTH */
 
 auth.onAuthStateChanged(function(user) {
 
@@ -652,27 +698,31 @@ function editorLogin() {
     "Logging in...";
 
 
-  auth.signInWithEmailAndPassword(
-    email,
-    pin
-  )
+  auth
+    .signInWithEmailAndPassword(
+      email,
+      pin
+    )
 
-  .then(function() {
+    .then(function() {
 
-    message.textContent = "";
+      message.textContent = "";
 
-    document.getElementById("pin").value = "";
+      document.getElementById("pin").value = "";
 
-  })
+    })
 
-  .catch(function(error) {
+    .catch(function(error) {
 
-    console.error("Login error:", error);
+      console.error(
+        "Login error:",
+        error
+      );
 
-    message.textContent =
-      "❌ Incorrect name or PIN.";
+      message.textContent =
+        "❌ Incorrect name or PIN.";
 
-  });
+    });
 
 }
 
@@ -814,7 +864,6 @@ rankingsRef.on("value", function(snapshot) {
 
     }
 
-
     if (Array.isArray(data.ballon)) {
 
       ballonRanking =
@@ -854,7 +903,11 @@ function savePlayers() {
 
 /* CHANGE STAT */
 
-function changeStat(name, stat, amount) {
+function changeStat(
+  name,
+  stat,
+  amount
+) {
 
   if (!isEditor) {
 
@@ -879,12 +932,8 @@ function changeStat(name, stat, amount) {
   }
 
 
-  /* UPDATE SCREEN IMMEDIATELY */
-
   render();
 
-
-  /* SAVE TO FIREBASE */
 
   savePlayers()
 
@@ -937,40 +986,52 @@ function getSortedPlayers(type) {
     const B = players[b];
 
 
-    if (type === "ga")
+    if (type === "ga") {
 
       return
         (B.goals + B.assists)
         -
         (A.goals + A.assists);
 
+    }
 
-    if (type === "goals")
+
+    if (type === "goals") {
 
       return B.goals - A.goals;
 
+    }
 
-    if (type === "assists")
+
+    if (type === "assists") {
 
       return B.assists - A.assists;
 
+    }
 
-    if (type === "saves")
+
+    if (type === "saves") {
 
       return B.saves - A.saves;
 
+    }
 
-    if (type === "mvp")
+
+    if (type === "mvp") {
 
       return B.mvp - A.mvp;
 
+    }
 
-    if (type === "cleanSheets")
+
+    if (type === "cleanSheets") {
 
       return
         B.cleanSheets
         -
         A.cleanSheets;
+
+    }
 
 
     return 0;
@@ -1004,11 +1065,6 @@ function saveRankings() {
     console.error(
       "Ranking save error:",
       error
-    );
-
-    alert(
-      "⚠️ Ranking could not be saved.\n\n" +
-      error.message
     );
 
   });
@@ -1086,7 +1142,10 @@ function renderPlayers() {
     card.className = "card";
 
 
-    function statHTML(label, stat) {
+    function statHTML(
+      label,
+      stat
+    ) {
 
       if (isEditor) {
 
@@ -1160,13 +1219,25 @@ function renderPlayers() {
         ${name}
       </div>
 
-      ${statHTML("⚽ Goals", "goals")}
+      ${statHTML(
+        "⚽ Goals",
+        "goals"
+      )}
 
-      ${statHTML("🎯 Assists", "assists")}
+      ${statHTML(
+        "🎯 Assists",
+        "assists"
+      )}
 
-      ${statHTML("🧤 Saves", "saves")}
+      ${statHTML(
+        "🧤 Saves",
+        "saves"
+      )}
 
-      ${statHTML("⭐ MVPs", "mvp")}
+      ${statHTML(
+        "⭐ MVPs",
+        "mvp"
+      )}
 
       ${statHTML(
         "🧱 Clean Sheets",
@@ -1206,7 +1277,10 @@ function renderLeaderboard() {
     getSortedPlayers(currentSort);
 
 
-  sorted.forEach(function(name, index) {
+  sorted.forEach(function(
+    name,
+    index
+  ) {
 
     const p = players[name];
 
@@ -1261,7 +1335,10 @@ function renderRanking(
   container.innerHTML = "";
 
 
-  ranking.forEach(function(name, index) {
+  ranking.forEach(function(
+    name,
+    index
+  ) {
 
     const row =
       document.createElement("div");
@@ -1349,7 +1426,7 @@ function renderRanking(
 }
 
 
-/* RENDER EVERYTHING */
+/* RENDER */
 
 function render() {
 
