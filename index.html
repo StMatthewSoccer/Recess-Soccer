@@ -7,254 +7,256 @@
 <title>Saint Matthews Recess Soccer Live Stats</title>
 
 <style>
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#0b1220;
-  color:#fff;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1220;
+  color: #fff;
 }
 
-header{
-  padding:24px 16px;
-  text-align:center;
-  background:linear-gradient(135deg,#087a4b,#123b72);
+header {
+  padding: 24px 16px;
+  text-align: center;
+  background: linear-gradient(135deg, #087a4b, #123b72);
 }
 
-h1{
-  margin:0 0 6px;
-  font-size:30px;
+h1 {
+  margin: 0 0 6px;
+  font-size: 30px;
 }
 
-.subtitle{
-  opacity:.9;
+.subtitle {
+  opacity: 0.9;
 }
 
-.status{
-  margin-top:9px;
-  font-size:14px;
+.status {
+  margin-top: 9px;
+  font-size: 14px;
 }
 
-.login-area{
-  max-width:420px;
-  margin:15px auto;
-  padding:15px;
-  background:#151f31;
-  border:1px solid #29364d;
-  border-radius:16px;
-  text-align:center;
+.login-area {
+  max-width: 420px;
+  margin: 15px auto;
+  padding: 15px;
+  background: #151f31;
+  border: 1px solid #29364d;
+  border-radius: 16px;
+  text-align: center;
 }
 
 .login-area select,
-.login-area input{
-  width:100%;
-  padding:12px;
-  margin:5px 0;
-  border-radius:10px;
-  border:0;
-  font-size:16px;
+.login-area input {
+  width: 100%;
+  padding: 12px;
+  margin: 5px 0;
+  border-radius: 10px;
+  border: 0;
+  font-size: 16px;
 }
 
-.login-button{
-  width:100%;
-  margin-top:8px;
-  background:#16a085;
-  color:white;
+.login-button {
+  width: 100%;
+  margin-top: 8px;
+  background: #16a085;
+  color: white;
 }
 
-.logout-button{
-  margin-top:8px;
-  background:#c0392b;
-  color:white;
+.logout-button {
+  margin-top: 8px;
+  background: #c0392b;
+  color: white;
 }
 
-.login-message{
-  margin-top:8px;
-  font-size:14px;
+.login-message {
+  margin-top: 8px;
+  font-size: 14px;
 }
 
-.controls{
-  display:flex;
-  gap:9px;
-  justify-content:center;
-  flex-wrap:wrap;
-  padding:15px;
+.controls {
+  display: flex;
+  gap: 9px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 15px;
 }
 
-button{
-  border:0;
-  border-radius:12px;
-  padding:10px 15px;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.sort{
-  background:white;
-  color:#111;
+.sort {
+  background: white;
+  color: #111;
 }
 
-.section{
-  max-width:1100px;
-  margin:0 auto 20px;
-  padding:0 12px;
+.section {
+  max-width: 1100px;
+  margin: 0 auto 20px;
+  padding: 0 12px;
 }
 
-.section h2{
-  text-align:center;
-  margin:18px 0 12px;
-  font-size:26px;
+.section h2 {
+  text-align: center;
+  margin: 18px 0 12px;
+  font-size: 26px;
 }
 
-.grid{
-  max-width:1100px;
-  margin:auto;
-  padding:0 12px 30px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:14px;
+.grid {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 12px 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
 }
 
 .card,
-.rank-card{
-  background:#151f31;
-  border:1px solid #29364d;
-  border-radius:18px;
-  padding:18px;
+.rank-card {
+  background: #151f31;
+  border: 1px solid #29364d;
+  border-radius: 18px;
+  padding: 18px;
 }
 
-.player{
-  font-size:23px;
-  font-weight:800;
-  margin-bottom:14px;
+.player {
+  font-size: 23px;
+  font-weight: 800;
+  margin-bottom: 14px;
 }
 
-.stat{
-  display:grid;
-  grid-template-columns:1fr 44px 48px 44px;
-  align-items:center;
-  gap:7px;
-  margin:9px 0;
+.stat {
+  display: grid;
+  grid-template-columns: 1fr 44px 48px 44px;
+  align-items: center;
+  gap: 7px;
+  margin: 9px 0;
 }
 
-.value{
-  text-align:center;
-  font-size:20px;
-  font-weight:800;
+.value {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
 }
 
 .plus,
-.minus{
-  width:44px;
-  height:40px;
-  padding:0;
-  font-size:22px;
+.minus {
+  width: 44px;
+  height: 40px;
+  padding: 0;
+  font-size: 22px;
 }
 
-.plus{
-  background:#16a085;
-  color:white;
+.plus {
+  background: #16a085;
+  color: white;
 }
 
-.minus{
-  background:#c0392b;
-  color:white;
+.minus {
+  background: #c0392b;
+  color: white;
 }
 
-.total{
-  margin-top:13px;
-  padding-top:12px;
-  border-top:1px solid #334158;
-  font-weight:800;
-  font-size:18px;
+.total {
+  margin-top: 13px;
+  padding-top: 12px;
+  border-top: 1px solid #334158;
+  font-weight: 800;
+  font-size: 18px;
 }
 
-table{
-  width:100%;
-  border-collapse:collapse;
-  background:#151f31;
-  border-radius:15px;
-  overflow:hidden;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #151f31;
+  border-radius: 15px;
+  overflow: hidden;
 }
 
-th,td{
-  padding:10px;
-  text-align:center;
-  border-bottom:1px solid #29364d;
+th,
+td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #29364d;
 }
 
-th{
-  background:#1e2c43;
+th {
+  background: #1e2c43;
 }
 
-.rank-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:14px;
+.rank-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
 }
 
-.rank-card h3{
-  margin:0 0 12px;
-  text-align:center;
-  font-size:22px;
+.rank-card h3 {
+  margin: 0 0 12px;
+  text-align: center;
+  font-size: 22px;
 }
 
-.rank-row{
-  display:grid;
-  grid-template-columns:38px 1fr 42px 42px;
-  align-items:center;
-  gap:8px;
-  margin:8px 0;
-  padding:8px;
-  border-radius:12px;
-  background:#1d293d;
+.rank-row {
+  display: grid;
+  grid-template-columns: 38px 1fr 42px 42px;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 12px;
+  background: #1d293d;
 }
 
-.rank-number{
-  text-align:center;
-  font-size:20px;
-  font-weight:900;
+.rank-number {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 900;
 }
 
-.rank-name{
-  font-size:18px;
-  font-weight:700;
+.rank-name {
+  font-size: 18px;
+  font-weight: 700;
 }
 
-.move{
-  width:42px;
-  height:38px;
-  padding:0;
-  font-size:19px;
-  background:#33465f;
-  color:white;
+.move {
+  width: 42px;
+  height: 38px;
+  padding: 0;
+  font-size: 19px;
+  background: #33465f;
+  color: white;
 }
 
-.move:disabled{
-  opacity:.3;
-  cursor:not-allowed;
+.move:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
-.hidden{
-  display:none !important;
+.hidden {
+  display: none !important;
 }
 
-@media(max-width:600px){
+@media (max-width: 600px) {
 
-  h1{
-    font-size:24px;
+  h1 {
+    font-size: 24px;
   }
 
-  table{
-    font-size:12px;
+  table {
+    font-size: 11px;
   }
 
-  th,td{
-    padding:8px 4px;
+  th,
+  td {
+    padding: 7px 3px;
   }
 
 }
@@ -352,7 +354,7 @@ Log Out
 </div>
 
 
-<!-- SORT -->
+<!-- SORT BUTTONS -->
 
 <div class="controls">
 
@@ -376,6 +378,10 @@ Sort: Saves
 Sort: MVPs
 </button>
 
+<button class="sort" onclick="sortBy('cleanSheets')">
+Sort: Clean Sheets
+</button>
+
 </div>
 
 
@@ -397,6 +403,7 @@ Sort: MVPs
 <th>G+A</th>
 <th>Saves</th>
 <th>MVPs</th>
+<th>Clean Sheets</th>
 </tr>
 
 </thead>
@@ -407,6 +414,8 @@ Sort: MVPs
 
 </section>
 
+
+<!-- PLAYER CARDS -->
 
 <main class="grid" id="players"></main>
 
@@ -464,678 +473,902 @@ Sort: MVPs
 
 <script>
 
-const firebaseConfig={
+const firebaseConfig = {
 
-apiKey:"AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
+  apiKey: "AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
 
-authDomain:"recess-soccer.firebaseapp.com",
+  authDomain: "recess-soccer.firebaseapp.com",
 
-databaseURL:"https://recess-soccer-default-rtdb.firebaseio.com",
+  databaseURL: "https://recess-soccer-default-rtdb.firebaseio.com",
 
-projectId:"recess-soccer",
+  projectId: "recess-soccer",
 
-storageBucket:"recess-soccer.firebasestorage.app",
+  storageBucket: "recess-soccer.firebasestorage.app",
 
-messagingSenderId:"872558689342",
+  messagingSenderId: "872558689342",
 
-appId:"1:872558689342:web:a4dca17e1d6b963ed6656f",
+  appId: "1:872558689342:web:a4dca17e1d6b963ed6656f",
 
-measurementId:"G-HJ16JSL5Q2"
+  measurementId: "G-HJ16JSL5Q2"
 
 };
 
+
 firebase.initializeApp(firebaseConfig);
 
-const auth=firebase.auth();
 
-const db=firebase.database();
+const auth = firebase.auth();
 
-const statsRef=db.ref("players");
+const db = firebase.database();
 
-const rankingsRef=db.ref("rankings");
+const statsRef = db.ref("players");
+
+const rankingsRef = db.ref("rankings");
 
 
 /* PLAYERS */
 
-const playerNames=[
+const playerNames = [
 
-"Adi",
-"Aidan",
-"Artin",
-"Angelo",
-"Bryson",
-"Cameron",
-"Jack",
-"John",
-"Leonardo",
-"Marc",
-"Matthew",
-"Sami",
-"Nathan",
-"Theo"
+  "Adi",
+  "Aidan",
+  "Artin",
+  "Angelo",
+  "Bryson",
+  "Cameron",
+  "Jack",
+  "John",
+  "Leonardo",
+  "Marc",
+  "Matthew",
+  "Sami",
+  "Nathan",
+  "Theo"
 
 ];
 
 
-let players={};
+let players = {};
 
-playerNames.forEach(function(name){
 
-players[name]={
-goals:0,
-assists:0,
-saves:0,
-mvp:0
-};
+playerNames.forEach(function(name) {
+
+  players[name] = {
+
+    goals: 0,
+
+    assists: 0,
+
+    saves: 0,
+
+    mvp: 0,
+
+    cleanSheets: 0
+
+  };
 
 });
 
 
-let defenseRanking=[...playerNames];
+let defenseRanking = [...playerNames];
 
-let ballonRanking=[...playerNames];
+let ballonRanking = [...playerNames];
 
-let currentSort="ga";
+let currentSort = "ga";
 
-let isEditor=false;
+let isEditor = false;
 
 
 /* CURRENT EDITOR UIDS */
 
-const editors={
+const editors = {
 
-"OQZynBXwJ8RH6tPaAm7YhLXDrpD2":"Jack",
+  "OQZynBXwJ8RH6tPaAm7YhLXDrpD2": "Jack",
 
-"9ibGMcDM8MSP2kZfryQPybL4YNk2":"Jack (School)",
+  "9ibGMcDM8MSP2kZfryQPybL4YNk2": "Jack (School)",
 
-"lUNSDuP2vSTDD8L1oLOQstlF65C2":"Leonardo",
+  "lUNSDuP2vSTDD8L1oLOQstlF65C2": "Leonardo",
 
-"mLue07ETBShyubAKSRAT17GAWjQ2":"Angelo"
+  "mLue07ETBShyubAKSRAT17GAWjQ2": "Angelo"
 
 };
 
 
-/* FIREBASE EMAIL ACCOUNTS */
+/* EMAIL ACCOUNTS */
 
-const accounts={
+const accounts = {
 
-"Jack":"jmaso12.home@gmail.com",
+  "Jack": "jmaso12.home@gmail.com",
 
-"Jack (School)":"jack.mason1@stu.ocsb.ca",
+  "Jack (School)": "jack.mason1@stu.ocsb.ca",
 
-"Leonardo":"leonardo.ljubicic@stu.ocsb.ca",
+  "Leonardo": "leonardo.ljubicic@stu.ocsb.ca",
 
-"Angelo":"Angelo.Champagne@stu.ocsb.ca"
+  "Angelo": "Angelo.Champagne@stu.ocsb.ca"
 
 };
 
 
 /* AUTH STATE */
 
-auth.onAuthStateChanged(function(user){
+auth.onAuthStateChanged(function(user) {
 
-if(user && editors[user.uid]){
+  if (user && editors[user.uid]) {
 
-isEditor=true;
+    isEditor = true;
 
-showEditor(editors[user.uid]);
+    showEditor(editors[user.uid]);
 
-}else{
+  } else {
 
-isEditor=false;
+    isEditor = false;
 
-showViewer();
+    showViewer();
 
-}
+  }
 
-render();
+  render();
 
 });
 
 
 /* LOGIN */
 
-function editorLogin(){
+function editorLogin() {
 
-const name=
-document.getElementById("editorName").value;
+  const name =
+    document.getElementById("editorName").value;
 
-const pin=
-document.getElementById("pin").value;
+  const pin =
+    document.getElementById("pin").value;
 
-const message=
-document.getElementById("loginMessage");
+  const message =
+    document.getElementById("loginMessage");
 
-if(!name){
 
-message.textContent="Choose your name.";
+  if (!name) {
 
-return;
+    message.textContent =
+      "Choose your name.";
 
-}
+    return;
 
-if(!pin){
+  }
 
-message.textContent="Enter your PIN.";
 
-return;
+  if (!pin) {
 
-}
+    message.textContent =
+      "Enter your PIN.";
 
-const email=accounts[name];
+    return;
 
-message.textContent="Logging in...";
+  }
 
-auth.signInWithEmailAndPassword(email,pin)
 
-.then(function(){
+  const email = accounts[name];
 
-message.textContent="";
+  message.textContent =
+    "Logging in...";
 
-document.getElementById("pin").value="";
 
-})
+  auth.signInWithEmailAndPassword(
+    email,
+    pin
+  )
 
-.catch(function(error){
+  .then(function() {
 
-console.error(error);
+    message.textContent = "";
 
-message.textContent=
-"❌ Incorrect name or PIN.";
+    document.getElementById("pin").value = "";
 
-});
+  })
+
+  .catch(function(error) {
+
+    console.error("Login error:", error);
+
+    message.textContent =
+      "❌ Incorrect name or PIN.";
+
+  });
 
 }
 
 
 /* LOGOUT */
 
-function editorLogout(){
+function editorLogout() {
 
-auth.signOut();
+  auth.signOut();
 
 }
 
 
 /* VIEWER */
 
-function showViewer(){
+function showViewer() {
 
-document
-.getElementById("loginForm")
-.classList.remove("hidden");
+  document
+    .getElementById("loginForm")
+    .classList.remove("hidden");
 
-document
-.getElementById("editorInfo")
-.classList.add("hidden");
+  document
+    .getElementById("editorInfo")
+    .classList.add("hidden");
 
-document
-.getElementById("viewerMessage")
-.textContent=
-"👀 Viewing only — Login to edit";
+  document
+    .getElementById("viewerMessage")
+    .textContent =
+      "👀 Viewing only — Login to edit";
 
-document
-.getElementById("status")
-.textContent=
-"🟢 Live stats — View only";
+  document
+    .getElementById("status")
+    .textContent =
+      "🟢 Live stats — View only";
 
 }
 
 
 /* EDITOR */
 
-function showEditor(name){
+function showEditor(name) {
 
-document
-.getElementById("loginForm")
-.classList.add("hidden");
+  document
+    .getElementById("loginForm")
+    .classList.add("hidden");
 
-document
-.getElementById("viewerMessage")
-.textContent="";
+  document
+    .getElementById("viewerMessage")
+    .textContent = "";
 
-document
-.getElementById("editorInfo")
-.classList.remove("hidden");
+  document
+    .getElementById("editorInfo")
+    .classList.remove("hidden");
 
-document
-.getElementById("loggedInName")
-.textContent=
-"🟢 Logged in as "+name+" — Editor";
+  document
+    .getElementById("loggedInName")
+    .textContent =
+      "🟢 Logged in as " +
+      name +
+      " — Editor";
 
-document
-.getElementById("status")
-.textContent=
-"🟢 Connected — Editor access";
+  document
+    .getElementById("status")
+    .textContent =
+      "🟢 Connected — Editor access";
 
 }
 
 
 /* LOAD STATS */
 
-statsRef.on("value",function(snapshot){
+statsRef.on("value", function(snapshot) {
 
-const data=snapshot.val();
+  const data = snapshot.val();
 
-if(data){
+  if (data) {
 
-playerNames.forEach(function(name){
+    playerNames.forEach(function(name) {
 
-if(data[name]){
+      if (data[name]) {
 
-players[name]={
+        players[name] = {
 
-goals:data[name].goals||0,
+          goals:
+            Number(data[name].goals) || 0,
 
-assists:data[name].assists||0,
+          assists:
+            Number(data[name].assists) || 0,
 
-saves:data[name].saves||0,
+          saves:
+            Number(data[name].saves) || 0,
 
-mvp:data[name].mvp||0
+          mvp:
+            Number(data[name].mvp) || 0,
 
-};
+          cleanSheets:
+            Number(data[name].cleanSheets) || 0
 
-}
+        };
 
-});
+      }
 
-}
+    });
 
-render();
+  }
+
+  render();
+
+}, function(error) {
+
+  console.error(
+    "Firebase read error:",
+    error
+  );
+
+  document.getElementById("status")
+    .textContent =
+      "🔴 Firebase database error";
 
 });
 
 
 /* LOAD RANKINGS */
 
-rankingsRef.on("value",function(snapshot){
+rankingsRef.on("value", function(snapshot) {
 
-const data=snapshot.val();
+  const data = snapshot.val();
 
-if(data){
+  if (data) {
 
-if(Array.isArray(data.defense)){
+    if (Array.isArray(data.defense)) {
 
-defenseRanking=
-data.defense.filter(function(name){
+      defenseRanking =
+        data.defense.filter(function(name) {
 
-return playerNames.includes(name);
+          return playerNames.includes(name);
 
-});
+        });
 
-}
-
-if(Array.isArray(data.ballon)){
-
-ballonRanking=
-data.ballon.filter(function(name){
-
-return playerNames.includes(name);
-
-});
-
-}
-
-}
-
-render();
-
-});
+    }
 
 
-/* SAVE */
+    if (Array.isArray(data.ballon)) {
 
-function savePlayers(){
+      ballonRanking =
+        data.ballon.filter(function(name) {
 
-if(!isEditor)return;
+          return playerNames.includes(name);
 
-statsRef.set(players);
+        });
 
-}
+    }
 
+  }
 
-function saveRankings(){
-
-if(!isEditor)return;
-
-rankingsRef.set({
-
-defense:defenseRanking,
-
-ballon:ballonRanking
+  render();
 
 });
 
+
+/* SAVE STATS */
+
+function savePlayers() {
+
+  if (!isEditor) {
+
+    return Promise.reject(
+      new Error(
+        "You are not logged in as an editor."
+      )
+    );
+
+  }
+
+  return statsRef.set(players);
+
 }
 
 
-/* CHANGE STATS */
+/* CHANGE STAT */
 
-function changeStat(name,stat,amount){
+function changeStat(name, stat, amount) {
 
-if(!isEditor)return;
+  if (!isEditor) {
 
-players[name][stat]+=amount;
+    alert(
+      "You must be logged in as an editor."
+    );
 
-if(players[name][stat]<0){
+    return;
 
-players[name][stat]=0;
+  }
 
-}
 
-savePlayers();
+  players[name][stat] =
+    Number(players[name][stat] || 0)
+    + amount;
 
-render();
+
+  if (players[name][stat] < 0) {
+
+    players[name][stat] = 0;
+
+  }
+
+
+  /* UPDATE SCREEN IMMEDIATELY */
+
+  render();
+
+
+  /* SAVE TO FIREBASE */
+
+  savePlayers()
+
+    .then(function() {
+
+      console.log(
+        "Saved:",
+        name,
+        stat,
+        players[name][stat]
+      );
+
+    })
+
+    .catch(function(error) {
+
+      console.error(
+        "Firebase save error:",
+        error
+      );
+
+      alert(
+        "⚠️ The number changed on screen, " +
+        "but Firebase could not save it.\n\n" +
+        error.message
+      );
+
+    });
 
 }
 
 
 /* SORT */
 
-function sortBy(type){
+function sortBy(type) {
 
-currentSort=type;
+  currentSort = type;
 
-render();
-
-}
-
-
-function getSortedPlayers(type){
-
-return [...playerNames].sort(function(a,b){
-
-const A=players[a];
-
-const B=players[b];
-
-if(type==="ga")
-return(B.goals+B.assists)-(A.goals+A.assists);
-
-if(type==="goals")
-return B.goals-A.goals;
-
-if(type==="assists")
-return B.assists-A.assists;
-
-if(type==="saves")
-return B.saves-A.saves;
-
-if(type==="mvp")
-return B.mvp-A.mvp;
-
-return 0;
-
-});
+  render();
 
 }
 
 
-/* MOVE RANKINGS */
+function getSortedPlayers(type) {
 
-function movePlayer(ranking,index,direction){
+  return [...playerNames].sort(function(a, b) {
 
-if(!isEditor)return;
+    const A = players[a];
 
-const newIndex=index+direction;
+    const B = players[b];
 
-if(newIndex<0||
-newIndex>=ranking.length)return;
 
-const temp=ranking[index];
+    if (type === "ga")
 
-ranking[index]=ranking[newIndex];
+      return
+        (B.goals + B.assists)
+        -
+        (A.goals + A.assists);
 
-ranking[newIndex]=temp;
 
-saveRankings();
+    if (type === "goals")
 
-render();
+      return B.goals - A.goals;
+
+
+    if (type === "assists")
+
+      return B.assists - A.assists;
+
+
+    if (type === "saves")
+
+      return B.saves - A.saves;
+
+
+    if (type === "mvp")
+
+      return B.mvp - A.mvp;
+
+
+    if (type === "cleanSheets")
+
+      return
+        B.cleanSheets
+        -
+        A.cleanSheets;
+
+
+    return 0;
+
+  });
+
+}
+
+
+/* SAVE RANKINGS */
+
+function saveRankings() {
+
+  if (!isEditor) {
+
+    return;
+
+  }
+
+
+  rankingsRef.set({
+
+    defense: defenseRanking,
+
+    ballon: ballonRanking
+
+  })
+
+  .catch(function(error) {
+
+    console.error(
+      "Ranking save error:",
+      error
+    );
+
+    alert(
+      "⚠️ Ranking could not be saved.\n\n" +
+      error.message
+    );
+
+  });
+
+}
+
+
+/* MOVE RANKING */
+
+function movePlayer(
+  ranking,
+  index,
+  direction
+) {
+
+  if (!isEditor) {
+
+    return;
+
+  }
+
+
+  const newIndex =
+    index + direction;
+
+
+  if (
+    newIndex < 0 ||
+    newIndex >= ranking.length
+  ) {
+
+    return;
+
+  }
+
+
+  const temp =
+    ranking[index];
+
+  ranking[index] =
+    ranking[newIndex];
+
+  ranking[newIndex] =
+    temp;
+
+
+  render();
+
+  saveRankings();
 
 }
 
 
 /* PLAYER CARDS */
 
-function renderPlayers(){
+function renderPlayers() {
 
-const container=
-document.getElementById("players");
+  const container =
+    document.getElementById("players");
 
-container.innerHTML="";
-
-const sorted=
-getSortedPlayers(currentSort);
-
-sorted.forEach(function(name){
-
-const p=players[name];
-
-const card=
-document.createElement("div");
-
-card.className="card";
+  container.innerHTML = "";
 
 
-function statHTML(label,stat){
-
-if(isEditor){
-
-return`
-
-<div class="stat">
-
-<span>${label}</span>
-
-<button
-class="minus"
-onclick="changeStat('${name}','${stat}',-1)">
-−
-</button>
-
-<div class="value">
-${p[stat]}
-</div>
-
-<button
-class="plus"
-onclick="changeStat('${name}','${stat}',1)">
-+
-</button>
-
-</div>
-
-`;
-
-}
-
-return`
-
-<div class="stat">
-
-<span>${label}</span>
-
-<div></div>
-
-<div class="value">
-${p[stat]}
-</div>
-
-<div></div>
-
-</div>
-
-`;
-
-}
+  const sorted =
+    getSortedPlayers(currentSort);
 
 
-card.innerHTML=`
+  sorted.forEach(function(name) {
 
-<div class="player">
-${name}
-</div>
+    const p = players[name];
 
-${statHTML("⚽ Goals","goals")}
+    const card =
+      document.createElement("div");
 
-${statHTML("🎯 Assists","assists")}
+    card.className = "card";
 
-${statHTML("🧤 Saves","saves")}
 
-${statHTML("⭐ MVPs","mvp")}
+    function statHTML(label, stat) {
 
-<div class="total">
-G+A: ${p.goals+p.assists}
-</div>
+      if (isEditor) {
 
-`;
+        return `
 
-container.appendChild(card);
+        <div class="stat">
 
-});
+          <span>${label}</span>
+
+          <button
+            class="minus"
+            onclick="
+              changeStat(
+                '${name}',
+                '${stat}',
+                -1
+              )
+            "
+          >
+            −
+          </button>
+
+          <div class="value">
+            ${p[stat]}
+          </div>
+
+          <button
+            class="plus"
+            onclick="
+              changeStat(
+                '${name}',
+                '${stat}',
+                1
+              )
+            "
+          >
+            +
+          </button>
+
+        </div>
+
+        `;
+
+      }
+
+
+      return `
+
+      <div class="stat">
+
+        <span>${label}</span>
+
+        <div></div>
+
+        <div class="value">
+          ${p[stat]}
+        </div>
+
+        <div></div>
+
+      </div>
+
+      `;
+
+    }
+
+
+    card.innerHTML = `
+
+      <div class="player">
+        ${name}
+      </div>
+
+      ${statHTML("⚽ Goals", "goals")}
+
+      ${statHTML("🎯 Assists", "assists")}
+
+      ${statHTML("🧤 Saves", "saves")}
+
+      ${statHTML("⭐ MVPs", "mvp")}
+
+      ${statHTML(
+        "🧱 Clean Sheets",
+        "cleanSheets"
+      )}
+
+      <div class="total">
+
+        G+A:
+        ${p.goals + p.assists}
+
+      </div>
+
+    `;
+
+
+    container.appendChild(card);
+
+  });
 
 }
 
 
 /* LEADERBOARD */
 
-function renderLeaderboard(){
+function renderLeaderboard() {
 
-const table=
-document.getElementById("leaderboard");
+  const table =
+    document.getElementById(
+      "leaderboard"
+    );
 
-table.innerHTML="";
+  table.innerHTML = "";
 
-const sorted=
-getSortedPlayers(currentSort);
 
-sorted.forEach(function(name,index){
+  const sorted =
+    getSortedPlayers(currentSort);
 
-const p=players[name];
 
-const row=
-document.createElement("tr");
+  sorted.forEach(function(name, index) {
 
-row.innerHTML=`
+    const p = players[name];
 
-<td>${index+1}</td>
+    const row =
+      document.createElement("tr");
 
-<td><strong>${name}</strong></td>
 
-<td>${p.goals}</td>
+    row.innerHTML = `
 
-<td>${p.assists}</td>
+      <td>${index + 1}</td>
 
-<td>${p.goals+p.assists}</td>
+      <td>
+        <strong>${name}</strong>
+      </td>
 
-<td>${p.saves}</td>
+      <td>${p.goals}</td>
 
-<td>${p.mvp}</td>
+      <td>${p.assists}</td>
 
-`;
+      <td>
+        ${p.goals + p.assists}
+      </td>
 
-table.appendChild(row);
+      <td>${p.saves}</td>
 
-});
+      <td>${p.mvp}</td>
+
+      <td>${p.cleanSheets}</td>
+
+    `;
+
+
+    table.appendChild(row);
+
+  });
 
 }
 
 
 /* RANKINGS */
 
-function renderRanking(containerId,ranking){
+function renderRanking(
+  containerId,
+  ranking
+) {
 
-const container=
-document.getElementById(containerId);
+  const container =
+    document.getElementById(
+      containerId
+    );
 
-container.innerHTML="";
+  container.innerHTML = "";
 
-ranking.forEach(function(name,index){
 
-const row=
-document.createElement("div");
+  ranking.forEach(function(name, index) {
 
-row.className="rank-row";
+    const row =
+      document.createElement("div");
 
-if(isEditor){
+    row.className = "rank-row";
 
-const rankingVariable=
-containerId==="ballonRanking"
-?"ballonRanking"
-:"defenseRanking";
 
-row.innerHTML=`
+    const variableName =
+      containerId === "ballonRanking"
+      ? "ballonRanking"
+      : "defenseRanking";
 
-<div class="rank-number">
-${index+1}
-</div>
 
-<div class="rank-name">
-${name}
-</div>
+    if (isEditor) {
 
-<button
-class="move"
-onclick="movePlayer(${rankingVariable},${index},-1)"
-${index===0?"disabled":""}>
-▲
-</button>
+      row.innerHTML = `
 
-<button
-class="move"
-onclick="movePlayer(${rankingVariable},${index},1)"
-${index===ranking.length-1?"disabled":""}>
-▼
-</button>
+        <div class="rank-number">
+          ${index + 1}
+        </div>
 
-`;
+        <div class="rank-name">
+          ${name}
+        </div>
 
-}else{
+        <button
+          class="move"
+          onclick="
+            movePlayer(
+              ${variableName},
+              ${index},
+              -1
+            )
+          "
+          ${index === 0 ? "disabled" : ""}
+        >
+          ▲
+        </button>
 
-row.innerHTML=`
+        <button
+          class="move"
+          onclick="
+            movePlayer(
+              ${variableName},
+              ${index},
+              1
+            )
+          "
+          ${
+            index === ranking.length - 1
+            ? "disabled"
+            : ""
+          }
+        >
+          ▼
+        </button>
 
-<div class="rank-number">
-${index+1}
-</div>
+      `;
 
-<div class="rank-name">
-${name}
-</div>
+    } else {
 
-<div></div>
+      row.innerHTML = `
 
-<div></div>
+        <div class="rank-number">
+          ${index + 1}
+        </div>
 
-`;
+        <div class="rank-name">
+          ${name}
+        </div>
+
+        <div></div>
+
+        <div></div>
+
+      `;
+
+    }
+
+
+    container.appendChild(row);
+
+  });
 
 }
 
-container.appendChild(row);
 
-});
+/* RENDER EVERYTHING */
 
-}
+function render() {
 
+  renderLeaderboard();
 
-/* RENDER */
+  renderPlayers();
 
-function render(){
+  renderRanking(
+    "ballonRanking",
+    ballonRanking
+  );
 
-renderLeaderboard();
-
-renderPlayers();
-
-renderRanking(
-"ballonRanking",
-ballonRanking
-);
-
-renderRanking(
-"defenseRanking",
-defenseRanking
-);
+  renderRanking(
+    "defenseRanking",
+    defenseRanking
+  );
 
 }
+
 
 render();
 
