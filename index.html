@@ -71,3 +71,32 @@ th,td{padding:10px;text-align:center;border-bottom:1px solid #29364d}th{backgrou
 <main class="grid" id="players"></main>
 
 <script type="module">
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
+    authDomain: "recess-soccer.firebaseapp.com",
+    databaseURL: "https://recess-soccer-default-rtdb.firebaseio.com",
+    projectId: "recess-soccer",
+    storageBucket: "recess-soccer.firebasestorage.app",
+    messagingSenderId: "872558689342",
+    appId: "1:872558689342:web:a4dca17e1d6b963ed6656f",
+    measurementId: "G-HJ16JSL5Q2"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  const db = firebase.database();
+
+  firebase.auth().signInAnonymously()
+    .then(() => {
+      console.log("Firebase connected!");
+    })
+    .catch((error) => {
+      console.error("Firebase login error:", error);
+    });
+</script>
