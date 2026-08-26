@@ -1,73 +1,930 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Recess Soccer Live Stats</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#0b1220;color:#fff}
-header{padding:24px 16px;text-align:center;background:linear-gradient(135deg,#087a4b,#123b72)}
-h1{margin:0 0 6px;font-size:30px}.subtitle{opacity:.9}.status{margin-top:9px;font-size:14px}
-.controls{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;padding:15px}
-button{border:0;border-radius:12px;padding:10px 15px;font-size:16px;font-weight:700;cursor:pointer}
-.reset{background:#e74c3c;color:#fff}.sort{background:#fff;color:#111}
-.section{max-width:1100px;margin:0 auto 20px;padding:0 12px}
-.section h2{text-align:center;margin:18px 0 12px;font-size:26px}
-.rank-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-.rank-card,.leader-card{background:#151f31;border:1px solid #29364d;border-radius:18px;padding:16px}
-.rank-card h3{margin:0 0 12px;text-align:center;font-size:22px}
-.rank-row{display:grid;grid-template-columns:38px 1fr 42px 42px;align-items:center;gap:8px;margin:8px 0;padding:8px;border-radius:12px;background:#1d293d}
-.rank-number{text-align:center;font-size:20px;font-weight:900}
-.rank-name{font-size:18px;font-weight:700}
-.move{width:42px;height:38px;padding:0;font-size:19px;background:#33465f;color:#fff}
-.move:disabled{opacity:.3;cursor:not-allowed}
-.award-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.award-row{display:grid;grid-template-columns:1fr 44px 55px 44px;align-items:center;gap:6px;background:#151f31;border:1px solid #29364d;border-radius:15px;padding:10px}
-.award-name{font-weight:700;font-size:17px}.award-value{text-align:center;font-size:21px;font-weight:900}
-.plus,.minus{width:44px;height:40px;padding:0;font-size:22px}.plus{background:#16a085;color:#fff}.minus{background:#c0392b;color:#fff}
-.grid{max-width:1100px;margin:auto;padding:0 12px 30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
-.card{background:#151f31;border:1px solid #29364d;border-radius:18px;padding:18px}.player{font-size:23px;font-weight:800;margin-bottom:14px}
-.stat{display:grid;grid-template-columns:1fr 48px 48px 48px;align-items:center;gap:7px;margin:9px 0}
-.value{text-align:center;font-size:20px;font-weight:800}.total{margin-top:13px;padding-top:12px;border-top:1px solid #334158;font-weight:800;font-size:18px}
-table{width:100%;border-collapse:collapse;background:#151f31;border-radius:15px;overflow:hidden}
-th,td{padding:10px;text-align:center;border-bottom:1px solid #29364d}th{background:#1e2c43}
-@media(max-width:500px){h1{font-size:25px}.rank-row{grid-template-columns:34px 1fr 40px 40px}.award-row{grid-template-columns:1fr 40px 50px 40px}}
-</style></head><body>
-<header><h1>⚽ Recess Soccer Live Stats</h1><div class="subtitle">Everyone sees the same score in real time</div><div class="status" id="status">Connecting…</div></header>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Recess Soccer Live Stats</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b1220;
+      color: white;
+    }
+
+    header {
+      padding: 24px 16px;
+      text-align: center;
+      background: linear-gradient(135deg, #087a4b, #123b72);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 30px;
+    }
+
+    .subtitle {
+      opacity: 0.9;
+    }
+
+    .status {
+      margin-top: 9px;
+      font-size: 14px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 9px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 15px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 15px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .reset {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .sort {
+      background: white;
+      color: #111;
+    }
+
+    .section {
+      max-width: 1100px;
+      margin: 0 auto 20px;
+      padding: 0 12px;
+    }
+
+    .section h2 {
+      text-align: center;
+      margin: 18px 0 12px;
+      font-size: 26px;
+    }
+
+    .rank-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .rank-card,
+    .leader-card {
+      background: #151f31;
+      border: 1px solid #29364d;
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .rank-card h3 {
+      margin: 0 0 12px;
+      text-align: center;
+      font-size: 22px;
+    }
+
+    .rank-row {
+      display: grid;
+      grid-template-columns: 38px 1fr 42px 42px;
+      align-items: center;
+      gap: 8px;
+      margin: 8px 0;
+      padding: 8px;
+      border-radius: 12px;
+      background: #1d293d;
+    }
+
+    .rank-number {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .rank-name {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .move {
+      width: 42px;
+      height: 38px;
+      padding: 0;
+      font-size: 19px;
+      background: #33465f;
+      color: white;
+    }
+
+    .move:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .award-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .award-row {
+      display: grid;
+      grid-template-columns: 1fr 44px 55px 44px;
+      align-items: center;
+      gap: 6px;
+      background: #151f31;
+      border: 1px solid #29364d;
+      border-radius: 15px;
+      padding: 10px;
+    }
+
+    .award-name {
+      font-weight: 700;
+      font-size: 17px;
+    }
+
+    .award-value {
+      text-align: center;
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .plus,
+    .minus {
+      width: 44px;
+      height: 40px;
+      padding: 0;
+      font-size: 22px;
+    }
+
+    .plus {
+      background: #16a085;
+      color: white;
+    }
+
+    .minus {
+      background: #c0392b;
+      color: white;
+    }
+
+    .grid {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 12px 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: #151f31;
+      border: 1px solid #29364d;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .player {
+      font-size: 23px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .stat {
+      display: grid;
+      grid-template-columns: 1fr 48px 48px 48px;
+      align-items: center;
+      gap: 7px;
+      margin: 9px 0;
+    }
+
+    .value {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .total {
+      margin-top: 13px;
+      padding-top: 12px;
+      border-top: 1px solid #334158;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #151f31;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #29364d;
+    }
+
+    th {
+      background: #1e2c43;
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 25px;
+      }
+
+      .rank-row {
+        grid-template-columns: 34px 1fr 40px 40px;
+      }
+
+      .award-row {
+        grid-template-columns: 1fr 40px 50px 40px;
+      }
+
+      table {
+        font-size: 13px;
+      }
+
+      th,
+      td {
+        padding: 7px 3px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>⚽ Recess Soccer Live Stats</h1>
+  <div class="subtitle">Everyone sees the same score in real time</div>
+  <div class="status" id="status">Connecting...</div>
+</header>
 
 <div class="controls">
-<button class="sort" onclick="sortBy('ga')">Sort: G+A</button>
-<button class="sort" onclick="sortBy('goals')">Sort: Goals</button>
-<button class="sort" onclick="sortBy('assists')">Sort: Assists</button>
-<button class="sort" onclick="sortBy('saves')">Sort: Saves</button>
-<button class="reset" onclick="resetAll()">Reset Stats</button>
+  <button class="sort" onclick="sortBy('ga')">Sort: G+A</button>
+  <button class="sort" onclick="sortBy('goals')">Sort: Goals</button>
+  <button class="sort" onclick="sortBy('assists')">Sort: Assists</button>
+  <button class="sort" onclick="sortBy('saves')">Sort: Saves</button>
+  <button class="reset" onclick="resetAll()">Reset Stats</button>
 </div>
 
 <section class="section">
-<h2>🛡️ Golden Defense</h2>
-<div class="rank-grid"><div class="rank-card">
-<h3>Best Defense Rankings</h3>
-<div id="defenseRanking"></div>
-</div></div>
+  <h2>🛡️ Golden Defense</h2>
+
+  <div class="rank-grid">
+    <div class="rank-card">
+      <h3>Best Defense Rankings</h3>
+      <div id="defenseRanking"></div>
+    </div>
+  </div>
 </section>
 
 <section class="section">
-<h2>🏆 Ballon d'Or</h2>
-<div class="rank-grid"><div class="rank-card">
-<h3>Player Rankings</h3>
-<div id="ballonRanking"></div>
-</div></div>
+  <h2>🏆 Ballon d'Or</h2>
+
+  <div class="rank-grid">
+    <div class="rank-card">
+      <h3>Player Rankings</h3>
+      <div id="ballonRanking"></div>
+    </div>
+  </div>
 </section>
 
 <section class="section">
-<h2>⭐ MVP Match Awards</h2>
-<div class="award-grid" id="awards"></div>
+  <h2>⭐ MVP Match Awards</h2>
+  <div class="award-grid" id="awards"></div>
 </section>
 
 <section class="section">
-<h2>📊 Player Stats</h2>
-<table><thead><tr><th>#</th><th>Player</th><th>Goals</th><th>Assists</th><th>G+A</th><th>Saves</th></tr></thead>
-<tbody id="leaderboard"></tbody></table>
+  <h2>📊 Player Stats</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th>Goals</th>
+        <th>Assists</th>
+        <th>G+A</th>
+        <th>Saves</th>
+      </tr>
+    </thead>
+
+    <tbody id="leaderboard"></tbody>
+  </table>
 </section>
 
 <main class="grid" id="players"></main>
 
-<script type="module">
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script>
+
+  // ==========================================
+  // PLAYER LIST
+  // ==========================================
+
+  const playerNames = [
+    "Adi",
+    "Aidan",
+    "Artin",
+    "Angelo",
+    "Bryson",
+    "Cameron",
+    "Jack",
+    "John",
+    "Leonardo",
+    "Marc",
+    "Matthew",
+    "Sami",
+    "Nathan",
+    "Theo"
+  ];
+
+
+  // ==========================================
+  // FIREBASE
+  // ==========================================
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
+    authDomain: "recess-soccer.firebaseapp.com",
+    databaseURL: "https://recess-soccer-default-rtdb.firebaseio.com",
+    projectId: "recess-soccer",
+    storageBucket: "recess-soccer.firebasestorage.app",
+    messagingSenderId: "872558689342",
+    appId: "1:872558689342:web:a4dca17e1d6b963ed6656f",
+    measurementId: "G-HJ16JSL5Q2"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  const db = firebase.database();
+
+  const statsRef = db.ref("players");
+
+
+  // ==========================================
+  // LOCAL PLAYER DATA
+  // ==========================================
+
+  let players = {};
+
+  playerNames.forEach(name => {
+    players[name] = {
+      goals: 0,
+      assists: 0,
+      saves: 0,
+      mvp: 0
+    };
+  });
+
+
+  let currentSort = "ga";
+
+
+  // ==========================================
+  // FIREBASE LOGIN
+  // ==========================================
+
+  firebase.auth().signInAnonymously()
+    .then(() => {
+
+      document.getElementById("status").textContent =
+        "🟢 Connected — stats sync in real time";
+
+      startDatabase();
+
+    })
+    .catch(error => {
+
+      console.error("Firebase login error:", error);
+
+      document.getElementById("status").textContent =
+        "🔴 Firebase connection error";
+
+      render();
+
+    });
+
+
+  // ==========================================
+  // DATABASE
+  // ==========================================
+
+  function startDatabase() {
+
+    statsRef.once("value")
+      .then(snapshot => {
+
+        const data = snapshot.val();
+
+        if (data) {
+
+          playerNames.forEach(name => {
+
+            if (data[name]) {
+
+              players[name] = {
+                goals: data[name].goals || 0,
+                assists: data[name].assists || 0,
+                saves: data[name].saves || 0,
+                mvp: data[name].mvp || 0
+              };
+
+            }
+
+          });
+
+        }
+
+        savePlayers();
+        render();
+
+      });
+
+
+    statsRef.on("value", snapshot => {
+
+      const data = snapshot.val();
+
+      if (!data) return;
+
+      playerNames.forEach(name => {
+
+        if (data[name]) {
+
+          players[name] = {
+            goals: data[name].goals || 0,
+            assists: data[name].assists || 0,
+            saves: data[name].saves || 0,
+            mvp: data[name].mvp || 0
+          };
+
+        }
+
+      });
+
+      render();
+
+    });
+
+  }
+
+
+  function savePlayers() {
+
+    statsRef.set(players);
+
+  }
+
+
+  // ==========================================
+  // CHANGE STATS
+  // ==========================================
+
+  function changeStat(name, stat, amount) {
+
+    if (!players[name]) return;
+
+    players[name][stat] += amount;
+
+    if (players[name][stat] < 0) {
+      players[name][stat] = 0;
+    }
+
+    savePlayers();
+    render();
+
+  }
+
+
+  // ==========================================
+  // RESET
+  // ==========================================
+
+  function resetAll() {
+
+    const confirmReset = confirm(
+      "Are you sure you want to reset ALL player stats?"
+    );
+
+    if (!confirmReset) return;
+
+    playerNames.forEach(name => {
+
+      players[name] = {
+        goals: 0,
+        assists: 0,
+        saves: 0,
+        mvp: 0
+      };
+
+    });
+
+    savePlayers();
+    render();
+
+  }
+
+
+  // ==========================================
+  // SORT
+  // ==========================================
+
+  function sortBy(type) {
+
+    currentSort = type;
+
+    render();
+
+  }
+
+
+  function getSortedPlayers(type) {
+
+    return [...playerNames].sort((a, b) => {
+
+      const A = players[a];
+      const B = players[b];
+
+      if (type === "ga") {
+        return (B.goals + B.assists) -
+               (A.goals + A.assists);
+      }
+
+      if (type === "goals") {
+        return B.goals - A.goals;
+      }
+
+      if (type === "assists") {
+        return B.assists - A.assists;
+      }
+
+      if (type === "saves") {
+        return B.saves - A.saves;
+      }
+
+      return 0;
+
+    });
+
+  }
+
+
+  // ==========================================
+  // MAIN PLAYER CARDS
+  // ==========================================
+
+  function renderPlayers() {
+
+    const container = document.getElementById("players");
+
+    container.innerHTML = "";
+
+    const sorted = getSortedPlayers(currentSort);
+
+    sorted.forEach(name => {
+
+      const p = players[name];
+
+      const total = p.goals + p.assists;
+
+      const card = document.createElement("div");
+
+      card.className = "card";
+
+      card.innerHTML = `
+
+        <div class="player">${name}</div>
+
+        <div class="stat">
+          <span>⚽ Goals</span>
+
+          <button class="minus"
+            onclick="changeStat('${name}','goals',-1)">
+            −
+          </button>
+
+          <div class="value">${p.goals}</div>
+
+          <button class="plus"
+            onclick="changeStat('${name}','goals',1)">
+            +
+          </button>
+        </div>
+
+
+        <div class="stat">
+          <span>🎯 Assists</span>
+
+          <button class="minus"
+            onclick="changeStat('${name}','assists',-1)">
+            −
+          </button>
+
+          <div class="value">${p.assists}</div>
+
+          <button class="plus"
+            onclick="changeStat('${name}','assists',1)">
+            +
+          </button>
+        </div>
+
+
+        <div class="stat">
+          <span>🧤 Saves</span>
+
+          <button class="minus"
+            onclick="changeStat('${name}','saves',-1)">
+            −
+          </button>
+
+          <div class="value">${p.saves}</div>
+
+          <button class="plus"
+            onclick="changeStat('${name}','saves',1)">
+            +
+          </button>
+        </div>
+
+
+        <div class="stat">
+          <span>⭐ MVP</span>
+
+          <button class="minus"
+            onclick="changeStat('${name}','mvp',-1)">
+            −
+          </button>
+
+          <div class="value">${p.mvp}</div>
+
+          <button class="plus"
+            onclick="changeStat('${name}','mvp',1)">
+            +
+          </button>
+        </div>
+
+
+        <div class="total">
+          G+A: ${total}
+        </div>
+
+      `;
+
+      container.appendChild(card);
+
+    });
+
+  }
+
+
+  // ==========================================
+  // LEADERBOARD
+  // ==========================================
+
+  function renderLeaderboard() {
+
+    const table = document.getElementById("leaderboard");
+
+    table.innerHTML = "";
+
+    const sorted = getSortedPlayers(currentSort);
+
+    sorted.forEach((name, index) => {
+
+      const p = players[name];
+
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+
+        <td>${index + 1}</td>
+
+        <td><strong>${name}</strong></td>
+
+        <td>${p.goals}</td>
+
+        <td>${p.assists}</td>
+
+        <td>${p.goals + p.assists}</td>
+
+        <td>${p.saves}</td>
+
+      `;
+
+      table.appendChild(row);
+
+    });
+
+  }
+
+
+  // ==========================================
+  // BALLON D'OR
+  // ==========================================
+
+  function renderBallon() {
+
+    const container =
+      document.getElementById("ballonRanking");
+
+    container.innerHTML = "";
+
+    const sorted = [...playerNames].sort((a, b) => {
+
+      const A = players[a];
+
+      const B = players[b];
+
+      const scoreA =
+        A.goals * 3 +
+        A.assists * 2 +
+        A.mvp * 4;
+
+      const scoreB =
+        B.goals * 3 +
+        B.assists * 2 +
+        B.mvp * 4;
+
+      return scoreB - scoreA;
+
+    });
+
+
+    sorted.forEach((name, index) => {
+
+      const row = document.createElement("div");
+
+      row.className = "rank-row";
+
+      row.innerHTML = `
+
+        <div class="rank-number">
+          ${index + 1}
+        </div>
+
+        <div class="rank-name">
+          ${name}
+        </div>
+
+        <button class="move" disabled>
+          ▲
+        </button>
+
+        <button class="move" disabled>
+          ▼
+        </button>
+
+      `;
+
+      container.appendChild(row);
+
+    });
+
+  }
+
+
+  // ==========================================
+  // GOLDEN DEFENSE
+  // ==========================================
+
+  function renderDefense() {
+
+    const container =
+      document.getElementById("defenseRanking");
+
+    container.innerHTML = "";
+
+    const sorted = [...playerNames].sort((a, b) => {
+
+      return players[b].saves - players[a].saves;
+
+    });
+
+
+    sorted.forEach((name, index) => {
+
+      const row = document.createElement("div");
+
+      row.className = "rank-row";
+
+      row.innerHTML = `
+
+        <div class="rank-number">
+          ${index + 1}
+        </div>
+
+        <div class="rank-name">
+          ${name}
+        </div>
+
+        <button class="move" disabled>
+          ▲
+        </button>
+
+        <button class="move" disabled>
+          ▼
+        </button>
+
+      `;
+
+      container.appendChild(row);
+
+    });
+
+  }
+
+
+  // ==========================================
+  // MVP AWARDS
+  // ==========================================
+
+  function renderAwards() {
+
+    const container =
+      document.getElementById("awards");
+
+    container.innerHTML = "";
+
+    playerNames.forEach(name => {
+
+      const p = players[name];
+
+      const row = document.createElement("div");
+
+      row.className = "award-row";
+
+      row.innerHTML = `
+
+        <div class="award-name">
+          ${name}
+        </div>
+
+        <button class="minus"
+          onclick="changeStat('${name}','mvp',-1)">
+          −
+        </button>
+
+        <div class="award-value">
+          ${p.mvp}
+        </div>
+
+        <button class="plus"
+          onclick="changeStat('${name}','mvp',1)">
+          +
+        </button>
+
+      `;
+
+      container.appendChild(row);
+
+    });
+
+  }
+
+
+  // ==========================================
+  // RENDER EVERYTHING
+  // ==========================================
+
+  function render() {
+
+    renderPlayers();
+
+    renderLeaderboard();
+
+    renderBallon();
+
+    renderDefense();
+
+    renderAwards();
+
+  }
+
+
+  // Initial display
+  render();
+
+</script>
+
+</body>
+</html>
