@@ -394,14 +394,14 @@
     })
     .catch(error => {
 
-      console.error("Firebase login error:", error);
+  console.error("Firebase login error:", error);
 
-      document.getElementById("status").textContent =
-        "🔴 Firebase connection error";
+  document.getElementById("status").textContent =
+    "🔴 Firebase error: " + error.code;
 
-      render();
+  render();
 
-    });
+});
 
 
   // ==========================================
