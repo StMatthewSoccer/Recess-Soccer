@@ -1,15 +1,13 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Recess Soccer Live Stats</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -29,9 +27,7 @@
       font-size: 30px;
     }
 
-    .subtitle {
-      opacity: 0.9;
-    }
+    .subtitle { opacity: .9; }
 
     .status {
       margin-top: 9px;
@@ -83,8 +79,7 @@
       gap: 14px;
     }
 
-    .rank-card,
-    .leader-card {
+    .rank-card {
       background: #151f31;
       border: 1px solid #29364d;
       border-radius: 18px;
@@ -129,54 +124,8 @@
     }
 
     .move:disabled {
-      opacity: 0.3;
+      opacity: .3;
       cursor: not-allowed;
-    }
-
-    .award-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-    }
-
-    .award-row {
-      display: grid;
-      grid-template-columns: 1fr 44px 55px 44px;
-      align-items: center;
-      gap: 6px;
-      background: #151f31;
-      border: 1px solid #29364d;
-      border-radius: 15px;
-      padding: 10px;
-    }
-
-    .award-name {
-      font-weight: 700;
-      font-size: 17px;
-    }
-
-    .award-value {
-      text-align: center;
-      font-size: 21px;
-      font-weight: 900;
-    }
-
-    .plus,
-    .minus {
-      width: 44px;
-      height: 40px;
-      padding: 0;
-      font-size: 22px;
-    }
-
-    .plus {
-      background: #16a085;
-      color: white;
-    }
-
-    .minus {
-      background: #c0392b;
-      color: white;
     }
 
     .grid {
@@ -215,6 +164,24 @@
       font-weight: 800;
     }
 
+    .plus,
+    .minus {
+      width: 44px;
+      height: 40px;
+      padding: 0;
+      font-size: 22px;
+    }
+
+    .plus {
+      background: #16a085;
+      color: white;
+    }
+
+    .minus {
+      background: #c0392b;
+      color: white;
+    }
+
     .total {
       margin-top: 13px;
       padding-top: 12px;
@@ -242,26 +209,22 @@
       background: #1e2c43;
     }
 
-    @media (max-width: 500px) {
+    @media(max-width: 600px) {
       h1 {
         font-size: 25px;
       }
 
-      .rank-row {
-        grid-template-columns: 34px 1fr 40px 40px;
-      }
-
-      .award-row {
-        grid-template-columns: 1fr 40px 50px 40px;
-      }
-
       table {
-        font-size: 13px;
+        font-size: 12px;
       }
 
       th,
       td {
-        padding: 7px 3px;
+        padding: 8px 4px;
+      }
+
+      .rank-row {
+        grid-template-columns: 34px 1fr 40px 40px;
       }
     }
   </style>
@@ -283,6 +246,9 @@
   <button class="reset" onclick="resetAll()">Reset Stats</button>
 </div>
 
+
+<!-- GOLDEN DEFENSE -->
+
 <section class="section">
   <h2>🛡️ Golden Defense</h2>
 
@@ -293,6 +259,9 @@
     </div>
   </div>
 </section>
+
+
+<!-- BALLON D'OR -->
 
 <section class="section">
   <h2>🏆 Ballon d'Or</h2>
@@ -305,10 +274,8 @@
   </div>
 </section>
 
-<section class="section">
-  <h2>⭐ MVP Match Awards</h2>
-  <div class="award-grid" id="awards"></div>
-</section>
+
+<!-- PLAYER STATS -->
 
 <section class="section">
   <h2>📊 Player Stats</h2>
@@ -322,6 +289,7 @@
         <th>Assists</th>
         <th>G+A</th>
         <th>Saves</th>
+        <th>MVPs</th>
       </tr>
     </thead>
 
@@ -329,9 +297,14 @@
   </table>
 </section>
 
+
+<!-- PLAYER CARDS -->
+
 <main class="grid" id="players"></main>
 
-<!-- Firebase -->
+
+<!-- FIREBASE -->
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -339,7 +312,7 @@
 <script>
 
   // ==========================================
-  // PLAYER LIST
+  // PLAYER NAMES
   // ==========================================
 
   const playerNames = [
@@ -380,10 +353,11 @@
   const db = firebase.database();
 
   const statsRef = db.ref("players");
+  const rankingsRef = db.ref("rankings");
 
 
   // ==========================================
-  // LOCAL PLAYER DATA
+  // PLAYER DATA
   // ==========================================
 
   let players = {};
@@ -397,6 +371,10 @@
     };
   });
 
+
+  // Ranking orders
+  let defenseRanking = [...playerNames];
+  let ballonRanking = [...playerNames];
 
   let currentSort = "ga";
 
@@ -432,56 +410,66 @@
 
   function startDatabase() {
 
-    statsRef.once("value")
-      .then(snapshot => {
-
-        const data = snapshot.val();
-
-        if (data) {
-
-          playerNames.forEach(name => {
-
-            if (data[name]) {
-
-              players[name] = {
-                goals: data[name].goals || 0,
-                assists: data[name].assists || 0,
-                saves: data[name].saves || 0,
-                mvp: data[name].mvp || 0
-              };
-
-            }
-
-          });
-
-        }
-
-        savePlayers();
-        render();
-
-      });
-
-
     statsRef.on("value", snapshot => {
 
       const data = snapshot.val();
 
-      if (!data) return;
+      if (data) {
 
-      playerNames.forEach(name => {
+        playerNames.forEach(name => {
 
-        if (data[name]) {
+          if (data[name]) {
 
-          players[name] = {
-            goals: data[name].goals || 0,
-            assists: data[name].assists || 0,
-            saves: data[name].saves || 0,
-            mvp: data[name].mvp || 0
-          };
+            players[name] = {
+              goals: data[name].goals || 0,
+              assists: data[name].assists || 0,
+              saves: data[name].saves || 0,
+              mvp: data[name].mvp || 0
+            };
 
+          }
+
+        });
+
+      }
+
+      render();
+
+    });
+
+
+    rankingsRef.on("value", snapshot => {
+
+      const data = snapshot.val();
+
+      if (data) {
+
+        if (Array.isArray(data.defense)) {
+          defenseRanking = data.defense.filter(name =>
+            playerNames.includes(name)
+          );
         }
 
-      });
+        if (Array.isArray(data.ballon)) {
+          ballonRanking = data.ballon.filter(name =>
+            playerNames.includes(name)
+          );
+        }
+
+        // Make sure no player is missing
+        playerNames.forEach(name => {
+
+          if (!defenseRanking.includes(name)) {
+            defenseRanking.push(name);
+          }
+
+          if (!ballonRanking.includes(name)) {
+            ballonRanking.push(name);
+          }
+
+        });
+
+      }
 
       render();
 
@@ -490,9 +478,25 @@
   }
 
 
-  function savePlayers() {
+  // ==========================================
+  // SAVE STATS
+  // ==========================================
 
+  function savePlayers() {
     statsRef.set(players);
+  }
+
+
+  // ==========================================
+  // SAVE RANKINGS
+  // ==========================================
+
+  function saveRankings() {
+
+    rankingsRef.set({
+      defense: defenseRanking,
+      ballon: ballonRanking
+    });
 
   }
 
@@ -547,7 +551,7 @@
 
 
   // ==========================================
-  // SORT
+  // SORT PLAYER STATS
   // ==========================================
 
   function sortBy(type) {
@@ -591,7 +595,31 @@
 
 
   // ==========================================
-  // MAIN PLAYER CARDS
+  // MOVE PLAYER IN RANKING
+  // ==========================================
+
+  function movePlayer(ranking, index, direction) {
+
+    const newIndex = index + direction;
+
+    if (newIndex < 0 || newIndex >= ranking.length) {
+      return;
+    }
+
+    const temp = ranking[index];
+
+    ranking[index] = ranking[newIndex];
+
+    ranking[newIndex] = temp;
+
+    saveRankings();
+    render();
+
+  }
+
+
+  // ==========================================
+  // PLAYER CARDS
   // ==========================================
 
   function renderPlayers() {
@@ -668,7 +696,7 @@
 
 
         <div class="stat">
-          <span>⭐ MVP</span>
+          <span>⭐ MVPs</span>
 
           <button class="minus"
             onclick="changeStat('${name}','mvp',-1)">
@@ -729,6 +757,8 @@
 
         <td>${p.saves}</td>
 
+        <td>${p.mvp}</td>
+
       `;
 
       table.appendChild(row);
@@ -739,7 +769,7 @@
 
 
   // ==========================================
-  // BALLON D'OR
+  // BALLON D'OR RANKING
   // ==========================================
 
   function renderBallon() {
@@ -749,28 +779,7 @@
 
     container.innerHTML = "";
 
-    const sorted = [...playerNames].sort((a, b) => {
-
-      const A = players[a];
-
-      const B = players[b];
-
-      const scoreA =
-        A.goals * 3 +
-        A.assists * 2 +
-        A.mvp * 4;
-
-      const scoreB =
-        B.goals * 3 +
-        B.assists * 2 +
-        B.mvp * 4;
-
-      return scoreB - scoreA;
-
-    });
-
-
-    sorted.forEach((name, index) => {
+    ballonRanking.forEach((name, index) => {
 
       const row = document.createElement("div");
 
@@ -786,11 +795,17 @@
           ${name}
         </div>
 
-        <button class="move" disabled>
+        <button
+          class="move"
+          onclick="movePlayer(ballonRanking, ${index}, -1)"
+          ${index === 0 ? "disabled" : ""}>
           ▲
         </button>
 
-        <button class="move" disabled>
+        <button
+          class="move"
+          onclick="movePlayer(ballonRanking, ${index}, 1)"
+          ${index === ballonRanking.length - 1 ? "disabled" : ""}>
           ▼
         </button>
 
@@ -804,7 +819,7 @@
 
 
   // ==========================================
-  // GOLDEN DEFENSE
+  // GOLDEN DEFENSE RANKING
   // ==========================================
 
   function renderDefense() {
@@ -814,14 +829,7 @@
 
     container.innerHTML = "";
 
-    const sorted = [...playerNames].sort((a, b) => {
-
-      return players[b].saves - players[a].saves;
-
-    });
-
-
-    sorted.forEach((name, index) => {
+    defenseRanking.forEach((name, index) => {
 
       const row = document.createElement("div");
 
@@ -837,60 +845,18 @@
           ${name}
         </div>
 
-        <button class="move" disabled>
+        <button
+          class="move"
+          onclick="movePlayer(defenseRanking, ${index}, -1)"
+          ${index === 0 ? "disabled" : ""}>
           ▲
         </button>
 
-        <button class="move" disabled>
+        <button
+          class="move"
+          onclick="movePlayer(defenseRanking, ${index}, 1)"
+          ${index === defenseRanking.length - 1 ? "disabled" : ""}>
           ▼
-        </button>
-
-      `;
-
-      container.appendChild(row);
-
-    });
-
-  }
-
-
-  // ==========================================
-  // MVP AWARDS
-  // ==========================================
-
-  function renderAwards() {
-
-    const container =
-      document.getElementById("awards");
-
-    container.innerHTML = "";
-
-    playerNames.forEach(name => {
-
-      const p = players[name];
-
-      const row = document.createElement("div");
-
-      row.className = "award-row";
-
-      row.innerHTML = `
-
-        <div class="award-name">
-          ${name}
-        </div>
-
-        <button class="minus"
-          onclick="changeStat('${name}','mvp',-1)">
-          −
-        </button>
-
-        <div class="award-value">
-          ${p.mvp}
-        </div>
-
-        <button class="plus"
-          onclick="changeStat('${name}','mvp',1)">
-          +
         </button>
 
       `;
@@ -916,8 +882,6 @@
 
     renderDefense();
 
-    renderAwards();
-
   }
 
 
@@ -928,3 +892,4 @@
 
 </body>
 </html>
+```
