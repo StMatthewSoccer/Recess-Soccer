@@ -388,32 +388,40 @@ Log Out
 
 <div class="controls">
 
-<button class="sort" onclick="sortBy('ga')">
-Sort: G+A
-</button>
+function getSortedPlayers(type) {
 
-<button class="sort" onclick="sortBy('goals')">
-Sort: Goals
-</button>
+  return [...playerNames].sort(function(a, b) {
 
-<button class="sort" onclick="sortBy('assists')">
-Sort: Assists
-</button>
+    const A = players[a];
+    const B = players[b];
 
-<button class="sort" onclick="sortBy('saves')">
-Sort: Saves
-</button>
+    if (type === "ga") {
+      return (B.goals + B.assists) - (A.goals + A.assists);
+    }
 
-<button class="sort" onclick="sortBy('mvp')">
-Sort: MVPs
-</button>
+    if (type === "goals") {
+      return B.goals - A.goals;
+    }
 
-<button class="sort" onclick="sortBy('cleanSheets')">
-Sort: Clean Sheets
-</button>
+    if (type === "assists") {
+      return B.assists - A.assists;
+    }
 
-</div>
+    if (type === "saves") {
+      return B.saves - A.saves;
+    }
 
+    if (type === "mvp") {
+      return B.mvp - A.mvp;
+    }
+
+    if (type === "cleanSheets") {
+      return B.cleanSheets - A.cleanSheets;
+    }
+
+    return 0;
+  });
+}
 
 <!-- PLAYER STATS -->
 
