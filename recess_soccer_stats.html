@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recess Soccer Stats</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#0b1220;color:#fff}
+header{padding:24px 16px;text-align:center;background:linear-gradient(135deg,#0b7a4b,#123b72)}
+h1{margin:0 0 6px;font-size:30px}
+.subtitle{opacity:.85}
+.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:16px}
+button{border:0;border-radius:12px;padding:10px 16px;font-size:16px;font-weight:700;cursor:pointer}
+.reset{background:#e74c3c;color:#fff}
+.sort{background:#fff;color:#111}
+.grid{max-width:1100px;margin:auto;padding:0 12px 30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:#151f31;border:1px solid #29364d;border-radius:18px;padding:18px;box-shadow:0 6px 18px #0005}
+.player{font-size:23px;font-weight:800;margin-bottom:14px}
+.stat{display:grid;grid-template-columns:1fr 48px 48px 48px;align-items:center;gap:7px;margin:9px 0}
+.stat label{font-size:15px}
+.value{text-align:center;font-size:20px;font-weight:800}
+.plus,.minus{width:48px;height:40px;padding:0;font-size:23px}
+.plus{background:#16a085;color:white}
+.minus{background:#c0392b;color:white}
+.total{margin-top:13px;padding-top:12px;border-top:1px solid #334158;font-weight:800;font-size:18px}
+.leader{max-width:1100px;margin:0 auto 20px;padding:0 12px}
+.leader h2{text-align:center}
+table{width:100%;border-collapse:collapse;background:#151f31;border-radius:15px;overflow:hidden}
+th,td{padding:10px;text-align:center;border-bottom:1px solid #29364d}
+th{background:#1e2c43}
+@media(max-width:500px){h1{font-size:25px}.card{padding:15px}.stat{grid-template-columns:1fr 44px 44px 44px}.plus,.minus{width:44px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>⚽ Recess Soccer Stats</h1>
+  <div class="subtitle">Track goals, assists and goalie saves</div>
+</header>
+
+<div class="controls">
+  <button class="sort" onclick="sortBy('ga')">Sort: G+A</button>
+  <button class="sort" onclick="sortBy('goals')">Sort: Goals</button>
+  <button class="sort" onclick="sortBy('assists')">Sort: Assists</button>
+  <button class="sort" onclick="sortBy('saves')">Sort: Saves</button>
+  <button class="reset" onclick="resetAll()">Reset All</button>
+</div>
+
+<section class="leader">
+<h2>🏆 Leaderboard</h2>
+<table>
+<thead><tr><th>#</th><th>Player</th><th>Goals</th><th>Assists</th><th>G+A</th><th>Saves</th></tr></thead>
+<tbody id="leaderboard"></tbody>
+</table>
+</section>
+
+<main class="grid" id="players"></main>
+
+<script>
+const names=["Adi","Aidan","Artin","Angelo","Bryson","Cameron","Jack","John","Leonardo","Marc","Matthew","Sami","Nathan","Theo"];
+let stats=JSON.parse(localStorage.getItem("recessSoccerStats")||"null") ||
+  Object.fromEntries(names.map(n=>[n,{goals:0,assists:0,saves:0}]));
+let sortMode="ga";
+
+function save(){localStorage.setItem("recessSoccerStats",JSON.stringify(stats));}
+function change(name,type,amount){
+  stats[name][type]=Math.max(0,stats[name][type]+amount);
+  save(); render();
+}
+function render(){
+  const container=document.getElementById("players");
+  container.innerHTML=names.map(name=>{
+    const s=stats[name], ga=s.goals+s.assists;
+    return `<article class="card">
+      <div class="player">${name}</div>
+      ${statRow(name,"goals","⚽ Goals")}
+      ${statRow(name,"assists","🎯 Assists")}
+      ${statRow(name,"saves","🧤 Goalie Saves")}
+      <div class="total">⚡ Goals + Assists: ${ga}</div>
+    </article>`;
+  }).join("");
+  renderLeaderboard();
+}
+function statRow(name,type,label){
+  return `<div class="stat">
+    <label>${label}</label>
+    <button class="minus" onclick="change('${name}','${type}',-1)">−</button>
+    <div class="value">${stats[name][type]}</div>
+    <button class="plus" onclick="change('${name}','${type}',1)">+</button>
+  </div>`;
+}
+function sortBy(mode){sortMode=mode;renderLeaderboard();}
+function renderLeaderboard(){
+  const rows=names.map(n=>({name:n,...stats[n],ga:stats[n].goals+stats[n].assists}));
+  rows.sort((a,b)=>b[sortMode]-a[sortMode] || a.name.localeCompare(b.name));
+  document.getElementById("leaderboard").innerHTML=rows.map((r,i)=>
+    `<tr><td>${i+1}</td><td>${r.name}</td><td>${r.goals}</td><td>${r.assists}</td><td>${r.ga}</td><td>${r.saves}</td></tr>`
+  ).join("");
+}
+function resetAll(){
+  if(confirm("Reset all player stats?")){
+    names.forEach(n=>stats[n]={goals:0,assists:0,saves:0});
+    save();render();
+  }
+}
+render();
+</script>
+</body>
+</html>
