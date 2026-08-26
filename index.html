@@ -7,7 +7,9 @@
   <title>Recess Soccer Live Stats</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -27,7 +29,9 @@
       font-size: 30px;
     }
 
-    .subtitle { opacity: .9; }
+    .subtitle {
+      opacity: 0.9;
+    }
 
     .status {
       margin-top: 9px;
@@ -51,14 +55,14 @@
       cursor: pointer;
     }
 
-    .reset {
-      background: #e74c3c;
-      color: white;
-    }
-
     .sort {
       background: white;
       color: #111;
+    }
+
+    .reset {
+      background: #e74c3c;
+      color: white;
     }
 
     .section {
@@ -124,7 +128,7 @@
     }
 
     .move:disabled {
-      opacity: .3;
+      opacity: 0.3;
       cursor: not-allowed;
     }
 
@@ -238,50 +242,48 @@
   <div class="status" id="status">Connecting...</div>
 </header>
 
+
+<!-- SORT BUTTONS -->
+
 <div class="controls">
-  <button class="sort" onclick="sortBy('ga')">Sort: G+A</button>
-  <button class="sort" onclick="sortBy('goals')">Sort: Goals</button>
-  <button class="sort" onclick="sortBy('assists')">Sort: Assists</button>
-  <button class="sort" onclick="sortBy('saves')">Sort: Saves</button>
-  <button class="reset" onclick="resetAll()">Reset Stats</button>
+
+  <button class="sort" onclick="sortBy('ga')">
+    Sort: G+A
+  </button>
+
+  <button class="sort" onclick="sortBy('goals')">
+    Sort: Goals
+  </button>
+
+  <button class="sort" onclick="sortBy('assists')">
+    Sort: Assists
+  </button>
+
+  <button class="sort" onclick="sortBy('saves')">
+    Sort: Saves
+  </button>
+
+  <button class="sort" onclick="sortBy('mvp')">
+    Sort: MVPs
+  </button>
+
+  <button class="reset" onclick="resetAll()">
+    Reset Stats
+  </button>
+
 </div>
-
-
-<!-- GOLDEN DEFENSE -->
-
-<section class="section">
-  <h2>🛡️ Golden Defense</h2>
-
-  <div class="rank-grid">
-    <div class="rank-card">
-      <h3>Best Defense Rankings</h3>
-      <div id="defenseRanking"></div>
-    </div>
-  </div>
-</section>
-
-
-<!-- BALLON D'OR -->
-
-<section class="section">
-  <h2>🏆 Ballon d'Or</h2>
-
-  <div class="rank-grid">
-    <div class="rank-card">
-      <h3>Player Rankings</h3>
-      <div id="ballonRanking"></div>
-    </div>
-  </div>
-</section>
 
 
 <!-- PLAYER STATS -->
 
 <section class="section">
+
   <h2>📊 Player Stats</h2>
 
   <table>
+
     <thead>
+
       <tr>
         <th>#</th>
         <th>Player</th>
@@ -291,10 +293,13 @@
         <th>Saves</th>
         <th>MVPs</th>
       </tr>
+
     </thead>
 
     <tbody id="leaderboard"></tbody>
+
   </table>
+
 </section>
 
 
@@ -303,16 +308,59 @@
 <main class="grid" id="players"></main>
 
 
+<!-- BALLON D'OR -->
+
+<section class="section">
+
+  <h2>🏆 Ballon d'Or</h2>
+
+  <div class="rank-grid">
+
+    <div class="rank-card">
+
+      <h3>Player Rankings</h3>
+
+      <div id="ballonRanking"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GOLDEN DEFENSE -->
+
+<section class="section">
+
+  <h2>🛡️ Golden Defense</h2>
+
+  <div class="rank-grid">
+
+    <div class="rank-card">
+
+      <h3>Best Defense Rankings</h3>
+
+      <div id="defenseRanking"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
 <!-- FIREBASE -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
+
 <script>
 
   // ==========================================
-  // PLAYER NAMES
+  // PLAYERS
   // ==========================================
 
   const playerNames = [
@@ -338,21 +386,39 @@
   // ==========================================
 
   const firebaseConfig = {
+
     apiKey: "AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
-    authDomain: "recess-soccer.firebaseapp.com",
-    databaseURL: "https://recess-soccer-default-rtdb.firebaseio.com",
-    projectId: "recess-soccer",
-    storageBucket: "recess-soccer.firebasestorage.app",
-    messagingSenderId: "872558689342",
-    appId: "1:872558689342:web:a4dca17e1d6b963ed6656f",
-    measurementId: "G-HJ16JSL5Q2"
+
+    authDomain:
+      "recess-soccer.firebaseapp.com",
+
+    databaseURL:
+      "https://recess-soccer-default-rtdb.firebaseio.com",
+
+    projectId:
+      "recess-soccer",
+
+    storageBucket:
+      "recess-soccer.firebasestorage.app",
+
+    messagingSenderId:
+      "872558689342",
+
+    appId:
+      "1:872558689342:web:a4dca17e1d6b963ed6656f",
+
+    measurementId:
+      "G-HJ16JSL5Q2"
+
   };
+
 
   firebase.initializeApp(firebaseConfig);
 
   const db = firebase.database();
 
   const statsRef = db.ref("players");
+
   const rankingsRef = db.ref("rankings");
 
 
@@ -363,45 +429,66 @@
   let players = {};
 
   playerNames.forEach(name => {
+
     players[name] = {
+
       goals: 0,
+
       assists: 0,
+
       saves: 0,
+
       mvp: 0
+
     };
+
   });
 
 
-  // Ranking orders
-  let defenseRanking = [...playerNames];
-  let ballonRanking = [...playerNames];
-
   let currentSort = "ga";
+
+
+  // Rankings
+
+  let defenseRanking =
+    [...playerNames];
+
+  let ballonRanking =
+    [...playerNames];
 
 
   // ==========================================
   // FIREBASE LOGIN
   // ==========================================
 
-  firebase.auth().signInAnonymously()
+  firebase.auth()
+    .signInAnonymously()
+
     .then(() => {
 
-      document.getElementById("status").textContent =
+      document.getElementById("status")
+        .textContent =
         "🟢 Connected — stats sync in real time";
 
       startDatabase();
 
     })
+
     .catch(error => {
 
-  console.error("Firebase login error:", error);
+      console.error(
+        "Firebase login error:",
+        error
+      );
 
-  document.getElementById("status").textContent =
-    "🔴 Firebase error: " + error.code;
+      document.getElementById("status")
+        .textContent =
+        "🔴 Firebase error: " +
+        error.code;
 
-  render();
+      render();
 
-});
+    });
 
 
   // ==========================================
@@ -409,6 +496,9 @@
   // ==========================================
 
   function startDatabase() {
+
+
+    // PLAYER STATS
 
     statsRef.on("value", snapshot => {
 
@@ -421,10 +511,19 @@
           if (data[name]) {
 
             players[name] = {
-              goals: data[name].goals || 0,
-              assists: data[name].assists || 0,
-              saves: data[name].saves || 0,
-              mvp: data[name].mvp || 0
+
+              goals:
+                data[name].goals || 0,
+
+              assists:
+                data[name].assists || 0,
+
+              saves:
+                data[name].saves || 0,
+
+              mvp:
+                data[name].mvp || 0
+
             };
 
           }
@@ -438,6 +537,8 @@
     });
 
 
+    // RANKINGS
+
     rankingsRef.on("value", snapshot => {
 
       const data = snapshot.val();
@@ -445,26 +546,39 @@
       if (data) {
 
         if (Array.isArray(data.defense)) {
-          defenseRanking = data.defense.filter(name =>
-            playerNames.includes(name)
-          );
+
+          defenseRanking =
+            data.defense.filter(name =>
+              playerNames.includes(name)
+            );
+
         }
+
 
         if (Array.isArray(data.ballon)) {
-          ballonRanking = data.ballon.filter(name =>
-            playerNames.includes(name)
-          );
+
+          ballonRanking =
+            data.ballon.filter(name =>
+              playerNames.includes(name)
+            );
+
         }
 
-        // Make sure no player is missing
+
+        // Make sure nobody is missing
+
         playerNames.forEach(name => {
 
           if (!defenseRanking.includes(name)) {
+
             defenseRanking.push(name);
+
           }
 
           if (!ballonRanking.includes(name)) {
+
             ballonRanking.push(name);
+
           }
 
         });
@@ -483,7 +597,9 @@
   // ==========================================
 
   function savePlayers() {
+
     statsRef.set(players);
+
   }
 
 
@@ -494,64 +610,50 @@
   function saveRankings() {
 
     rankingsRef.set({
-      defense: defenseRanking,
-      ballon: ballonRanking
+
+      defense:
+        defenseRanking,
+
+      ballon:
+        ballonRanking
+
     });
 
   }
 
 
   // ==========================================
-  // CHANGE STATS
+  // CHANGE STAT
   // ==========================================
 
-  function changeStat(name, stat, amount) {
+  function changeStat(
+    name,
+    stat,
+    amount
+  ) {
 
     if (!players[name]) return;
 
     players[name][stat] += amount;
 
+
     if (players[name][stat] < 0) {
+
       players[name][stat] = 0;
+
     }
 
+
     savePlayers();
+
     render();
 
   }
 
 
+  
   // ==========================================
-  // RESET
-  // ==========================================
-
-  function resetAll() {
-
-    const confirmReset = confirm(
-      "Are you sure you want to reset ALL player stats?"
-    );
-
-    if (!confirmReset) return;
-
-    playerNames.forEach(name => {
-
-      players[name] = {
-        goals: 0,
-        assists: 0,
-        saves: 0,
-        mvp: 0
-      };
-
-    });
-
-    savePlayers();
-    render();
-
-  }
-
-
-  // ==========================================
-  // SORT PLAYER STATS
+  // SORT
   // ==========================================
 
   function sortBy(type) {
@@ -565,54 +667,101 @@
 
   function getSortedPlayers(type) {
 
-    return [...playerNames].sort((a, b) => {
+    return [...playerNames].sort(
+      (a, b) => {
 
-      const A = players[a];
-      const B = players[b];
+        const A = players[a];
 
-      if (type === "ga") {
-        return (B.goals + B.assists) -
-               (A.goals + A.assists);
+        const B = players[b];
+
+
+        if (type === "ga") {
+
+          return (
+            B.goals +
+            B.assists
+          ) - (
+            A.goals +
+            A.assists
+          );
+
+        }
+
+
+        if (type === "goals") {
+
+          return B.goals - A.goals;
+
+        }
+
+
+        if (type === "assists") {
+
+          return B.assists - A.assists;
+
+        }
+
+
+        if (type === "saves") {
+
+          return B.saves - A.saves;
+
+        }
+
+
+        if (type === "mvp") {
+
+          return B.mvp - A.mvp;
+
+        }
+
+
+        return 0;
+
       }
-
-      if (type === "goals") {
-        return B.goals - A.goals;
-      }
-
-      if (type === "assists") {
-        return B.assists - A.assists;
-      }
-
-      if (type === "saves") {
-        return B.saves - A.saves;
-      }
-
-      return 0;
-
-    });
+    );
 
   }
 
 
   // ==========================================
-  // MOVE PLAYER IN RANKING
+  // MOVE RANKING PLAYER
   // ==========================================
 
-  function movePlayer(ranking, index, direction) {
+  function movePlayer(
+    ranking,
+    index,
+    direction
+  ) {
 
-    const newIndex = index + direction;
+    const newIndex =
+      index + direction;
 
-    if (newIndex < 0 || newIndex >= ranking.length) {
+
+    if (
+      newIndex < 0 ||
+      newIndex >= ranking.length
+    ) {
+
       return;
+
     }
 
-    const temp = ranking[index];
 
-    ranking[index] = ranking[newIndex];
+    const temp =
+      ranking[index];
 
-    ranking[newIndex] = temp;
+
+    ranking[index] =
+      ranking[newIndex];
+
+
+    ranking[newIndex] =
+      temp;
+
 
     saveRankings();
+
     render();
 
   }
@@ -624,99 +773,147 @@
 
   function renderPlayers() {
 
-    const container = document.getElementById("players");
+    const container =
+      document.getElementById(
+        "players"
+      );
 
     container.innerHTML = "";
 
-    const sorted = getSortedPlayers(currentSort);
+
+    const sorted =
+      getSortedPlayers(
+        currentSort
+      );
+
 
     sorted.forEach(name => {
 
-      const p = players[name];
+      const p =
+        players[name];
 
-      const total = p.goals + p.assists;
 
-      const card = document.createElement("div");
+      const total =
+        p.goals +
+        p.assists;
+
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
 
       card.className = "card";
 
+
       card.innerHTML = `
 
-        <div class="player">${name}</div>
+        <div class="player">
+          ${name}
+        </div>
+
 
         <div class="stat">
+
           <span>⚽ Goals</span>
 
-          <button class="minus"
+          <button
+            class="minus"
             onclick="changeStat('${name}','goals',-1)">
             −
           </button>
 
-          <div class="value">${p.goals}</div>
+          <div class="value">
+            ${p.goals}
+          </div>
 
-          <button class="plus"
+          <button
+            class="plus"
             onclick="changeStat('${name}','goals',1)">
             +
           </button>
+
         </div>
 
 
         <div class="stat">
+
           <span>🎯 Assists</span>
 
-          <button class="minus"
+          <button
+            class="minus"
             onclick="changeStat('${name}','assists',-1)">
             −
           </button>
 
-          <div class="value">${p.assists}</div>
+          <div class="value">
+            ${p.assists}
+          </div>
 
-          <button class="plus"
+          <button
+            class="plus"
             onclick="changeStat('${name}','assists',1)">
             +
           </button>
+
         </div>
 
 
         <div class="stat">
+
           <span>🧤 Saves</span>
 
-          <button class="minus"
+          <button
+            class="minus"
             onclick="changeStat('${name}','saves',-1)">
             −
           </button>
 
-          <div class="value">${p.saves}</div>
+          <div class="value">
+            ${p.saves}
+          </div>
 
-          <button class="plus"
+          <button
+            class="plus"
             onclick="changeStat('${name}','saves',1)">
             +
           </button>
+
         </div>
 
 
         <div class="stat">
+
           <span>⭐ MVPs</span>
 
-          <button class="minus"
+          <button
+            class="minus"
             onclick="changeStat('${name}','mvp',-1)">
             −
           </button>
 
-          <div class="value">${p.mvp}</div>
+          <div class="value">
+            ${p.mvp}
+          </div>
 
-          <button class="plus"
+          <button
+            class="plus"
             onclick="changeStat('${name}','mvp',1)">
             +
           </button>
+
         </div>
 
 
         <div class="total">
+
           G+A: ${total}
+
         </div>
 
       `;
+
 
       container.appendChild(card);
 
@@ -731,152 +928,209 @@
 
   function renderLeaderboard() {
 
-    const table = document.getElementById("leaderboard");
+    const table =
+      document.getElementById(
+        "leaderboard"
+      );
 
     table.innerHTML = "";
 
-    const sorted = getSortedPlayers(currentSort);
 
-    sorted.forEach((name, index) => {
+    const sorted =
+      getSortedPlayers(
+        currentSort
+      );
 
-      const p = players[name];
 
-      const row = document.createElement("tr");
+    sorted.forEach(
+      (name, index) => {
 
-      row.innerHTML = `
+        const p =
+          players[name];
 
-        <td>${index + 1}</td>
 
-        <td><strong>${name}</strong></td>
+        const row =
+          document.createElement(
+            "tr"
+          );
 
-        <td>${p.goals}</td>
 
-        <td>${p.assists}</td>
+        row.innerHTML = `
 
-        <td>${p.goals + p.assists}</td>
+          <td>
+            ${index + 1}
+          </td>
 
-        <td>${p.saves}</td>
+          <td>
+            <strong>
+              ${name}
+            </strong>
+          </td>
 
-        <td>${p.mvp}</td>
+          <td>
+            ${p.goals}
+          </td>
 
-      `;
+          <td>
+            ${p.assists}
+          </td>
 
-      table.appendChild(row);
+          <td>
+            ${p.goals + p.assists}
+          </td>
 
-    });
+          <td>
+            ${p.saves}
+          </td>
+
+          <td>
+            ${p.mvp}
+          </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+      }
+    );
 
   }
 
 
   // ==========================================
-  // BALLON D'OR RANKING
+  // BALLON D'OR
   // ==========================================
 
   function renderBallon() {
 
     const container =
-      document.getElementById("ballonRanking");
+      document.getElementById(
+        "ballonRanking"
+      );
 
     container.innerHTML = "";
 
-    ballonRanking.forEach((name, index) => {
 
-      const row = document.createElement("div");
+    ballonRanking.forEach(
+      (name, index) => {
 
-      row.className = "rank-row";
+        const row =
+          document.createElement(
+            "div"
+          );
 
-      row.innerHTML = `
 
-        <div class="rank-number">
-          ${index + 1}
-        </div>
+        row.className =
+          "rank-row";
 
-        <div class="rank-name">
-          ${name}
-        </div>
 
-        <button
-          class="move"
-          onclick="movePlayer(ballonRanking, ${index}, -1)"
-          ${index === 0 ? "disabled" : ""}>
-          ▲
-        </button>
+        row.innerHTML = `
 
-        <button
-          class="move"
-          onclick="movePlayer(ballonRanking, ${index}, 1)"
-          ${index === ballonRanking.length - 1 ? "disabled" : ""}>
-          ▼
-        </button>
+          <div class="rank-number">
+            ${index + 1}
+          </div>
 
-      `;
+          <div class="rank-name">
+            ${name}
+          </div>
 
-      container.appendChild(row);
+          <button
+            class="move"
+            onclick="movePlayer(ballonRanking, ${index}, -1)"
+            ${index === 0 ? "disabled" : ""}>
+            ▲
+          </button>
 
-    });
+          <button
+            class="move"
+            onclick="movePlayer(ballonRanking, ${index}, 1)"
+            ${index === ballonRanking.length - 1 ? "disabled" : ""}>
+            ▼
+          </button>
+
+        `;
+
+
+        container.appendChild(row);
+
+      }
+    );
 
   }
 
 
   // ==========================================
-  // GOLDEN DEFENSE RANKING
+  // GOLDEN DEFENSE
   // ==========================================
 
   function renderDefense() {
 
     const container =
-      document.getElementById("defenseRanking");
+      document.getElementById(
+        "defenseRanking"
+      );
 
     container.innerHTML = "";
 
-    defenseRanking.forEach((name, index) => {
 
-      const row = document.createElement("div");
+    defenseRanking.forEach(
+      (name, index) => {
 
-      row.className = "rank-row";
+        const row =
+          document.createElement(
+            "div"
+          );
 
-      row.innerHTML = `
 
-        <div class="rank-number">
-          ${index + 1}
-        </div>
+        row.className =
+          "rank-row";
 
-        <div class="rank-name">
-          ${name}
-        </div>
 
-        <button
-          class="move"
-          onclick="movePlayer(defenseRanking, ${index}, -1)"
-          ${index === 0 ? "disabled" : ""}>
-          ▲
-        </button>
+        row.innerHTML = `
 
-        <button
-          class="move"
-          onclick="movePlayer(defenseRanking, ${index}, 1)"
-          ${index === defenseRanking.length - 1 ? "disabled" : ""}>
-          ▼
-        </button>
+          <div class="rank-number">
+            ${index + 1}
+          </div>
 
-      `;
+          <div class="rank-name">
+            ${name}
+          </div>
 
-      container.appendChild(row);
+          <button
+            class="move"
+            onclick="movePlayer(defenseRanking, ${index}, -1)"
+            ${index === 0 ? "disabled" : ""}>
+            ▲
+          </button>
 
-    });
+          <button
+            class="move"
+            onclick="movePlayer(defenseRanking, ${index}, 1)"
+            ${index === defenseRanking.length - 1 ? "disabled" : ""}>
+            ▼
+          </button>
+
+        `;
+
+
+        container.appendChild(row);
+
+      }
+    );
 
   }
 
 
   // ==========================================
-  // RENDER EVERYTHING
+  // RENDER
   // ==========================================
 
   function render() {
 
-    renderPlayers();
-
     renderLeaderboard();
+
+    renderPlayers();
 
     renderBallon();
 
@@ -885,7 +1139,6 @@
   }
 
 
-  // Initial display
   render();
 
 </script>
