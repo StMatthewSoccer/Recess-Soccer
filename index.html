@@ -416,7 +416,7 @@ Sort: Clean Sheets
 </div>
 
 
-<!-- PLAYER STATS -->
+<!-- PLAYER LEADERBOARD -->
 
 <section class="section">
 
@@ -482,23 +482,23 @@ alt="Ballon d'Or Trophy"
 </section>
 
 
-<!-- GOLDEN DEFENSE -->
+<!-- GOLDEN DEFENCE -->
 
 <section class="section">
 
-<h2>🛡️ Golden Defense</h2>
+<h2>🛡️ Golden Defence</h2>
 
 <img
 src="Screenshot_20260826-003116.png"
 class="trophy-image"
-alt="Golden Defense Trophy"
+alt="Golden Defence Trophy"
 >
 
 <div class="rank-grid">
 
 <div class="rank-card">
 
-<h3>Best Defense Rankings</h3>
+<h3>Best Defence Rankings</h3>
 
 <div id="defenseRanking"></div>
 
@@ -646,7 +646,7 @@ const accounts = {
 };
 
 
-/* AUTH STATE */
+/* AUTH */
 
 auth.onAuthStateChanged(function(user) {
 
@@ -982,22 +982,12 @@ function sortBy(type) {
 
   currentSort = type;
 
-  render();
+  renderLeaderboard();
 
 }
 
 
-/*
-  IMPORTANT:
-  G+A SORTING IS DONE HERE.
-
-  Example:
-  6 Goals + 0 Assists = 6 G+A
-  0 Goals + 8 Assists = 8 G+A
-
-  Therefore the 8 G+A player
-  appears above the 6 G+A player.
-*/
+/* LEADERBOARD SORTING */
 
 function getSortedPlayers(type) {
 
@@ -1005,9 +995,6 @@ function getSortedPlayers(type) {
 
     const A = players[a];
     const B = players[b];
-
-
-    /* G+A */
 
     if (type === "ga") {
 
@@ -1023,8 +1010,6 @@ function getSortedPlayers(type) {
     }
 
 
-    /* GOALS */
-
     if (type === "goals") {
 
       return (
@@ -1034,8 +1019,6 @@ function getSortedPlayers(type) {
 
     }
 
-
-    /* ASSISTS */
 
     if (type === "assists") {
 
@@ -1047,8 +1030,6 @@ function getSortedPlayers(type) {
     }
 
 
-    /* SAVES */
-
     if (type === "saves") {
 
       return (
@@ -1059,8 +1040,6 @@ function getSortedPlayers(type) {
     }
 
 
-    /* MVPS */
-
     if (type === "mvp") {
 
       return (
@@ -1070,8 +1049,6 @@ function getSortedPlayers(type) {
 
     }
 
-
-    /* CLEAN SHEETS */
 
     if (type === "cleanSheets") {
 
@@ -1095,21 +1072,15 @@ function getSortedPlayers(type) {
 function saveRankings() {
 
   if (!isEditor) {
-
     return;
-
   }
-
 
   rankingsRef.set({
 
     defense: defenseRanking,
-
     ballon: ballonRanking
 
-  })
-
-  .catch(function(error) {
+  }).catch(function(error) {
 
     console.error(
       "Ranking save error:",
@@ -1121,7 +1092,7 @@ function saveRankings() {
 }
 
 
-/* MOVE PLAYERS */
+/* MOVE RANKING */
 
 function movePlayer(
   ranking,
@@ -1164,7 +1135,7 @@ function movePlayer(
     temp;
 
 
-  render();
+  renderRankings();
 
   saveRankings();
 
@@ -1181,11 +1152,16 @@ function renderPlayers() {
   container.innerHTML = "";
 
 
-  const sorted =
-    getSortedPlayers(currentSort);
+  /*
+    IMPORTANT:
+    Player cards ALWAYS stay in
+    the original playerNames order.
 
+    Adding a goal or assist will
+    NOT move the cards.
+  */
 
-  sorted.forEach(function(name) {
+  playerNames.forEach(function(name) {
 
     const p = players[name];
 
@@ -1295,9 +1271,13 @@ function renderPlayers() {
       )}
 
       <div class="total">
+
         G+A:
-        ${Number(p.goals || 0) +
-          Number(p.assists || 0)}
+        ${
+          Number(p.goals || 0) +
+          Number(p.assists || 0)
+        }
+
       </div>
 
     `;
@@ -1332,6 +1312,7 @@ function renderLeaderboard() {
   ) {
 
     const p = players[name];
+
 
     const ga =
       Number(p.goals || 0) +
@@ -1373,6 +1354,21 @@ function renderLeaderboard() {
 
 
 /* RANKINGS */
+
+function renderRankings() {
+
+  renderRanking(
+    "ballonRanking",
+    ballonRanking
+  );
+
+  renderRanking(
+    "defenseRanking",
+    defenseRanking
+  );
+
+}
+
 
 function renderRanking(
   containerId,
@@ -1481,19 +1477,16 @@ function renderRanking(
 
 function render() {
 
+  /*
+    Stats changes update the numbers,
+    but player cards stay in place.
+  */
+
   renderLeaderboard();
 
   renderPlayers();
 
-  renderRanking(
-    "ballonRanking",
-    ballonRanking
-  );
-
-  renderRanking(
-    "defenseRanking",
-    defenseRanking
-  );
+  renderRankings();
 
 }
 
