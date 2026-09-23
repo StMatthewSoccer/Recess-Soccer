@@ -7,18 +7,9 @@
 <title>Saint Matthews Recess Soccer Live Stats</title>
 
 <style>
+
 * {
   box-sizing: border-box;
-}
-
-:root {
-  --green: #16a34a;
-  --dark-green: #064e3b;
-  --light-green: #22c55e;
-  --white: #ffffff;
-  --glass: rgba(255,255,255,0.12);
-  --border: rgba(255,255,255,0.22);
-  --dark: #07130d;
 }
 
 body {
@@ -28,55 +19,68 @@ body {
   min-height: 100vh;
 
   background:
-    linear-gradient(rgba(2,20,10,.78), rgba(2,20,10,.88)),
+    linear-gradient(
+      rgba(2, 20, 10, .82),
+      rgba(2, 20, 10, .92)
+    ),
     url("https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=2000&q=80")
-    center/cover fixed;
+    center / cover fixed;
 }
+
+/* =========================
+   HEADER
+========================= */
 
 header {
   text-align: center;
-  padding: 35px 15px 20px;
+  padding: 35px 15px 25px;
 }
 
 header h1 {
   margin: 0;
   font-size: clamp(28px, 6vw, 52px);
   font-weight: 900;
-  text-shadow: 0 3px 15px rgba(0,0,0,.5);
 }
 
 header p {
-  margin: 10px 0 0;
-  opacity: .85;
-  font-size: 15px;
+  margin-top: 10px;
+  opacity: .8;
 }
 
+/* =========================
+   GENERAL
+========================= */
+
 .container {
-  width: min(1500px, 95%);
+  width: 95%;
+  max-width: 1500px;
   margin: auto;
 }
 
 .card {
-  background: rgba(5, 25, 15, .76);
-  border: 1px solid var(--border);
+  background: rgba(5, 25, 15, .82);
+  border: 1px solid rgba(255,255,255,.18);
   border-radius: 20px;
-  box-shadow: 0 15px 45px rgba(0,0,0,.28);
-  backdrop-filter: blur(12px);
   margin-bottom: 25px;
   overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,.3);
+  backdrop-filter: blur(12px);
 }
 
-/* LOGIN */
+/* =========================
+   LOGIN
+========================= */
 
 .login-card {
-  padding: 22px;
-  max-width: 500px;
-  margin: 0 auto 25px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 25px;
 }
 
 .login-card h2 {
-  margin-top: 0;
   text-align: center;
+  margin-top: 0;
 }
 
 .login-row {
@@ -87,12 +91,12 @@ header p {
 
 select,
 input {
+  min-width: 0;
   flex: 1;
-  min-width: 150px;
-  padding: 12px;
+  padding: 13px;
   border-radius: 10px;
-  border: 1px solid rgba(255,255,255,.25);
-  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(0,0,0,.4);
   color: white;
   font-size: 15px;
 }
@@ -105,41 +109,46 @@ button {
   border: 0;
   border-radius: 10px;
   padding: 11px 15px;
-  cursor: pointer;
   font-weight: 800;
-  transition: .15s;
-}
-
-button:hover {
-  transform: translateY(-1px);
+  cursor: pointer;
 }
 
 .login-btn {
-  background: var(--light-green);
-  color: #04240e;
+  background: #22c55e;
+  color: #052e16;
 }
 
 .logout-btn {
+  display: none;
   background: #dc2626;
   color: white;
-  display: none;
-}
-
-#loginStatus {
-  text-align: center;
-  margin-top: 12px;
-  font-size: 14px;
-}
-
-body.editor-mode .logout-btn {
-  display: inline-block;
 }
 
 body.editor-mode .login-btn {
   display: none;
 }
 
-/* STAT SHEET */
+body.editor-mode .logout-btn {
+  display: block;
+}
+
+#loginStatus {
+  text-align: center;
+  margin-top: 14px;
+  font-weight: 700;
+}
+
+.login-error {
+  color: #fca5a5;
+}
+
+.login-success {
+  color: #86efac;
+}
+
+/* =========================
+   STAT SHEET HEADER
+========================= */
 
 .sheet-header {
   padding: 25px 25px 15px;
@@ -147,21 +156,23 @@ body.editor-mode .login-btn {
 
 .sheet-header h2 {
   margin: 0;
-  font-size: 28px;
+  font-size: 30px;
 }
 
 .sheet-header p {
-  margin: 7px 0 18px;
+  margin-bottom: 0;
   opacity: .75;
 }
 
-/* STAT OPTIONS - NO DROPDOWN */
+/* =========================
+   STAT BUTTONS
+========================= */
 
 .stat-options {
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
-  padding: 0 25px 20px;
+  gap: 8px;
+  padding: 10px 25px 20px;
 }
 
 .stat-sort-btn {
@@ -170,75 +181,87 @@ body.editor-mode .login-btn {
   border: 1px solid rgba(255,255,255,.2);
 }
 
-.stat-sort-btn:hover,
+.stat-sort-btn:hover {
+  background: rgba(255,255,255,.2);
+}
+
 .stat-sort-btn.active {
-  background: var(--light-green);
+  background: #22c55e;
   color: #052e16;
 }
 
-/* TABLE */
+/* =========================
+   EDITOR MESSAGE
+========================= */
+
+.editor-note {
+  display: none;
+  padding: 0 25px 18px;
+  color: #86efac;
+  font-weight: bold;
+}
+
+body.editor-mode .editor-note {
+  display: block;
+}
+
+/* =========================
+   TABLE
+========================= */
 
 .table-wrap {
-  width: 100%;
   overflow-x: auto;
-  border-top: 1px solid rgba(255,255,255,.12);
+  width: 100%;
 }
 
 .stat-table {
-  width: 100%;
-  min-width: 1050px;
   border-collapse: collapse;
+  width: 100%;
+  min-width: 1100px;
 }
 
 .stat-table th,
 .stat-table td {
   padding: 13px 10px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
   text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,.09);
 }
 
 .stat-table th {
-  background: rgba(0,0,0,.38);
-  position: sticky;
-  top: 0;
-  z-index: 2;
+  background: rgba(0,0,0,.45);
   font-size: 13px;
   white-space: nowrap;
 }
 
-.stat-table th:first-child,
-.stat-table td:first-child {
-  text-align: left;
-  position: sticky;
-  left: 0;
-  z-index: 3;
-  background: rgba(5,25,15,.96);
+.stat-table td {
+  font-size: 15px;
 }
 
-.stat-table th:first-child {
-  z-index: 4;
-}
-
-.stat-table tbody tr:hover td {
+.stat-table tbody tr:hover {
   background: rgba(255,255,255,.05);
 }
 
 .player-name {
+  text-align: left !important;
   font-weight: 900;
+  font-size: 16px !important;
   white-space: nowrap;
 }
 
 .stat-number {
-  font-weight: 800;
+  font-weight: 900;
   font-size: 17px;
 }
 
+/* =========================
+   EDIT BUTTONS
+========================= */
+
 .edit-controls {
   display: none;
-  align-items: center;
   justify-content: center;
   gap: 5px;
-  margin-top: 5px;
+  margin-top: 6px;
 }
 
 body.editor-mode .edit-controls {
@@ -247,13 +270,11 @@ body.editor-mode .edit-controls {
 
 .plus,
 .minus {
-  width: 29px;
-  height: 29px;
+  width: 30px;
+  height: 30px;
   padding: 0;
-  border-radius: 7px;
   color: white;
   font-size: 18px;
-  line-height: 29px;
 }
 
 .plus {
@@ -264,22 +285,13 @@ body.editor-mode .edit-controls {
   background: #dc2626;
 }
 
-.editor-note {
-  display: none;
-  padding: 0 25px 20px;
-  color: #86efac;
-  font-weight: bold;
-}
-
-body.editor-mode .editor-note {
-  display: block;
-}
-
-/* RANKINGS */
+/* =========================
+   RANKINGS
+========================= */
 
 .section-title {
-  padding: 25px 25px 10px;
   text-align: center;
+  padding: 25px 20px 10px;
 }
 
 .section-title h2 {
@@ -288,7 +300,7 @@ body.editor-mode .editor-note {
 }
 
 .section-title p {
-  opacity: .7;
+  opacity: .75;
 }
 
 .trophy {
@@ -300,17 +312,17 @@ body.editor-mode .editor-note {
 }
 
 .ranking-list {
-  padding: 10px 25px 25px;
+  padding: 10px 25px 20px;
 }
 
 .ranking-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px;
-  margin-bottom: 7px;
-  border-radius: 12px;
   background: rgba(255,255,255,.07);
+  border-radius: 10px;
+  margin-bottom: 7px;
+  padding: 11px;
 }
 
 .rank-number {
@@ -341,8 +353,8 @@ body.editor-mode .move-buttons {
 
 .save-ranking {
   display: none;
-  margin: 10px auto 25px;
-  background: var(--light-green);
+  margin: 5px auto 25px;
+  background: #22c55e;
   color: #052e16;
 }
 
@@ -350,247 +362,570 @@ body.editor-mode .save-ranking {
   display: block;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
-@media (max-width: 700px) {
+@media(max-width:700px) {
+
   header {
     padding-top: 25px;
   }
 
-  .sheet-header {
-    padding: 20px 15px 10px;
-  }
-
   .stat-options {
-    padding: 0 15px 15px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: rgba(5,25,15,.96);
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .stat-sort-btn {
     flex: 1 1 calc(50% - 8px);
     font-size: 12px;
-    padding: 10px 5px;
+  }
+
+  .sheet-header {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .editor-note {
-    padding: 0 15px 15px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .ranking-list {
     padding-left: 15px;
     padding-right: 15px;
   }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
+
   <h1>⚽ Saint Matthews Recess Soccer</h1>
-  <p>Live Stats • Rankings • Player Comparison</p>
+
+  <p>
+    Live Stats • Player Comparison • Rankings
+  </p>
+
 </header>
+
 
 <div class="container">
 
-  <!-- LOGIN -->
-  <div class="card login-card">
-    <h2>🔐 Editor Login</h2>
 
-    <div class="login-row">
+<!-- =========================
+     LOGIN
+========================= -->
 
-      <select id="username">
-        <option value="">Select username</option>
-        <option value="jack">jack</option>
-        <option value="jackschool">jackschool</option>
-        <option value="leonardo">leonardo</option>
-        <option value="angelo">angelo</option>
-      </select>
+<div class="card login-card">
 
-      <input
-        id="pin"
-        type="password"
-        placeholder="PIN / Password"
-      >
+  <h2>🔐 Editor Login</h2>
 
-      <button class="login-btn" onclick="login()">
-        Sign In
-      </button>
+  <div class="login-row">
 
-      <button class="logout-btn" onclick="logout()">
-        Sign Out
-      </button>
+    <select id="username">
 
-    </div>
+      <option value="">
+        Select username
+      </option>
 
-    <div id="loginStatus">
-      View-only mode
-    </div>
-  </div>
+      <option value="jack">
+        jack
+      </option>
 
+      <option value="jackschool">
+        jackschool
+      </option>
 
-  <!-- BIG STAT SHEET -->
-  <div class="card">
+      <option value="leonardo">
+        leonardo
+      </option>
 
-    <div class="sheet-header">
-      <h2>📊 Player Stat Sheet</h2>
-      <p>
-        Compare everyone's stats. Click a stat to sort the table.
-      </p>
-    </div>
+      <option value="angelo">
+        angelo
+      </option>
 
-    <!-- ALL STAT OPTIONS VISIBLE -->
-    <div class="stat-options">
-
-      <button class="stat-sort-btn active" onclick="sortBy('goals', this)">
-        ⚽ Goals
-      </button>
-
-      <button class="stat-sort-btn" onclick="sortBy('assists', this)">
-        🎯 Assists
-      </button>
-
-      <button class="stat-sort-btn" onclick="sortBy('ga', this)">
-        📈 G+A
-      </button>
-
-      <button class="stat-sort-btn" onclick="sortBy('saves', this)">
-        🧤 Goalie Saves
-      </button>
-
-      <button class="stat-sort-btn" onclick="sortBy('cleanSheets', this)">
-        🛡️ Clean Sheets
-      </button>
-
-      <button class="stat-sort-btn" onclick="sortBy('yellowCards', this)">
-        🟨 Yellow Cards
-      </button>
-
-      <button class="stat-sort-btn" onclick="sortBy('redCards', this)">
-        🟥 Red Cards
-      </button>
-
-      <button class="stat-sort-btn" onclick="sortBy('mvps', this)">
-        🏆 MVPs
-      </button>
-
-    </div>
-
-    <div class="editor-note">
-      ✏️ Editor mode: use the + and − buttons to change stats.
-    </div>
-
-    <div class="table-wrap">
-
-      <table class="stat-table">
-
-        <thead>
-          <tr>
-            <th>Player</th>
-            <th>Goals</th>
-            <th>Assists</th>
-            <th>G+A</th>
-            <th>Goalie Saves</th>
-            <th>Clean Sheets</th>
-            <th>Yellow</th>
-            <th>Red</th>
-            <th>MVPs</th>
-          </tr>
-        </thead>
-
-        <tbody id="statTableBody"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
+    </select>
 
 
-  <!-- GOLDEN DEFENCE -->
-  <div class="card">
+    <input
+      id="pin"
+      type="password"
+      placeholder="PIN / Password"
+      autocomplete="current-password"
+    >
 
-    <div class="section-title">
-      <h2>🛡️ Golden Defence</h2>
 
-      <img
-        class="trophy"
-        src="Screenshot_20260826-003116.png"
-        alt="Golden Defence Trophy"
-      >
+    <button
+      id="loginButton"
+      class="login-btn"
+      type="button"
+    >
+      Sign In
+    </button>
 
-      <p>Rank the best defenders.</p>
-    </div>
 
-    <div class="ranking-list" id="defenceRanking"></div>
-
-    <button class="save-ranking" onclick="saveRankings('defence')">
-      Save Golden Defence
+    <button
+      id="logoutButton"
+      class="logout-btn"
+      type="button"
+    >
+      Sign Out
     </button>
 
   </div>
 
 
-  <!-- BALLON D'OR -->
-  <div class="card">
+  <div id="loginStatus">
+    View-only mode
+  </div>
 
-    <div class="section-title">
-      <h2>🏆 Ballon d'Or</h2>
+</div>
 
-      <img
-        class="trophy"
-        src="Screenshot_20260826-003131.png"
-        alt="Ballon d'Or Trophy"
-      >
 
-      <p>Rank the players for Ballon d'Or.</p>
-    </div>
+<!-- =========================
+     BIG STAT SHEET
+========================= -->
 
-    <div class="ranking-list" id="ballonRanking"></div>
+<div class="card">
 
-    <button class="save-ranking" onclick="saveRankings('ballon')">
-      Save Ballon d'Or
+  <div class="sheet-header">
+
+    <h2>📊 Player Stat Sheet</h2>
+
+    <p>
+      Click a stat to sort everyone by that category.
+    </p>
+
+  </div>
+
+
+  <!-- ALL STAT OPTIONS ARE HERE -->
+
+  <div class="stat-options">
+
+    <button
+      class="stat-sort-btn active"
+      data-stat="goals"
+      type="button"
+    >
+      ⚽ Goals
     </button>
+
+    <button
+      class="stat-sort-btn"
+      data-stat="assists"
+      type="button"
+    >
+      🎯 Assists
+    </button>
+
+    <button
+      class="stat-sort-btn"
+      data-stat="ga"
+      type="button"
+    >
+      📈 G+A
+    </button>
+
+    <button
+      class="stat-sort-btn"
+      data-stat="saves"
+      type="button"
+    >
+      🧤 Goalie Saves
+    </button>
+
+    <button
+      class="stat-sort-btn"
+      data-stat="cleanSheets"
+      type="button"
+    >
+      🛡️ Clean Sheets
+    </button>
+
+    <button
+      class="stat-sort-btn"
+      data-stat="yellowCards"
+      type="button"
+    >
+      🟨 Yellow Cards
+    </button>
+
+    <button
+      class="stat-sort-btn"
+      data-stat="redCards"
+      type="button"
+    >
+      🟥 Red Cards
+    </button>
+
+    <button
+      class="stat-sort-btn"
+      data-stat="mvps"
+      type="button"
+    >
+      🏆 MVPs
+    </button>
+
+  </div>
+
+
+  <div class="editor-note">
+    ✏️ Editor mode is ON — use + and − underneath the stats.
+  </div>
+
+
+  <div class="table-wrap">
+
+    <table class="stat-table">
+
+      <thead>
+
+        <tr>
+
+          <th>Player</th>
+
+          <th>Goals</th>
+
+          <th>Assists</th>
+
+          <th>G+A</th>
+
+          <th>Goalie Saves</th>
+
+          <th>Clean Sheets</th>
+
+          <th>Yellow</th>
+
+          <th>Red</th>
+
+          <th>MVPs</th>
+
+        </tr>
+
+      </thead>
+
+
+      <!--
+        IMPORTANT:
+        The names are physically in the HTML.
+        They do NOT depend on Firebase.
+      -->
+
+      <tbody id="statTableBody">
+
+        <tr data-player="Adi">
+          <td class="player-name">Adi</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Aidan">
+          <td class="player-name">Aidan</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Artin">
+          <td class="player-name">Artin</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Angelo">
+          <td class="player-name">Angelo</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Bryson">
+          <td class="player-name">Bryson</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Cameron">
+          <td class="player-name">Cameron</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Jack">
+          <td class="player-name">Jack</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="John">
+          <td class="player-name">John</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Leonardo">
+          <td class="player-name">Leonardo</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Marc">
+          <td class="player-name">Marc</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Matthew">
+          <td class="player-name">Matthew</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Sami">
+          <td class="player-name">Sami</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Nathan">
+          <td class="player-name">Nathan</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+        <tr data-player="Theo">
+          <td class="player-name">Theo</td>
+          <td data-stat-cell="goals">0</td>
+          <td data-stat-cell="assists">0</td>
+          <td data-stat-cell="ga">0</td>
+          <td data-stat-cell="saves">0</td>
+          <td data-stat-cell="cleanSheets">0</td>
+          <td data-stat-cell="yellowCards">0</td>
+          <td data-stat-cell="redCards">0</td>
+          <td data-stat-cell="mvps">0</td>
+        </tr>
+
+      </tbody>
+
+    </table>
 
   </div>
 
 </div>
 
 
-<!-- FIREBASE -->
+<!-- =========================
+     GOLDEN DEFENCE
+========================= -->
+
+<div class="card">
+
+  <div class="section-title">
+
+    <h2>🛡️ Golden Defence</h2>
+
+    <img
+      class="trophy"
+      src="Screenshot_20260826-003116.png"
+      alt="Golden Defence"
+    >
+
+    <p>Rank the best defence.</p>
+
+  </div>
+
+  <div
+    class="ranking-list"
+    id="defenceRanking"
+  ></div>
+
+  <button
+    class="save-ranking"
+    id="saveDefence"
+    type="button"
+  >
+    Save Golden Defence
+  </button>
+
+</div>
+
+
+<!-- =========================
+     BALLON D'OR
+========================= -->
+
+<div class="card">
+
+  <div class="section-title">
+
+    <h2>🏆 Ballon d'Or</h2>
+
+    <img
+      class="trophy"
+      src="Screenshot_20260826-003131.png"
+      alt="Ballon d'Or"
+    >
+
+    <p>Rank the players for Ballon d'Or.</p>
+
+  </div>
+
+  <div
+    class="ranking-list"
+    id="ballonRanking"
+  ></div>
+
+  <button
+    class="save-ranking"
+    id="saveBallon"
+    type="button"
+  >
+    Save Ballon d'Or
+  </button>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     FIREBASE
+========================= -->
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
+
 <script>
 
-/* =========================
-   FIREBASE
-========================= */
+/* =========================================
+   FIREBASE CONFIG
+========================================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCyXvJ6IxdE5Nj-J-0YEfipH7CMNZa_RUI",
-  authDomain: "recess-soccer.firebaseapp.com",
-  databaseURL: "https://recess-soccer-default-rtdb.firebaseio.com",
-  projectId: "recess-soccer",
-  storageBucket: "recess-soccer.firebasestorage.app",
-  messagingSenderId: "872558689342",
-  appId: "1:872558689342:web:a4dca17e1d6b963ed6656f",
-  measurementId: "G-HJ16JSL5Q2"
+
+  apiKey:
+    "AIzaSyCyXvJ6IxdE5Nj-J-0YEfipH7CMNZa_RUI",
+
+  authDomain:
+    "recess-soccer.firebaseapp.com",
+
+  databaseURL:
+    "https://recess-soccer-default-rtdb.firebaseio.com",
+
+  projectId:
+    "recess-soccer",
+
+  storageBucket:
+    "recess-soccer.firebasestorage.app",
+
+  messagingSenderId:
+    "872558689342",
+
+  appId:
+    "1:872558689342:web:a4dca17e1d6b963ed6656f",
+
+  measurementId:
+    "G-HJ16JSL5Q2"
+
 };
+
 
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
+
 const db = firebase.database();
 
 
-/* =========================
+/* =========================================
    PLAYERS
-========================= */
+========================================= */
 
 const PLAYER_NAMES = [
   "Adi",
@@ -611,6 +946,7 @@ const PLAYER_NAMES = [
 
 
 const DEFAULT_STATS = {
+
   goals: 0,
   assists: 0,
   saves: 0,
@@ -618,21 +954,29 @@ const DEFAULT_STATS = {
   yellowCards: 0,
   redCards: 0,
   mvps: 0
+
 };
 
 
 let players = {};
 
 PLAYER_NAMES.forEach(name => {
+
   players[name] = {
     ...DEFAULT_STATS
   };
+
 });
 
 
-/* =========================
+let currentSort = "goals";
+
+let isEditor = false;
+
+
+/* =========================================
    EDITOR ACCOUNTS
-========================= */
+========================================= */
 
 const EDITORS = {
 
@@ -655,241 +999,43 @@ const EDITORS = {
 };
 
 
-let isEditor = false;
-let currentSort = "goals";
+/* =========================================
+   RANKINGS
+========================================= */
 
-let defenceRanking = [...PLAYER_NAMES];
-let ballonRanking = [...PLAYER_NAMES];
+let defenceRanking = [
+  ...PLAYER_NAMES
+];
 
-
-/* =========================
-   CREATE PLAYER DATA
-========================= */
-
-function normalizePlayer(name, data) {
-
-  const p = {
-    ...DEFAULT_STATS,
-    ...(data || {})
-  };
-
-  return {
-    goals: Number(p.goals) || 0,
-    assists: Number(p.assists) || 0,
-    saves: Number(p.saves) || 0,
-    cleanSheets: Number(p.cleanSheets) || 0,
-    yellowCards: Number(p.yellowCards) || 0,
-    redCards: Number(p.redCards) || 0,
-    mvps: Number(p.mvps) || 0
-  };
-
-}
+let ballonRanking = [
+  ...PLAYER_NAMES
+];
 
 
-/* =========================
-   STAT TABLE
-========================= */
+/* =========================================
+   LOGIN
+========================================= */
 
-function renderTable() {
-
-  const body = document.getElementById("statTableBody");
-
-  let list = PLAYER_NAMES.map(name => ({
-    name,
-    stats: normalizePlayer(name, players[name])
-  }));
+document
+  .getElementById("loginButton")
+  .addEventListener("click", login);
 
 
-  /* SORT */
-
-  if (currentSort === "ga") {
-
-    list.sort((a, b) =>
-      (b.stats.goals + b.stats.assists) -
-      (a.stats.goals + a.stats.assists)
-    );
-
-  } else {
-
-    list.sort((a, b) =>
-      b.stats[currentSort] - a.stats[currentSort]
-    );
-
-  }
+document
+  .getElementById("logoutButton")
+  .addEventListener("click", logout);
 
 
-  body.innerHTML = "";
+document
+  .getElementById("pin")
+  .addEventListener("keydown", function(event) {
 
-
-  list.forEach(player => {
-
-    const s = player.stats;
-
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-
-      <td class="player-name">
-        ${player.name}
-      </td>
-
-      ${statCell(player.name, "goals", s.goals)}
-
-      ${statCell(player.name, "assists", s.assists)}
-
-      <td class="stat-number">
-        ${s.goals + s.assists}
-      </td>
-
-      ${statCell(player.name, "saves", s.saves)}
-
-      ${statCell(player.name, "cleanSheets", s.cleanSheets)}
-
-      ${statCell(player.name, "yellowCards", s.yellowCards)}
-
-      ${statCell(player.name, "redCards", s.redCards)}
-
-      ${statCell(player.name, "mvps", s.mvps)}
-
-    `;
-
-    body.appendChild(row);
+    if (event.key === "Enter") {
+      login();
+    }
 
   });
 
-}
-
-
-/* =========================
-   STAT CELL
-========================= */
-
-function statCell(playerName, stat, value) {
-
-  if (!isEditor) {
-
-    return `
-      <td class="stat-number">
-        ${value}
-      </td>
-    `;
-
-  }
-
-  return `
-
-    <td>
-
-      <div class="stat-number">
-        ${value}
-      </div>
-
-      <div class="edit-controls">
-
-        <button
-          class="minus"
-          onclick="changeStat('${escapeName(playerName)}','${stat}',-1)"
-        >
-          −
-        </button>
-
-        <button
-          class="plus"
-          onclick="changeStat('${escapeName(playerName)}','${stat}',1)"
-        >
-          +
-        </button>
-
-      </div>
-
-    </td>
-
-  `;
-
-}
-
-
-function escapeName(name) {
-  return name.replace(/'/g, "\\'");
-}
-
-
-/* =========================
-   CHANGE STAT
-========================= */
-
-function changeStat(playerName, stat, amount) {
-
-  if (!isEditor) {
-    return;
-  }
-
-
-  const current = normalizePlayer(
-    playerName,
-    players[playerName]
-  );
-
-
-  const newValue = Math.max(
-    0,
-    current[stat] + amount
-  );
-
-
-  players[playerName][stat] = newValue;
-
-
-  db.ref("players/" + playerName + "/" + stat)
-    .set(newValue)
-    .then(() => {
-
-      renderTable();
-
-    })
-    .catch(error => {
-
-      console.error(error);
-
-      alert(
-        "Firebase could not save this stat.\n\n" +
-        error.message
-      );
-
-      /* Reload server value */
-
-      loadPlayers();
-
-    });
-
-}
-
-
-/* =========================
-   SORT
-========================= */
-
-function sortBy(stat, button) {
-
-  currentSort = stat;
-
-
-  document
-    .querySelectorAll(".stat-sort-btn")
-    .forEach(btn => btn.classList.remove("active"));
-
-
-  button.classList.add("active");
-
-
-  renderTable();
-
-}
-
-
-/* =========================
-   LOGIN
-========================= */
 
 function login() {
 
@@ -903,26 +1049,44 @@ function login() {
     document.getElementById("loginStatus");
 
 
-  if (!username || !pin) {
+  if (!username) {
+
+    status.className = "login-error";
 
     status.textContent =
-      "Select a username and enter the PIN.";
+      "Please select an editor username.";
 
     return;
   }
 
 
-  const editor = EDITORS[username];
+  if (!pin) {
+
+    status.className = "login-error";
+
+    status.textContent =
+      "Please enter the PIN / password.";
+
+    return;
+  }
+
+
+  const editor =
+    EDITORS[username];
 
 
   if (!editor) {
 
+    status.className = "login-error";
+
     status.textContent =
-      "Invalid editor username.";
+      "That editor account does not exist.";
 
     return;
   }
 
+
+  status.className = "";
 
   status.textContent =
     "Signing in...";
@@ -934,365 +1098,22 @@ function login() {
       pin
     )
 
-    .then(() => {
+    .then(function(userCredential) {
+
+      isEditor = true;
+
+      document.body.classList.add(
+        "editor-mode"
+      );
+
+
+      status.className =
+        "login-success";
+
 
       status.textContent =
-        "Signed in as " + username;
+        "✅ Signed in as " +
+        username;
 
-    })
 
-    .catch(error => {
-
-      console.error(error);
-
-      status.textContent =
-        "Login failed: " + error.code;
-
-    });
-
-}
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-function logout() {
-
-  auth.signOut();
-
-}
-
-
-/* =========================
-   AUTH STATE
-========================= */
-
-auth.onAuthStateChanged(user => {
-
-  if (user) {
-
-    isEditor = true;
-
-    document.body.classList.add("editor-mode");
-
-    document.getElementById("loginStatus").textContent =
-      "✅ Editor mode enabled: " + user.email;
-
-  } else {
-
-    isEditor = false;
-
-    document.body.classList.remove("editor-mode");
-
-    document.getElementById("loginStatus").textContent =
-      "View-only mode";
-
-  }
-
-  renderTable();
-  renderRankings();
-
-});
-
-
-/* =========================
-   LOAD PLAYERS
-========================= */
-
-function loadPlayers() {
-
-  db.ref("players").on(
-    "value",
-    snapshot => {
-
-      const data = snapshot.val() || {};
-
-
-      PLAYER_NAMES.forEach(name => {
-
-        players[name] =
-          normalizePlayer(name, data[name]);
-
-      });
-
-
-      renderTable();
-
-    },
-
-    error => {
-
-      console.error(
-        "Firebase player read error:",
-        error
-      );
-
-      /*
-        The names and zero stats remain visible
-        even if Firebase cannot be read.
-      */
-
-      renderTable();
-
-    }
-  );
-
-}
-
-
-/* =========================
-   RANKINGS
-========================= */
-
-function normalizeRanking(saved) {
-
-  const result = [];
-
-  if (Array.isArray(saved)) {
-
-    saved.forEach(name => {
-
-      if (
-        PLAYER_NAMES.includes(name) &&
-        !result.includes(name)
-      ) {
-        result.push(name);
-      }
-
-    });
-
-  }
-
-
-  PLAYER_NAMES.forEach(name => {
-
-    if (!result.includes(name)) {
-      result.push(name);
-    }
-
-  });
-
-
-  return result;
-
-}
-
-
-/* =========================
-   RENDER RANKINGS
-========================= */
-
-function renderRankings() {
-
-  renderOneRanking(
-    "defenceRanking",
-    defenceRanking
-  );
-
-  renderOneRanking(
-    "ballonRanking",
-    ballonRanking
-  );
-
-}
-
-
-function renderOneRanking(elementId, ranking) {
-
-  const container =
-    document.getElementById(elementId);
-
-
-  container.innerHTML = "";
-
-
-  ranking.forEach((name, index) => {
-
-    const row =
-      document.createElement("div");
-
-    row.className = "ranking-row";
-
-
-    row.innerHTML = `
-
-      <div class="rank-number">
-        ${index + 1}
-      </div>
-
-      <div class="rank-name">
-        ${name}
-      </div>
-
-      <div class="move-buttons">
-
-        <button
-          onclick="moveRanking('${elementId}',${index},-1)"
-        >
-          ↑
-        </button>
-
-        <button
-          onclick="moveRanking('${elementId}',${index},1)"
-        >
-          ↓
-        </button>
-
-      </div>
-
-    `;
-
-
-    container.appendChild(row);
-
-  });
-
-}
-
-
-/* =========================
-   MOVE RANKING
-========================= */
-
-function moveRanking(type, index, direction) {
-
-  let ranking =
-    type === "defenceRanking"
-      ? defenceRanking
-      : ballonRanking;
-
-
-  const newIndex =
-    index + direction;
-
-
-  if (
-    newIndex < 0 ||
-    newIndex >= ranking.length
-  ) {
-    return;
-  }
-
-
-  [
-    ranking[index],
-    ranking[newIndex]
-  ] = [
-    ranking[newIndex],
-    ranking[index]
-  ];
-
-
-  renderRankings();
-
-}
-
-
-/* =========================
-   LOAD RANKINGS
-========================= */
-
-function loadRankings() {
-
-  db.ref("rankings").on(
-    "value",
-    snapshot => {
-
-      const data =
-        snapshot.val() || {};
-
-
-      defenceRanking =
-        normalizeRanking(data.defence);
-
-
-      ballonRanking =
-        normalizeRanking(data.ballon);
-
-
-      renderRankings();
-
-    },
-
-    error => {
-
-      console.error(
-        "Firebase ranking read error:",
-        error
-      );
-
-      /*
-        Always show all 14 players even if
-        Firebase ranking data is missing.
-      */
-
-      defenceRanking =
-        normalizeRanking(defenceRanking);
-
-      ballonRanking =
-        normalizeRanking(ballonRanking);
-
-      renderRankings();
-
-    }
-  );
-
-}
-
-
-/* =========================
-   SAVE RANKINGS
-========================= */
-
-function saveRankings(type) {
-
-  if (!isEditor) {
-
-    alert("You must be signed in as an editor.");
-
-    return;
-  }
-
-
-  const ranking =
-    type === "defence"
-      ? defenceRanking
-      : ballonRanking;
-
-
-  db.ref("rankings/" + type)
-    .set(ranking)
-
-    .then(() => {
-
-      alert(
-        type === "defence"
-          ? "Golden Defence saved!"
-          : "Ballon d'Or saved!"
-      );
-
-    })
-
-    .catch(error => {
-
-      console.error(error);
-
-      alert(
-        "Could not save ranking:\n\n" +
-        error.message
-      );
-
-    });
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-loadPlayers();
-loadRankings();
-renderTable();
-rend
+      document.getElement
