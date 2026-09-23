@@ -45,7 +45,7 @@ header p {
 }
 
 .card {
-  background: rgba(14, 30, 22, .9);
+  background: rgba(14, 30, 22, .92);
   border: 1px solid rgba(255,255,255,.08);
   border-radius: 16px;
   padding: 14px;
@@ -94,10 +94,18 @@ button {
   background: #17452f;
   font-weight: 700;
   cursor: pointer;
+  transition: .15s;
 }
 
-button:hover {
+button:hover:not(:disabled) {
   background: #256747;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .login-btn,
@@ -115,6 +123,14 @@ button:hover {
   color: #9dbbaa;
   font-size: 12px;
   margin-top: 3px;
+}
+
+.firebase-good {
+  color: #6ed49e;
+}
+
+.firebase-bad {
+  color: #e78383;
 }
 
 
@@ -146,7 +162,7 @@ button:hover {
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 830px;
+  min-width: 850px;
 }
 
 th,
@@ -177,7 +193,7 @@ td:first-child {
 
 
 /* =========================
-   EDITOR
+   PLAYER STATS
 ========================= */
 
 .editor-grid {
@@ -187,16 +203,28 @@ td:first-child {
 }
 
 .player-card {
-  background: rgba(4,15,10,.65);
+  background: rgba(4,15,10,.68);
   border: 1px solid rgba(255,255,255,.07);
   border-radius: 12px;
   padding: 10px;
 }
 
+.player-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
 .player-title {
   font-size: 15px;
   font-weight: 800;
-  margin-bottom: 7px;
+}
+
+.lock-label {
+  font-size: 10px;
+  color: #8fa99a;
 }
 
 .edit-row {
@@ -236,6 +264,15 @@ td:first-child {
   min-width: 25px;
   text-align: center;
   color: #bfe3cf;
+}
+
+.notice {
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(225,175,60,.08);
+  border: 1px solid rgba(225,175,60,.12);
+  color: #cdbf96;
+  font-size: 12px;
 }
 
 
@@ -291,31 +328,9 @@ td:first-child {
   font-size: 14px;
 }
 
-.arrow-btn:disabled {
-  opacity: .3;
-  cursor: default;
-}
-
 .save-container {
   text-align: center;
   margin-top: 9px;
-}
-
-.notice {
-  padding: 10px;
-  border-radius: 8px;
-  background: rgba(225,175,60,.08);
-  border: 1px solid rgba(225,175,60,.12);
-  color: #cdbf96;
-  font-size: 12px;
-}
-
-.firebase-good {
-  color: #6ed49e;
-}
-
-.firebase-bad {
-  color: #e78383;
 }
 
 @media(max-width:700px) {
@@ -334,6 +349,10 @@ td:first-child {
   .card {
     padding: 10px;
   }
+
+  .login-row > * {
+    width: 100%;
+  }
 }
 </style>
 </head>
@@ -348,9 +367,9 @@ td:first-child {
 </header>
 
 
-<!-- =====================================================
+<!-- =========================
      LOGIN
-===================================================== -->
+========================= -->
 
 <div class="card">
 
@@ -375,13 +394,22 @@ td:first-child {
       id="password"
       type="password"
       placeholder="PIN / Password"
+      autocomplete="current-password"
     >
 
-    <button class="login-btn" id="loginBtn">
+    <button
+      type="button"
+      class="login-btn"
+      id="loginBtn"
+    >
       Sign In
     </button>
 
-    <button class="logout-btn hidden" id="logoutBtn">
+    <button
+      type="button"
+      class="logout-btn hidden"
+      id="logoutBtn"
+    >
       Sign Out
     </button>
 
@@ -394,14 +422,15 @@ td:first-child {
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
      STAT BOARD
-===================================================== -->
+========================= -->
 
 <div class="card">
 
   <div class="section-header">
     <h2>📊 Stat Board</h2>
+
     <span class="status">
       Live comparison
     </span>
@@ -465,84 +494,7 @@ td:first-child {
         </tr>
       </thead>
 
-      <tbody id="statBoardBody">
-
-        <!--
-          THESE 14 PLAYERS ARE DIRECTLY IN THE HTML.
-          FIREBASE IS NOT REQUIRED FOR THEM TO EXIST.
-        -->
-
-        <tr>
-          <td>Adi</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Aidan</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Artin</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Angelo</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Bryson</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Cameron</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Jack</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>John</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Leonardo</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Marc</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Matthew</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Sami</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Nathan</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-        <tr>
-          <td>Theo</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-        </tr>
-
-      </tbody>
+      <tbody id="statBoardBody"></tbody>
 
     </table>
 
@@ -551,37 +503,30 @@ td:first-child {
 </div>
 
 
-<!-- =====================================================
-     EDIT PLAYER STATS
-===================================================== -->
+<!-- =========================
+     INDIVIDUAL PLAYER STATS
+========================= -->
 
 <div class="card">
 
   <div class="section-header">
-    <h2>✏️ Edit Player Stats</h2>
+    <h2>✏️ Player Stats</h2>
 
     <span class="status" id="editorStatus">
-      Sign in to edit
+      View only
     </span>
   </div>
 
-  <div id="editorContent">
-
-    <div class="notice">
-      Sign in with an authorized account to edit player statistics.
-    </div>
-
-  </div>
+  <div id="editorContent"></div>
 
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
      RANKINGS
-===================================================== -->
+========================= -->
 
 <div class="ranking-grid">
-
 
   <!-- BALLON D'OR -->
 
@@ -596,6 +541,7 @@ td:first-child {
 
     <div class="section-header">
       <h2>🏆 Ballon d'Or</h2>
+
       <span class="status">
         Player ranking
       </span>
@@ -633,6 +579,7 @@ td:first-child {
 
     <div class="section-header">
       <h2>🛡️ Golden Defence</h2>
+
       <span class="status">
         Defence ranking
       </span>
@@ -661,9 +608,9 @@ td:first-child {
 </div>
 
 
-<!-- =====================================================
-     FIREBASE
-===================================================== -->
+<!-- =========================
+     FIREBASE SDK
+========================= -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -710,7 +657,7 @@ const DEFAULT_STATS = {
 
 
 /* =====================================================
-   CREATE LOCAL PLAYER DATA
+   LOCAL DATA
 ===================================================== */
 
 let playerStats = {};
@@ -794,7 +741,59 @@ const firebaseConfig = {
 
 
 /* =====================================================
-   STAT BOARD RENDER
+   HELPER FUNCTIONS
+===================================================== */
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+function cleanStats(stats) {
+
+  return {
+    goals: Math.max(0, Number(stats?.goals) || 0),
+    assists: Math.max(0, Number(stats?.assists) || 0),
+    saves: Math.max(0, Number(stats?.saves) || 0),
+    cleanSheets: Math.max(0, Number(stats?.cleanSheets) || 0),
+    yellowCards: Math.max(0, Number(stats?.yellowCards) || 0),
+    redCards: Math.max(0, Number(stats?.redCards) || 0),
+    mvps: Math.max(0, Number(stats?.mvps) || 0)
+  };
+
+}
+
+
+function setFirebaseStatus(message, good = true) {
+
+  const element =
+    document.getElementById("firebaseStatus");
+
+  if (!element) return;
+
+  element.textContent = message;
+
+  element.classList.remove(
+    "firebase-good",
+    "firebase-bad"
+  );
+
+  element.classList.add(
+    good ? "firebase-good" : "firebase-bad"
+  );
+
+}
+
+
+/* =====================================================
+   STAT BOARD
 ===================================================== */
 
 function renderStatBoard() {
@@ -881,7 +880,7 @@ function renderStatBoard() {
 
 
 /* =====================================================
-   EDITOR RENDER
+   PLAYER STATS
 ===================================================== */
 
 function renderEditor() {
@@ -891,15 +890,24 @@ function renderEditor() {
 
   if (!container) return;
 
-  if (!auth || !auth.currentUser) {
+  const canEdit =
+    !!(auth && auth.currentUser);
 
-    container.innerHTML = `
-      <div class="notice">
-        Sign in with an authorized account to edit player statistics.
-      </div>
-    `;
+  const editorStatus =
+    document.getElementById("editorStatus");
 
-    return;
+  if (editorStatus) {
+
+    editorStatus.textContent =
+      canEdit
+        ? "✏️ Editing enabled"
+        : "🔒 View only";
+
+    editorStatus.classList.toggle(
+      "firebase-good",
+      canEdit
+    );
+
   }
 
   container.innerHTML = "";
@@ -922,19 +930,35 @@ function renderEditor() {
       "player-card";
 
     card.innerHTML = `
-      <div class="player-title">
-        ${escapeHTML(name)}
+
+      <div class="player-title-row">
+
+        <div class="player-title">
+          ${escapeHTML(name)}
+        </div>
+
+        <div class="lock-label">
+          ${canEdit ? "EDITING" : "VIEW ONLY"}
+        </div>
+
       </div>
 
-      ${makeEditRow(name, "goals", "Goals")}
-      ${makeEditRow(name, "assists", "Assists")}
-      ${makeEditRow(name, "saves", "Goalie Saves")}
-      ${makeEditRow(name, "cleanSheets", "Clean Sheets")}
-      ${makeEditRow(name, "yellowCards", "Yellow Cards")}
-      ${makeEditRow(name, "redCards", "Red Cards")}
-      ${makeEditRow(name, "mvps", "MVPs")}
+      ${makeEditRow(name, "goals", "Goals", canEdit)}
+
+      ${makeEditRow(name, "assists", "Assists", canEdit)}
+
+      ${makeEditRow(name, "saves", "Goalie Saves", canEdit)}
+
+      ${makeEditRow(name, "cleanSheets", "Clean Sheets", canEdit)}
+
+      ${makeEditRow(name, "yellowCards", "Yellow Cards", canEdit)}
+
+      ${makeEditRow(name, "redCards", "Red Cards", canEdit)}
+
+      ${makeEditRow(name, "mvps", "MVPs", canEdit)}
 
       <div class="edit-row">
+
         <span class="edit-label">
           G+A
         </span>
@@ -945,6 +969,7 @@ function renderEditor() {
             (Number(stats.assists) || 0)
           }
         </span>
+
       </div>
     `;
 
@@ -957,7 +982,7 @@ function renderEditor() {
 }
 
 
-function makeEditRow(name, stat, label) {
+function makeEditRow(name, stat, label, canEdit) {
 
   const value =
     Number(
@@ -968,6 +993,7 @@ function makeEditRow(name, stat, label) {
     encodeURIComponent(name);
 
   return `
+
     <div class="edit-row">
 
       <span class="edit-label">
@@ -977,6 +1003,8 @@ function makeEditRow(name, stat, label) {
       <div class="counter">
 
         <button
+          type="button"
+          ${canEdit ? "" : "disabled"}
           onclick="changeStat('${encoded}','${stat}',-1)"
         >
           −
@@ -987,6 +1015,8 @@ function makeEditRow(name, stat, label) {
         </span>
 
         <button
+          type="button"
+          ${canEdit ? "" : "disabled"}
           onclick="changeStat('${encoded}','${stat}',1)"
         >
           +
@@ -996,6 +1026,7 @@ function makeEditRow(name, stat, label) {
 
     </div>
   `;
+
 }
 
 
@@ -1022,6 +1053,20 @@ function(encodedName, stat, amount) {
     return;
   }
 
+  const validStats = [
+    "goals",
+    "assists",
+    "saves",
+    "cleanSheets",
+    "yellowCards",
+    "redCards",
+    "mvps"
+  ];
+
+  if (!validStats.includes(stat)) {
+    return;
+  }
+
   if (!playerStats[name]) {
 
     playerStats[name] = {
@@ -1039,24 +1084,20 @@ function(encodedName, stat, amount) {
   playerStats[name][stat] =
     newValue;
 
-  /*
-    Update screen immediately.
-  */
-
   renderStatBoard();
   renderEditor();
 
-  /*
-    Save to Firebase.
-  */
-
-  saveStat(name, stat, newValue);
+  saveStat(
+    name,
+    stat,
+    newValue
+  );
 
 };
 
 
 /* =====================================================
-   SAVE STAT TO FIREBASE
+   SAVE STAT
 ===================================================== */
 
 function saveStat(name, stat, value) {
@@ -1067,11 +1108,21 @@ function saveStat(name, stat, value) {
     !auth ||
     !auth.currentUser
   ) {
+
+    setFirebaseStatus(
+      "Not connected",
+      false
+    );
+
     return;
+
   }
 
   db.ref(
-    "players/" + name + "/" + stat
+    "players/" +
+    name +
+    "/" +
+    stat
   )
   .set(value)
 
@@ -1092,11 +1143,52 @@ function saveStat(name, stat, value) {
     );
 
     setFirebaseStatus(
-      "Firebase connected • Save failed",
+      "Connected • Save failed",
       false
     );
 
+    alert(
+      "The stat changed on screen, but Firebase could not save it.\n\n" +
+      error.message
+    );
+
   });
+
+}
+
+
+/* =====================================================
+   RANKING NORMALIZATION
+===================================================== */
+
+function normalizeRanking(data) {
+
+  const result = [];
+
+  if (Array.isArray(data)) {
+
+    data.forEach(name => {
+
+      if (
+        PLAYER_NAMES.includes(name) &&
+        !result.includes(name)
+      ) {
+        result.push(name);
+      }
+
+    });
+
+  }
+
+  PLAYER_NAMES.forEach(name => {
+
+    if (!result.includes(name)) {
+      result.push(name);
+    }
+
+  });
+
+  return result;
 
 }
 
@@ -1114,6 +1206,9 @@ function renderBallonRanking() {
 
   container.innerHTML = "";
 
+  const canEdit =
+    !!(auth && auth.currentUser);
+
   ballonRanking.forEach((name, index) => {
 
     const row =
@@ -1123,6 +1218,7 @@ function renderBallonRanking() {
       "rank-row";
 
     row.innerHTML = `
+
       <span class="rank-number">
         ${index + 1}
       </span>
@@ -1132,20 +1228,23 @@ function renderBallonRanking() {
       </span>
 
       <button
+        type="button"
         class="arrow-btn"
-        onclick="moveBallon(${index},-1)"
-        ${index === 0 ? "disabled" : ""}
+        ${!canEdit || index === 0 ? "disabled" : ""}
+        onclick="moveBallon(${index}, -1)"
       >
         ↑
       </button>
 
       <button
+        type="button"
         class="arrow-btn"
-        onclick="moveBallon(${index},1)"
-        ${index === ballonRanking.length - 1 ? "disabled" : ""}
+        ${!canEdit || index === ballonRanking.length - 1 ? "disabled" : ""}
+        onclick="moveBallon(${index}, 1)"
       >
         ↓
       </button>
+
     `;
 
     container.appendChild(row);
@@ -1158,4 +1257,698 @@ function renderBallonRanking() {
 window.moveBallon =
 function(index, direction) {
 
-  if (!auth |
+  if (!auth || !auth.currentUser) {
+    return;
+  }
+
+  const newIndex =
+    index + direction;
+
+  if (
+    index < 0 ||
+    index >= ballonRanking.length ||
+    newIndex < 0 ||
+    newIndex >= ballonRanking.length
+  ) {
+    return;
+  }
+
+  const temp =
+    ballonRanking[index];
+
+  ballonRanking[index] =
+    ballonRanking[newIndex];
+
+  ballonRanking[newIndex] =
+    temp;
+
+  renderBallonRanking();
+
+};
+
+
+/* =====================================================
+   GOLDEN DEFENCE
+===================================================== */
+
+function renderDefenceRanking() {
+
+  const container =
+    document.getElementById("defenceRanking");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const canEdit =
+    !!(auth && auth.currentUser);
+
+  defenceRanking.forEach((name, index) => {
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "rank-row";
+
+    row.innerHTML = `
+
+      <span class="rank-number">
+        ${index + 1}
+      </span>
+
+      <span class="rank-name">
+        ${escapeHTML(name)}
+      </span>
+
+      <button
+        type="button"
+        class="arrow-btn"
+        ${!canEdit || index === 0 ? "disabled" : ""}
+        onclick="moveDefence(${index}, -1)"
+      >
+        ↑
+      </button>
+
+      <button
+        type="button"
+        class="arrow-btn"
+        ${!canEdit || index === defenceRanking.length - 1 ? "disabled" : ""}
+        onclick="moveDefence(${index}, 1)"
+      >
+        ↓
+      </button>
+
+    `;
+
+    container.appendChild(row);
+
+  });
+
+}
+
+
+window.moveDefence =
+function(index, direction) {
+
+  if (!auth || !auth.currentUser) {
+    return;
+  }
+
+  const newIndex =
+    index + direction;
+
+  if (
+    index < 0 ||
+    index >= defenceRanking.length ||
+    newIndex < 0 ||
+    newIndex >= defenceRanking.length
+  ) {
+    return;
+  }
+
+  const temp =
+    defenceRanking[index];
+
+  defenceRanking[index] =
+    defenceRanking[newIndex];
+
+  defenceRanking[newIndex] =
+    temp;
+
+  renderDefenceRanking();
+
+};
+
+
+/* =====================================================
+   SAVE RANKINGS
+===================================================== */
+
+function saveRanking(type) {
+
+  if (
+    !firebaseReady ||
+    !db ||
+    !auth ||
+    !auth.currentUser
+  ) {
+
+    alert(
+      "You must be signed in to save rankings."
+    );
+
+    return;
+
+  }
+
+  const ranking =
+    type === "ballon"
+      ? ballonRanking
+      : defenceRanking;
+
+  db.ref(
+    "rankings/" + type
+  )
+  .set(ranking)
+
+  .then(() => {
+
+    setFirebaseStatus(
+      "Firebase connected • Ranking saved",
+      true
+    );
+
+  })
+
+  .catch(error => {
+
+    console.error(
+      "Ranking save error:",
+      error
+    );
+
+    setFirebaseStatus(
+      "Connected • Ranking save failed",
+      false
+    );
+
+    alert(
+      "Firebase could not save the ranking.\n\n" +
+      error.message
+    );
+
+  });
+
+}
+
+
+/* =====================================================
+   LOAD PLAYER DATA
+===================================================== */
+
+function loadPlayers() {
+
+  if (!db) return;
+
+  db.ref("players")
+    .on(
+      "value",
+
+      snapshot => {
+
+        const data =
+          snapshot.val() || {};
+
+        PLAYER_NAMES.forEach(name => {
+
+          playerStats[name] =
+            cleanStats(
+              data[name] || DEFAULT_STATS
+            );
+
+        });
+
+        renderStatBoard();
+        renderEditor();
+
+        setFirebaseStatus(
+          "Firebase connected • Live",
+          true
+        );
+
+      },
+
+      error => {
+
+        console.error(
+          "Firebase players error:",
+          error
+        );
+
+        setFirebaseStatus(
+          "Firebase read failed",
+          false
+        );
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   LOAD RANKINGS
+===================================================== */
+
+function loadRankings() {
+
+  if (!db) return;
+
+  db.ref("rankings")
+    .on(
+      "value",
+
+      snapshot => {
+
+        const data =
+          snapshot.val() || {};
+
+        ballonRanking =
+          normalizeRanking(
+            data.ballon
+          );
+
+        defenceRanking =
+          normalizeRanking(
+            data.defence
+          );
+
+        renderBallonRanking();
+        renderDefenceRanking();
+
+      },
+
+      error => {
+
+        console.error(
+          "Firebase rankings error:",
+          error
+        );
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   AUTH UI
+===================================================== */
+
+function updateAuthUI(user) {
+
+  const loginBtn =
+    document.getElementById("loginBtn");
+
+  const logoutBtn =
+    document.getElementById("logoutBtn");
+
+  const password =
+    document.getElementById("password");
+
+  const loginStatus =
+    document.getElementById("loginStatus");
+
+  if (user) {
+
+    loginBtn.classList.add("hidden");
+
+    logoutBtn.classList.remove("hidden");
+
+    password.value = "";
+
+    loginStatus.textContent =
+      "Signed in • Editing enabled";
+
+    loginStatus.classList.add(
+      "firebase-good"
+    );
+
+  } else {
+
+    loginBtn.classList.remove("hidden");
+
+    logoutBtn.classList.add("hidden");
+
+    loginStatus.textContent =
+      "View-only mode";
+
+    loginStatus.classList.remove(
+      "firebase-good"
+    );
+
+  }
+
+  renderEditor();
+  renderBallonRanking();
+  renderDefenceRanking();
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function login() {
+
+  const username =
+    document.getElementById("username").value;
+
+  const password =
+    document.getElementById("password").value;
+
+  const loginStatus =
+    document.getElementById("loginStatus");
+
+  const account =
+    EDITOR_ACCOUNTS[username];
+
+  if (!account) {
+
+    loginStatus.textContent =
+      "Invalid username.";
+
+    return;
+
+  }
+
+  if (!password) {
+
+    loginStatus.textContent =
+      "Enter your PIN / password.";
+
+    return;
+
+  }
+
+  if (!auth) {
+
+    loginStatus.textContent =
+      "Firebase Authentication is not connected.";
+
+    return;
+
+  }
+
+  loginStatus.textContent =
+    "Signing in...";
+
+  try {
+
+    await auth.signInWithEmailAndPassword(
+      account.email,
+      password
+    );
+
+    loginStatus.textContent =
+      "Signed in as " + account.name;
+
+  } catch (error) {
+
+    console.error(
+      "Login error:",
+      error
+    );
+
+    let message =
+      "Sign in failed.";
+
+    switch (error.code) {
+
+      case "auth/invalid-credential":
+        message =
+          "Incorrect PIN / password.";
+        break;
+
+      case "auth/wrong-password":
+        message =
+          "Incorrect PIN / password.";
+        break;
+
+      case "auth/user-not-found":
+        message =
+          "This Firebase account does not exist.";
+        break;
+
+      case "auth/operation-not-allowed":
+        message =
+          "Email/Password sign-in is not enabled in Firebase.";
+        break;
+
+      case "auth/too-many-requests":
+        message =
+          "Too many attempts. Try again later.";
+        break;
+
+      case "auth/network-request-failed":
+        message =
+          "Network error. Check your internet connection.";
+        break;
+
+      default:
+        message =
+          error.code +
+          ": " +
+          error.message;
+
+    }
+
+    loginStatus.textContent =
+      message;
+
+  }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout() {
+
+  if (!auth) return;
+
+  try {
+
+    await auth.signOut();
+
+  } catch (error) {
+
+    console.error(
+      "Logout error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SORT BUTTONS
+===================================================== */
+
+function setupSorting() {
+
+  document
+    .querySelectorAll(".sort-btn")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          currentSort =
+            button.dataset.sort;
+
+          document
+            .querySelectorAll(".sort-btn")
+            .forEach(btn => {
+
+              btn.classList.toggle(
+                "active",
+                btn === button
+              );
+
+            });
+
+          renderStatBoard();
+
+        }
+      );
+
+    });
+
+}
+
+
+/* =====================================================
+   BUTTON EVENTS
+===================================================== */
+
+function setupButtons() {
+
+  document
+    .getElementById("loginBtn")
+    .addEventListener(
+      "click",
+      login
+    );
+
+  document
+    .getElementById("password")
+    .addEventListener(
+      "keydown",
+      event => {
+
+        if (event.key === "Enter") {
+          login();
+        }
+
+      }
+    );
+
+  document
+    .getElementById("logoutBtn")
+    .addEventListener(
+      "click",
+      logout
+    );
+
+  document
+    .getElementById("saveBallon")
+    .addEventListener(
+      "click",
+      () => saveRanking("ballon")
+    );
+
+  document
+    .getElementById("saveDefence")
+    .addEventListener(
+      "click",
+      () => saveRanking("defence")
+    );
+
+}
+
+
+/* =====================================================
+   START FIREBASE
+===================================================== */
+
+function startFirebase() {
+
+  try {
+
+    if (
+      typeof firebase === "undefined"
+    ) {
+
+      setFirebaseStatus(
+        "Firebase SDK failed to load",
+        false
+      );
+
+      return;
+
+    }
+
+    firebase.initializeApp(
+      firebaseConfig
+    );
+
+    auth =
+      firebase.auth();
+
+    db =
+      firebase.database();
+
+    firebaseReady = true;
+
+    setFirebaseStatus(
+      "Firebase connected",
+      true
+    );
+
+
+    /* -------------------------
+       AUTH LISTENER
+    ------------------------- */
+
+    auth.onAuthStateChanged(
+      user => {
+
+        updateAuthUI(user);
+
+      },
+
+      error => {
+
+        console.error(
+          "Auth state error:",
+          error
+        );
+
+        setFirebaseStatus(
+          "Authentication error",
+          false
+        );
+
+      }
+    );
+
+
+    /* -------------------------
+       DATABASE LISTENERS
+    ------------------------- */
+
+    loadPlayers();
+
+    loadRankings();
+
+  } catch (error) {
+
+    console.error(
+      "Firebase initialization error:",
+      error
+    );
+
+    setFirebaseStatus(
+      "Firebase connection failed",
+      false
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   INITIALIZE PAGE
+===================================================== */
+
+function initializePage() {
+
+  renderStatBoard();
+
+  renderEditor();
+
+  renderBallonRanking();
+
+  renderDefenceRanking();
+
+  setupSorting();
+
+  setupButtons();
+
+  startFirebase();
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  initializePage
+);
+
+</script>
+
+</body>
+</html>
