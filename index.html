@@ -7,6 +7,7 @@
 <title>Saint Matthews Recess Soccer Live Stats</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -37,6 +38,7 @@ h1 {
   margin-top: 9px;
   font-size: 14px;
 }
+
 
 /* LOGIN */
 
@@ -78,6 +80,7 @@ h1 {
   font-size: 14px;
 }
 
+
 /* SORT BUTTONS */
 
 .controls {
@@ -102,6 +105,7 @@ button {
   color: #111;
 }
 
+
 /* SECTIONS */
 
 .section {
@@ -116,6 +120,7 @@ button {
   font-size: 26px;
 }
 
+
 /* TROPHY IMAGES */
 
 .trophy-image {
@@ -126,6 +131,7 @@ button {
   margin: 0 auto 18px;
   border-radius: 15px;
 }
+
 
 /* PLAYER GRID */
 
@@ -192,6 +198,7 @@ button {
   font-size: 18px;
 }
 
+
 /* TABLE */
 
 .table-container {
@@ -200,7 +207,7 @@ button {
 
 table {
   width: 100%;
-  min-width: 700px;
+  min-width: 850px;
   border-collapse: collapse;
   background: #151f31;
   border-radius: 15px;
@@ -217,6 +224,7 @@ td {
 th {
   background: #1e2c43;
 }
+
 
 /* RANKINGS */
 
@@ -272,6 +280,7 @@ th {
   display: none !important;
 }
 
+
 @media (max-width: 600px) {
 
   h1 {
@@ -291,11 +300,15 @@ th {
   td {
     padding: 7px 4px;
   }
+
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -310,6 +323,7 @@ Connecting...
 </div>
 
 </header>
+
 
 
 <!-- LOGIN -->
@@ -346,12 +360,14 @@ Angelo
 
 </select>
 
+
 <input
 type="password"
 id="pin"
 placeholder="Enter PIN"
 inputmode="numeric"
 >
+
 
 <button
 class="login-button"
@@ -361,12 +377,14 @@ onclick="editorLogin()">
 
 </button>
 
+
 <div
 class="login-message"
 id="loginMessage">
 </div>
 
 </div>
+
 
 <div id="editorInfo" class="hidden">
 
@@ -383,6 +401,7 @@ Log Out
 </div>
 
 </div>
+
 
 
 <!-- SORT BUTTONS -->
@@ -413,7 +432,16 @@ Sort: MVPs
 Sort: Clean Sheets
 </button>
 
+<button class="sort" onclick="sortBy('yellowCards')">
+Sort: Yellow Cards
+</button>
+
+<button class="sort" onclick="sortBy('redCards')">
+Sort: Red Cards
+</button>
+
 </div>
+
 
 
 <!-- PLAYER LEADERBOARD -->
@@ -429,14 +457,27 @@ Sort: Clean Sheets
 <thead>
 
 <tr>
+
 <th>#</th>
+
 <th>Player</th>
+
 <th>Goals</th>
+
 <th>Assists</th>
+
 <th>G+A</th>
+
 <th>Saves</th>
+
 <th>MVPs</th>
+
 <th>Clean Sheets</th>
+
+<th>🟨 Yellow</th>
+
+<th>🟥 Red</th>
+
 </tr>
 
 </thead>
@@ -450,9 +491,11 @@ Sort: Clean Sheets
 </section>
 
 
+
 <!-- PLAYER CARDS -->
 
 <main class="grid" id="players"></main>
+
 
 
 <!-- BALLON D'OR -->
@@ -482,6 +525,7 @@ alt="Ballon d'Or Trophy"
 </section>
 
 
+
 <!-- GOLDEN DEFENCE -->
 
 <section class="section">
@@ -509,6 +553,7 @@ alt="Golden Defence Trophy"
 </section>
 
 
+
 <!-- FIREBASE -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -519,6 +564,9 @@ alt="Golden Defence Trophy"
 
 
 <script>
+
+
+/* FIREBASE CONFIG */
 
 const firebaseConfig = {
 
@@ -551,6 +599,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+
 const auth = firebase.auth();
 
 const db = firebase.database();
@@ -558,6 +607,7 @@ const db = firebase.database();
 const statsRef = db.ref("players");
 
 const rankingsRef = db.ref("rankings");
+
 
 
 /* PLAYERS */
@@ -582,30 +632,56 @@ const playerNames = [
 ];
 
 
+
+/*
+  ALL PLAYER STATS
+
+  MVPs and Clean Sheets are kept.
+
+  Yellow Cards and Red Cards are added.
+*/
+
 let players = {};
+
 
 playerNames.forEach(function(name) {
 
   players[name] = {
 
     goals: 0,
+
     assists: 0,
+
     saves: 0,
+
     mvp: 0,
-    cleanSheets: 0
+
+    cleanSheets: 0,
+
+    yellowCards: 0,
+
+    redCards: 0
 
   };
 
 });
 
 
-let defenseRanking = [...playerNames];
 
-let ballonRanking = [...playerNames];
+/* RANKINGS */
+
+let defenseRanking =
+  [...playerNames];
+
+let ballonRanking =
+  [...playerNames];
+
+
 
 let currentSort = "ga";
 
 let isEditor = false;
+
 
 
 /* EDITOR UIDS */
@@ -627,6 +703,7 @@ const editors = {
 };
 
 
+
 /* EMAIL ACCOUNTS */
 
 const accounts = {
@@ -646,6 +723,7 @@ const accounts = {
 };
 
 
+
 /* AUTH */
 
 auth.onAuthStateChanged(function(user) {
@@ -654,9 +732,13 @@ auth.onAuthStateChanged(function(user) {
 
     isEditor = true;
 
-    showEditor(editors[user.uid]);
+    showEditor(
+      editors[user.uid]
+    );
 
-  } else {
+  }
+
+  else {
 
     isEditor = false;
 
@@ -664,9 +746,11 @@ auth.onAuthStateChanged(function(user) {
 
   }
 
+
   render();
 
 });
+
 
 
 /* LOGIN */
@@ -674,13 +758,21 @@ auth.onAuthStateChanged(function(user) {
 function editorLogin() {
 
   const name =
-    document.getElementById("editorName").value;
+    document.getElementById(
+      "editorName"
+    ).value;
+
 
   const pin =
-    document.getElementById("pin").value;
+    document.getElementById(
+      "pin"
+    ).value;
+
 
   const message =
-    document.getElementById("loginMessage");
+    document.getElementById(
+      "loginMessage"
+    );
 
 
   if (!name) {
@@ -703,38 +795,44 @@ function editorLogin() {
   }
 
 
-  const email = accounts[name];
+  const email =
+    accounts[name];
+
 
   message.textContent =
     "Logging in...";
 
 
-  auth.signInWithEmailAndPassword(
-    email,
-    pin
-  )
+  auth
+    .signInWithEmailAndPassword(
+      email,
+      pin
+    )
 
-  .then(function() {
+    .then(function() {
 
-    message.textContent = "";
+      message.textContent = "";
 
-    document.getElementById("pin").value = "";
+      document.getElementById(
+        "pin"
+      ).value = "";
 
-  })
+    })
 
-  .catch(function(error) {
+    .catch(function(error) {
 
-    console.error(
-      "Login error:",
-      error
-    );
+      console.error(
+        "Login error:",
+        error
+      );
 
-    message.textContent =
-      "❌ Incorrect name or PIN.";
+      message.textContent =
+        "❌ Incorrect name or PIN.";
 
-  });
+    });
 
 }
+
 
 
 /* LOGOUT */
@@ -746,6 +844,7 @@ function editorLogout() {
 }
 
 
+
 /* VIEWER */
 
 function showViewer() {
@@ -754,14 +853,17 @@ function showViewer() {
     .getElementById("loginForm")
     .classList.remove("hidden");
 
+
   document
     .getElementById("editorInfo")
     .classList.add("hidden");
+
 
   document
     .getElementById("viewerMessage")
     .textContent =
       "👀 Viewing only — Login to edit";
+
 
   document
     .getElementById("status")
@@ -769,6 +871,7 @@ function showViewer() {
       "🟢 Live stats — View only";
 
 }
+
 
 
 /* EDITOR */
@@ -779,13 +882,16 @@ function showEditor(name) {
     .getElementById("loginForm")
     .classList.add("hidden");
 
+
   document
     .getElementById("viewerMessage")
     .textContent = "";
 
+
   document
     .getElementById("editorInfo")
     .classList.remove("hidden");
+
 
   document
     .getElementById("loggedInName")
@@ -793,6 +899,7 @@ function showEditor(name) {
       "🟢 Logged in as " +
       name +
       " — Editor";
+
 
   document
     .getElementById("status")
@@ -802,94 +909,159 @@ function showEditor(name) {
 }
 
 
+
 /* LOAD STATS */
 
-statsRef.on("value", function(snapshot) {
+statsRef.on(
+  "value",
+  function(snapshot) {
 
-  const data = snapshot.val();
+    const data =
+      snapshot.val();
 
-  if (data) {
 
-    playerNames.forEach(function(name) {
+    if (data) {
 
-      if (data[name]) {
+      playerNames.forEach(
+        function(name) {
 
-        players[name] = {
+          if (data[name]) {
 
-          goals:
-            Number(data[name].goals) || 0,
+            players[name] = {
 
-          assists:
-            Number(data[name].assists) || 0,
+              goals:
+                Number(
+                  data[name].goals
+                ) || 0,
 
-          saves:
-            Number(data[name].saves) || 0,
+              assists:
+                Number(
+                  data[name].assists
+                ) || 0,
 
-          mvp:
-            Number(data[name].mvp) || 0,
+              saves:
+                Number(
+                  data[name].saves
+                ) || 0,
 
-          cleanSheets:
-            Number(data[name].cleanSheets) || 0
+              mvp:
+                Number(
+                  data[name].mvp
+                ) || 0,
 
-        };
+              cleanSheets:
+                Number(
+                  data[name].cleanSheets
+                ) || 0,
 
-      }
+              yellowCards:
+                Number(
+                  data[name].yellowCards
+                ) || 0,
 
-    });
+              redCards:
+                Number(
+                  data[name].redCards
+                ) || 0
+
+            };
+
+          }
+
+        }
+      );
+
+    }
+
+
+    render();
+
+  },
+
+  function(error) {
+
+    console.error(
+      "Firebase read error:",
+      error
+    );
+
+
+    document
+      .getElementById("status")
+      .textContent =
+        "🔴 Firebase database error";
 
   }
 
-  render();
+);
 
-}, function(error) {
-
-  console.error(
-    "Firebase read error:",
-    error
-  );
-
-  document.getElementById("status")
-    .textContent =
-      "🔴 Firebase database error";
-
-});
 
 
 /* LOAD RANKINGS */
 
-rankingsRef.on("value", function(snapshot) {
+rankingsRef.on(
+  "value",
+  function(snapshot) {
 
-  const data = snapshot.val();
+    const data =
+      snapshot.val();
 
-  if (data) {
 
-    if (Array.isArray(data.defense)) {
+    if (data) {
 
-      defenseRanking =
-        data.defense.filter(function(name) {
+      /*
+        Supports your current Firebase
+        ranking names.
+      */
 
-          return playerNames.includes(name);
+      if (
+        Array.isArray(
+          data.defense
+        )
+      ) {
 
-        });
+        defenseRanking =
+          data.defense.filter(
+            function(name) {
+
+              return playerNames.includes(
+                name
+              );
+
+            }
+          );
+
+      }
+
+
+      if (
+        Array.isArray(
+          data.ballon
+        )
+      ) {
+
+        ballonRanking =
+          data.ballon.filter(
+            function(name) {
+
+              return playerNames.includes(
+                name
+              );
+
+            }
+          );
+
+      }
 
     }
 
-    if (Array.isArray(data.ballon)) {
 
-      ballonRanking =
-        data.ballon.filter(function(name) {
-
-          return playerNames.includes(name);
-
-        });
-
-    }
+    render();
 
   }
 
-  render();
+);
 
-});
 
 
 /* SAVE PLAYERS */
@@ -906,9 +1078,13 @@ function savePlayers() {
 
   }
 
-  return statsRef.set(players);
+
+  return statsRef.set(
+    players
+  );
 
 }
+
 
 
 /* CHANGE STAT */
@@ -931,11 +1107,19 @@ function changeStat(
 
 
   players[name][stat] =
-    Number(players[name][stat] || 0)
-    + amount;
+    Number(
+      players[name][stat] || 0
+    ) + amount;
 
 
-  if (players[name][stat] < 0) {
+  /*
+    Never allow a stat
+    to go below zero.
+  */
+
+  if (
+    players[name][stat] < 0
+  ) {
 
     players[name][stat] = 0;
 
@@ -965,6 +1149,7 @@ function changeStat(
         error
       );
 
+
       alert(
         "⚠️ The number changed on screen, " +
         "but Firebase could not save it.\n\n" +
@@ -974,6 +1159,7 @@ function changeStat(
     });
 
 }
+
 
 
 /* SORT */
@@ -987,84 +1173,125 @@ function sortBy(type) {
 }
 
 
+
 /* LEADERBOARD SORTING */
 
 function getSortedPlayers(type) {
 
-  return [...playerNames].sort(function(a, b) {
+  return [...playerNames].sort(
+    function(a, b) {
 
-    const A = players[a];
-    const B = players[b];
+      const A = players[a];
 
-    if (type === "ga") {
+      const B = players[b];
 
-      const totalA =
-        Number(A.goals || 0) +
-        Number(A.assists || 0);
 
-      const totalB =
-        Number(B.goals || 0) +
-        Number(B.assists || 0);
+      if (type === "ga") {
 
-      return totalB - totalA;
+        const totalA =
+          Number(A.goals || 0) +
+          Number(A.assists || 0);
+
+
+        const totalB =
+          Number(B.goals || 0) +
+          Number(B.assists || 0);
+
+
+        return totalB - totalA;
+
+      }
+
+
+      if (type === "goals") {
+
+        return (
+          Number(B.goals || 0) -
+          Number(A.goals || 0)
+        );
+
+      }
+
+
+      if (type === "assists") {
+
+        return (
+          Number(B.assists || 0) -
+          Number(A.assists || 0)
+        );
+
+      }
+
+
+      if (type === "saves") {
+
+        return (
+          Number(B.saves || 0) -
+          Number(A.saves || 0)
+        );
+
+      }
+
+
+      if (type === "mvp") {
+
+        return (
+          Number(B.mvp || 0) -
+          Number(A.mvp || 0)
+        );
+
+      }
+
+
+      if (type === "cleanSheets") {
+
+        return (
+          Number(
+            B.cleanSheets || 0
+          ) -
+          Number(
+            A.cleanSheets || 0
+          )
+        );
+
+      }
+
+
+      if (type === "yellowCards") {
+
+        return (
+          Number(
+            B.yellowCards || 0
+          ) -
+          Number(
+            A.yellowCards || 0
+          )
+        );
+
+      }
+
+
+      if (type === "redCards") {
+
+        return (
+          Number(
+            B.redCards || 0
+          ) -
+          Number(
+            A.redCards || 0
+          )
+        );
+
+      }
+
+
+      return 0;
+
     }
-
-
-    if (type === "goals") {
-
-      return (
-        Number(B.goals || 0) -
-        Number(A.goals || 0)
-      );
-
-    }
-
-
-    if (type === "assists") {
-
-      return (
-        Number(B.assists || 0) -
-        Number(A.assists || 0)
-      );
-
-    }
-
-
-    if (type === "saves") {
-
-      return (
-        Number(B.saves || 0) -
-        Number(A.saves || 0)
-      );
-
-    }
-
-
-    if (type === "mvp") {
-
-      return (
-        Number(B.mvp || 0) -
-        Number(A.mvp || 0)
-      );
-
-    }
-
-
-    if (type === "cleanSheets") {
-
-      return (
-        Number(B.cleanSheets || 0) -
-        Number(A.cleanSheets || 0)
-      );
-
-    }
-
-
-    return 0;
-
-  });
+  );
 
 }
+
 
 
 /* SAVE RANKINGS */
@@ -1072,15 +1299,23 @@ function getSortedPlayers(type) {
 function saveRankings() {
 
   if (!isEditor) {
+
     return;
+
   }
+
 
   rankingsRef.set({
 
-    defense: defenseRanking,
-    ballon: ballonRanking
+    defense:
+      defenseRanking,
 
-  }).catch(function(error) {
+    ballon:
+      ballonRanking
+
+  })
+
+  .catch(function(error) {
 
     console.error(
       "Ranking save error:",
@@ -1090,6 +1325,7 @@ function saveRankings() {
   });
 
 }
+
 
 
 /* MOVE RANKING */
@@ -1128,8 +1364,10 @@ function movePlayer(
   const temp =
     ranking[index];
 
+
   ranking[index] =
     ranking[newIndex];
+
 
   ranking[newIndex] =
     temp;
@@ -1142,74 +1380,109 @@ function movePlayer(
 }
 
 
+
 /* PLAYER CARDS */
 
 function renderPlayers() {
 
   const container =
-    document.getElementById("players");
+    document.getElementById(
+      "players"
+    );
+
 
   container.innerHTML = "";
 
 
   /*
-    IMPORTANT:
-    Player cards ALWAYS stay in
-    the original playerNames order.
-
-    Adding a goal or assist will
-    NOT move the cards.
+    Player cards ALWAYS stay
+    in the original playerNames order.
   */
 
-  playerNames.forEach(function(name) {
+  playerNames.forEach(
+    function(name) {
 
-    const p = players[name];
-
-    const card =
-      document.createElement("div");
-
-    card.className = "card";
+      const p =
+        players[name];
 
 
-    function statHTML(label, stat) {
+      const card =
+        document.createElement(
+          "div"
+        );
 
-      if (isEditor) {
+
+      card.className =
+        "card";
+
+
+      function statHTML(
+        label,
+        stat
+      ) {
+
+        if (isEditor) {
+
+          return `
+
+            <div class="stat">
+
+              <span>
+                ${label}
+              </span>
+
+              <button
+                class="minus"
+                onclick="
+                  changeStat(
+                    '${name}',
+                    '${stat}',
+                    -1
+                  )
+                "
+              >
+                −
+              </button>
+
+              <div class="value">
+                ${p[stat]}
+              </div>
+
+              <button
+                class="plus"
+                onclick="
+                  changeStat(
+                    '${name}',
+                    '${stat}',
+                    1
+                  )
+                "
+              >
+                +
+              </button>
+
+            </div>
+
+          `;
+
+        }
+
 
         return `
 
           <div class="stat">
 
-            <span>${label}</span>
+            <span>
+              ${label}
+            </span>
 
-            <button
-              class="minus"
-              onclick="
-                changeStat(
-                  '${name}',
-                  '${stat}',
-                  -1
-                )
-              "
-            >
-              −
-            </button>
+            <div></div>
 
             <div class="value">
               ${p[stat]}
             </div>
 
-            <button
-              class="plus"
-              onclick="
-                changeStat(
-                  '${name}',
-                  '${stat}',
-                  1
-                )
-              "
-            >
-              +
-            </button>
+            <div></div>
 
           </div>
 
@@ -1218,76 +1491,77 @@ function renderPlayers() {
       }
 
 
-      return `
+      card.innerHTML = `
 
-        <div class="stat">
+        <div class="player">
+          ${name}
+        </div>
 
-          <span>${label}</span>
 
-          <div></div>
+        ${statHTML(
+          "⚽ Goals",
+          "goals"
+        )}
 
-          <div class="value">
-            ${p[stat]}
-          </div>
 
-          <div></div>
+        ${statHTML(
+          "🎯 Assists",
+          "assists"
+        )}
+
+
+        ${statHTML(
+          "🧤 Saves",
+          "saves"
+        )}
+
+
+        ${statHTML(
+          "⭐ MVPs",
+          "mvp"
+        )}
+
+
+        ${statHTML(
+          "🧱 Clean Sheets",
+          "cleanSheets"
+        )}
+
+
+        ${statHTML(
+          "🟨 Yellow Cards",
+          "yellowCards"
+        )}
+
+
+        ${statHTML(
+          "🟥 Red Cards",
+          "redCards"
+        )}
+
+
+        <div class="total">
+
+          G+A:
+          ${
+            Number(p.goals || 0) +
+            Number(p.assists || 0)
+          }
 
         </div>
 
       `;
 
+
+      container.appendChild(
+        card
+      );
+
     }
-
-
-    card.innerHTML = `
-
-      <div class="player">
-        ${name}
-      </div>
-
-      ${statHTML(
-        "⚽ Goals",
-        "goals"
-      )}
-
-      ${statHTML(
-        "🎯 Assists",
-        "assists"
-      )}
-
-      ${statHTML(
-        "🧤 Saves",
-        "saves"
-      )}
-
-      ${statHTML(
-        "⭐ MVPs",
-        "mvp"
-      )}
-
-      ${statHTML(
-        "🧱 Clean Sheets",
-        "cleanSheets"
-      )}
-
-      <div class="total">
-
-        G+A:
-        ${
-          Number(p.goals || 0) +
-          Number(p.assists || 0)
-        }
-
-      </div>
-
-    `;
-
-
-    container.appendChild(card);
-
-  });
+  );
 
 }
+
 
 
 /* LEADERBOARD */
@@ -1299,201 +1573,75 @@ function renderLeaderboard() {
       "leaderboard"
     );
 
+
   table.innerHTML = "";
 
 
   const sorted =
-    getSortedPlayers(currentSort);
-
-
-  sorted.forEach(function(
-    name,
-    index
-  ) {
-
-    const p = players[name];
-
-
-    const ga =
-      Number(p.goals || 0) +
-      Number(p.assists || 0);
-
-
-    const row =
-      document.createElement("tr");
-
-
-    row.innerHTML = `
-
-      <td>${index + 1}</td>
-
-      <td>
-        <strong>${name}</strong>
-      </td>
-
-      <td>${p.goals}</td>
-
-      <td>${p.assists}</td>
-
-      <td><strong>${ga}</strong></td>
-
-      <td>${p.saves}</td>
-
-      <td>${p.mvp}</td>
-
-      <td>${p.cleanSheets}</td>
-
-    `;
-
-
-    table.appendChild(row);
-
-  });
-
-}
-
-
-/* RANKINGS */
-
-function renderRankings() {
-
-  renderRanking(
-    "ballonRanking",
-    ballonRanking
-  );
-
-  renderRanking(
-    "defenseRanking",
-    defenseRanking
-  );
-
-}
-
-
-function renderRanking(
-  containerId,
-  ranking
-) {
-
-  const container =
-    document.getElementById(
-      containerId
+    getSortedPlayers(
+      currentSort
     );
 
-  container.innerHTML = "";
+
+  sorted.forEach(
+    function(name, index) {
+
+      const p =
+        players[name];
 
 
-  ranking.forEach(function(
-    name,
-    index
-  ) {
-
-    const row =
-      document.createElement("div");
-
-    row.className = "rank-row";
+      const ga =
+        Number(p.goals || 0) +
+        Number(p.assists || 0);
 
 
-    const variableName =
-      containerId === "ballonRanking"
-      ? "ballonRanking"
-      : "defenseRanking";
+      const row =
+        document.createElement(
+          "tr"
+        );
 
-
-    if (isEditor) {
 
       row.innerHTML = `
 
-        <div class="rank-number">
+        <td>
           ${index + 1}
-        </div>
+        </td>
 
-        <div class="rank-name">
-          ${name}
-        </div>
+        <td>
+          <strong>
+            ${name}
+          </strong>
+        </td>
 
-        <button
-          class="move"
-          onclick="
-            movePlayer(
-              ${variableName},
-              ${index},
-              -1
-            )
-          "
-          ${index === 0 ? "disabled" : ""}
-        >
-          ▲
-        </button>
+        <td>
+          ${p.goals}
+        </td>
 
-        <button
-          class="move"
-          onclick="
-            movePlayer(
-              ${variableName},
-              ${index},
-              1
-            )
-          "
-          ${
-            index === ranking.length - 1
-            ? "disabled"
-            : ""
-          }
-        >
-          ▼
-        </button>
+        <td>
+          ${p.assists}
+        </td>
 
-      `;
+        <td>
+          <strong>
+            ${ga}
+          </strong>
+        </td>
 
-    } else {
+        <td>
+          ${p.saves}
+        </td>
 
-      row.innerHTML = `
+        <td>
+          ${p.mvp}
+        </td>
 
-        <div class="rank-number">
-          ${index + 1}
-        </div>
+        <td>
+          ${p.cleanSheets}
+        </td>
 
-        <div class="rank-name">
-          ${name}
-        </div>
+        <td>
+          🟨 ${p.yellowCards}
+        </td>
 
-        <div></div>
-        <div></div>
-
-      `;
-
-    }
-
-
-    container.appendChild(row);
-
-  });
-
-}
-
-
-/* RENDER */
-
-function render() {
-
-  /*
-    Stats changes update the numbers,
-    but player cards stay in place.
-  */
-
-  renderLeaderboard();
-
-  renderPlayers();
-
-  renderRankings();
-
-}
-
-
-render();
-
-</script>
-
-</body>
-  </html>
+        <td>
+          🟥 ${
