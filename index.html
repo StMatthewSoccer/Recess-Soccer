@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Saint Matthews Recess Soccer - Diagnostic</title>
+<title>Saint Matthews Recess Soccer Live Stats</title>
 
 <style>
 * {
@@ -13,109 +13,327 @@
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #07120d;
-  color: white;
-  padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(45,130,85,.35), transparent 45%),
+    linear-gradient(135deg, #06100b, #0b1e14 50%, #050c08);
+  min-height: 100vh;
 }
 
 .container {
-  max-width: 900px;
+  width: 96%;
+  max-width: 1250px;
   margin: auto;
+  padding: 15px 0 45px;
 }
 
-h1 {
+header {
   text-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 
-.subtitle {
-  text-align: center;
-  color: #9db7a8;
-  margin-bottom: 25px;
+header h1 {
+  margin: 0;
+  font-size: clamp(24px, 5vw, 40px);
 }
 
-.box {
-  background: #10251a;
-  border: 1px solid #294a38;
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 18px;
+header p {
+  margin: 5px 0 0;
+  color: #9bb9a7;
+  font-size: 13px;
 }
 
-.box h2 {
-  margin-top: 0;
+.card {
+  background: rgba(14, 30, 22, .9);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 15px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.25);
+  backdrop-filter: blur(10px);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 11px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 20px;
 }
 
 .status {
-  padding: 12px;
+  color: #9dbbaa;
+  font-size: 11px;
+}
+
+.login-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+select,
+input[type="password"] {
+  background: #091a11;
+  color: white;
+  border: 1px solid #31513f;
   border-radius: 8px;
-  background: #172e21;
-  margin-top: 10px;
+  padding: 9px;
 }
 
-.good {
-  border-left: 5px solid #35b878;
-}
-
-.warning {
-  border-left: 5px solid #e0a43c;
-}
-
-.bad {
-  border-left: 5px solid #d9534f;
-}
-
-.names {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 8px;
-}
-
-.name {
-  background: #173526;
-  border: 1px solid #2c5841;
+button {
+  border: 0;
   border-radius: 8px;
-  padding: 12px;
-  font-weight: bold;
+  color: white;
+  background: #17452f;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #256747;
+}
+
+.login-btn,
+.logout-btn,
+.save-btn {
+  padding: 9px 13px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.login-status {
+  width: 100%;
+  color: #9dbbaa;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+
+/* =========================
+   STAT BOARD
+========================= */
+
+.sort-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.sort-btn {
+  padding: 6px 9px;
+  font-size: 11px;
+}
+
+.sort-btn.active {
+  background: #2c8c60;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 10px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 830px;
 }
 
 th,
 td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #294334;
+  padding: 7px 6px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,.06);
 }
 
 th {
-  color: #a9c5b5;
+  color: #9fbdad;
+  font-size: 10px;
+  text-transform: uppercase;
 }
 
-button {
-  background: #238052;
-  color: white;
-  border: 0;
-  padding: 10px 15px;
+td {
+  font-size: 13px;
+}
+
+th:first-child,
+td:first-child {
+  text-align: left;
+}
+
+td:first-child {
+  font-weight: 800;
+}
+
+
+/* =========================
+   EDITOR
+========================= */
+
+.editor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 9px;
+}
+
+.player-card {
+  background: rgba(4,15,10,.65);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.player-title {
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 7px;
+}
+
+.edit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  margin: 4px 0;
+}
+
+.edit-label {
+  font-size: 11px;
+  color: #a7c0b1;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.counter button {
+  width: 27px;
+  height: 27px;
+  font-size: 17px;
+}
+
+.counter-value {
+  width: 25px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.ga-value {
+  font-weight: 800;
+  min-width: 25px;
+  text-align: center;
+  color: #bfe3cf;
+}
+
+
+/* =========================
+   RANKINGS
+========================= */
+
+.ranking-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 15px;
+}
+
+.trophy {
+  display: block;
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin: 0 auto 5px;
+}
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.rank-row {
+  display: grid;
+  grid-template-columns: 31px 1fr 28px 28px;
+  gap: 5px;
+  align-items: center;
+  background: rgba(255,255,255,.045);
+  padding: 6px;
   border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
 }
 
-button:hover {
-  background: #2c9964;
-}
-
-#debug {
-  font-family: monospace;
+.rank-number {
+  color: #9eb9a8;
+  font-weight: 800;
+  text-align: center;
   font-size: 12px;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #c8d8cf;
+}
+
+.rank-name {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.arrow-btn {
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+}
+
+.arrow-btn:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.save-container {
+  text-align: center;
+  margin-top: 9px;
+}
+
+.notice {
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(225,175,60,.08);
+  border: 1px solid rgba(225,175,60,.12);
+  color: #cdbf96;
+  font-size: 12px;
+}
+
+.firebase-good {
+  color: #6ed49e;
+}
+
+.firebase-bad {
+  color: #e78383;
+}
+
+@media(max-width:700px) {
+  .ranking-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    width: 98%;
+  }
+
+  .card {
+    padding: 10px;
+  }
 }
 </style>
 </head>
@@ -124,46 +342,52 @@ button:hover {
 
 <div class="container">
 
-<h1>⚽ Saint Matthews Recess Soccer</h1>
-
-<div class="subtitle">
-  Firebase Diagnostic Version
-</div>
+<header>
+  <h1>⚽ Saint Matthews Recess Soccer</h1>
+  <p>Live Stats & Rankings</p>
+</header>
 
 
 <!-- =====================================================
-     TEST 1
-     THESE NAMES ARE DIRECTLY IN THE HTML.
-     NO JAVASCRIPT OR FIREBASE IS NEEDED.
+     LOGIN
 ===================================================== -->
 
-<div class="box">
+<div class="card">
 
-  <h2>1. Player Names Test</h2>
+  <div class="section-header">
+    <h2>🔐 Editor Login</h2>
 
-  <div class="status good">
-    If you can see the names below, GitHub Pages and the HTML
-    are displaying correctly.
+    <span class="status" id="firebaseStatus">
+      Connecting...
+    </span>
   </div>
 
-  <br>
+  <div class="login-row">
 
-  <div class="names">
+    <select id="username">
+      <option value="jack">Jack</option>
+      <option value="jackschool">Jack (School)</option>
+      <option value="leonardo">Leonardo</option>
+      <option value="angelo">Angelo</option>
+    </select>
 
-    <div class="name">Adi</div>
-    <div class="name">Aidan</div>
-    <div class="name">Artin</div>
-    <div class="name">Angelo</div>
-    <div class="name">Bryson</div>
-    <div class="name">Cameron</div>
-    <div class="name">Jack</div>
-    <div class="name">John</div>
-    <div class="name">Leonardo</div>
-    <div class="name">Marc</div>
-    <div class="name">Matthew</div>
-    <div class="name">Sami</div>
-    <div class="name">Nathan</div>
-    <div class="name">Theo</div>
+    <input
+      id="password"
+      type="password"
+      placeholder="PIN / Password"
+    >
+
+    <button class="login-btn" id="loginBtn">
+      Sign In
+    </button>
+
+    <button class="logout-btn hidden" id="logoutBtn">
+      Sign Out
+    </button>
+
+    <div class="login-status" id="loginStatus">
+      View-only mode
+    </div>
 
   </div>
 
@@ -171,166 +395,370 @@ button:hover {
 
 
 <!-- =====================================================
-     TEST 2
-     JAVASCRIPT TEST
+     STAT BOARD
 ===================================================== -->
 
-<div class="box">
+<div class="card">
 
-  <h2>2. JavaScript Test</h2>
+  <div class="section-header">
+    <h2>📊 Stat Board</h2>
+    <span class="status">
+      Live comparison
+    </span>
+  </div>
 
-  <div id="javascriptStatus" class="status warning">
-    JavaScript has not run yet.
+  <div class="sort-buttons">
+
+    <button class="sort-btn active" data-sort="default">
+      Players
+    </button>
+
+    <button class="sort-btn" data-sort="goals">
+      Goals
+    </button>
+
+    <button class="sort-btn" data-sort="assists">
+      Assists
+    </button>
+
+    <button class="sort-btn" data-sort="ga">
+      G+A
+    </button>
+
+    <button class="sort-btn" data-sort="saves">
+      Saves
+    </button>
+
+    <button class="sort-btn" data-sort="cleanSheets">
+      Clean Sheets
+    </button>
+
+    <button class="sort-btn" data-sort="yellowCards">
+      Yellow
+    </button>
+
+    <button class="sort-btn" data-sort="redCards">
+      Red
+    </button>
+
+    <button class="sort-btn" data-sort="mvps">
+      MVPs
+    </button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Goals</th>
+          <th>Assists</th>
+          <th>G+A</th>
+          <th>Saves</th>
+          <th>Clean Sheets</th>
+          <th>Yellow</th>
+          <th>Red</th>
+          <th>MVPs</th>
+        </tr>
+      </thead>
+
+      <tbody id="statBoardBody">
+
+        <!--
+          THESE 14 PLAYERS ARE DIRECTLY IN THE HTML.
+          FIREBASE IS NOT REQUIRED FOR THEM TO EXIST.
+        -->
+
+        <tr>
+          <td>Adi</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Aidan</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Artin</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Angelo</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Bryson</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Cameron</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Jack</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>John</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Leonardo</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Marc</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Matthew</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Sami</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Nathan</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+        <tr>
+          <td>Theo</td><td>0</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
   </div>
 
 </div>
 
 
 <!-- =====================================================
-     TEST 3
-     FIREBASE SDK TEST
+     EDIT PLAYER STATS
 ===================================================== -->
 
-<div class="box">
+<div class="card">
 
-  <h2>3. Firebase SDK Test</h2>
+  <div class="section-header">
+    <h2>✏️ Edit Player Stats</h2>
 
-  <div id="firebaseSDKStatus" class="status warning">
-    Checking Firebase SDK...
+    <span class="status" id="editorStatus">
+      Sign in to edit
+    </span>
+  </div>
+
+  <div id="editorContent">
+
+    <div class="notice">
+      Sign in with an authorized account to edit player statistics.
+    </div>
+
   </div>
 
 </div>
 
 
 <!-- =====================================================
-     TEST 4
-     FIREBASE CONNECTION TEST
+     RANKINGS
 ===================================================== -->
 
-<div class="box">
+<div class="ranking-grid">
 
-  <h2>4. Firebase Connection Test</h2>
 
-  <div id="firebaseConnectionStatus" class="status warning">
-    Firebase connection has not been tested yet.
+  <!-- BALLON D'OR -->
+
+  <div class="card">
+
+    <img
+      class="trophy"
+      src="Screenshot_20260826-003131.png"
+      alt="Ballon d'Or trophy"
+      onerror="this.style.display='none'"
+    >
+
+    <div class="section-header">
+      <h2>🏆 Ballon d'Or</h2>
+      <span class="status">
+        Player ranking
+      </span>
+    </div>
+
+    <div
+      class="ranking-list"
+      id="ballonRanking"
+    ></div>
+
+    <div class="save-container">
+
+      <button
+        class="save-btn"
+        id="saveBallon"
+      >
+        Save Ballon d'Or Ranking
+      </button>
+
+    </div>
+
   </div>
+
+
+  <!-- GOLDEN DEFENCE -->
+
+  <div class="card">
+
+    <img
+      class="trophy"
+      src="Screenshot_20260826-003116.png"
+      alt="Golden Defence trophy"
+      onerror="this.style.display='none'"
+    >
+
+    <div class="section-header">
+      <h2>🛡️ Golden Defence</h2>
+      <span class="status">
+        Defence ranking
+      </span>
+    </div>
+
+    <div
+      class="ranking-list"
+      id="defenceRanking"
+    ></div>
+
+    <div class="save-container">
+
+      <button
+        class="save-btn"
+        id="saveDefence"
+      >
+        Save Golden Defence Ranking
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
 </div>
 
 
 <!-- =====================================================
-     TEST 5
-     FIREBASE DATABASE TEST
-===================================================== -->
-
-<div class="box">
-
-  <h2>5. Firebase Database Test</h2>
-
-  <div id="databaseStatus" class="status warning">
-    Database has not been tested yet.
-  </div>
-
-</div>
-
-
-<!-- =====================================================
-     TEST 6
-     FIREBASE PLAYERS TEST
-===================================================== -->
-
-<div class="box">
-
-  <h2>6. Firebase Players Data</h2>
-
-  <div id="playersStatus" class="status warning">
-    Waiting for Firebase...
-  </div>
-
-  <br>
-
-  <table>
-
-    <thead>
-      <tr>
-        <th>Player</th>
-        <th>Firebase Data</th>
-      </tr>
-    </thead>
-
-    <tbody id="playersTable">
-
-    </tbody>
-
-  </table>
-
-</div>
-
-
-<!-- =====================================================
-     DEBUG INFORMATION
-===================================================== -->
-
-<div class="box">
-
-  <h2>Debug Information</h2>
-
-  <div id="debug">
-    Starting diagnostic...
-  </div>
-
-</div>
-
-
-<button onclick="location.reload()">
-  Run Diagnostic Again
-</button>
-
-</div>
-
-
-<!-- =====================================================
-     FIREBASE SDK
+     FIREBASE
 ===================================================== -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 
 <script>
 
 /* =====================================================
-   JAVASCRIPT HAS STARTED
+   PLAYER LIST
 ===================================================== */
 
-const jsStatus =
-  document.getElementById("javascriptStatus");
-
-jsStatus.textContent =
-  "JavaScript is working correctly.";
-
-jsStatus.className =
-  "status good";
+const PLAYER_NAMES = [
+  "Adi",
+  "Aidan",
+  "Artin",
+  "Angelo",
+  "Bryson",
+  "Cameron",
+  "Jack",
+  "John",
+  "Leonardo",
+  "Marc",
+  "Matthew",
+  "Sami",
+  "Nathan",
+  "Theo"
+];
 
 
 /* =====================================================
-   DEBUG FUNCTION
+   DEFAULT STATS
 ===================================================== */
 
-function debug(message) {
+const DEFAULT_STATS = {
+  goals: 0,
+  assists: 0,
+  saves: 0,
+  cleanSheets: 0,
+  yellowCards: 0,
+  redCards: 0,
+  mvps: 0
+};
 
-  const box =
-    document.getElementById("debug");
 
-  box.textContent +=
-    "\n" + message;
+/* =====================================================
+   CREATE LOCAL PLAYER DATA
+===================================================== */
 
-  console.log(message);
+let playerStats = {};
 
-}
+PLAYER_NAMES.forEach(name => {
+  playerStats[name] = {
+    ...DEFAULT_STATS
+  };
+});
+
+
+let ballonRanking = [...PLAYER_NAMES];
+let defenceRanking = [...PLAYER_NAMES];
+
+let currentSort = "default";
+
+let firebaseReady = false;
+let auth = null;
+let db = null;
+
+
+/* =====================================================
+   EDITOR ACCOUNTS
+===================================================== */
+
+const EDITOR_ACCOUNTS = {
+
+  jack: {
+    email: "jmaso12.home@gmail.com",
+    name: "Jack"
+  },
+
+  jackschool: {
+    email: "jack.mason1@stu.ocsb.ca",
+    name: "Jack (School)"
+  },
+
+  leonardo: {
+    email: "leonardo.ljubicic@stu.ocsb.ca",
+    name: "Leonardo"
+  },
+
+  angelo: {
+    email: "angelo.champagne@stu.ocsb.ca",
+    name: "Angelo"
+  }
+
+};
 
 
 /* =====================================================
@@ -362,308 +790,372 @@ const firebaseConfig = {
 
   measurementId:
     "G-HJ16JSL5Q2"
+};
+
+
+/* =====================================================
+   STAT BOARD RENDER
+===================================================== */
+
+function renderStatBoard() {
+
+  const body =
+    document.getElementById("statBoardBody");
+
+  if (!body) return;
+
+  let names = [...PLAYER_NAMES];
+
+  if (currentSort !== "default") {
+
+    names.sort((a, b) => {
+
+      const A =
+        playerStats[a] || DEFAULT_STATS;
+
+      const B =
+        playerStats[b] || DEFAULT_STATS;
+
+      let aValue;
+      let bValue;
+
+      if (currentSort === "ga") {
+
+        aValue =
+          (Number(A.goals) || 0) +
+          (Number(A.assists) || 0);
+
+        bValue =
+          (Number(B.goals) || 0) +
+          (Number(B.assists) || 0);
+
+      } else {
+
+        aValue =
+          Number(A[currentSort]) || 0;
+
+        bValue =
+          Number(B[currentSort]) || 0;
+
+      }
+
+      return bValue - aValue;
+
+    });
+
+  }
+
+  body.innerHTML = "";
+
+  names.forEach(name => {
+
+    const stats =
+      playerStats[name] || DEFAULT_STATS;
+
+    const goals =
+      Number(stats.goals) || 0;
+
+    const assists =
+      Number(stats.assists) || 0;
+
+    const row =
+      document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${escapeHTML(name)}</td>
+      <td>${goals}</td>
+      <td>${assists}</td>
+      <td><strong>${goals + assists}</strong></td>
+      <td>${Number(stats.saves) || 0}</td>
+      <td>${Number(stats.cleanSheets) || 0}</td>
+      <td>${Number(stats.yellowCards) || 0}</td>
+      <td>${Number(stats.redCards) || 0}</td>
+      <td>${Number(stats.mvps) || 0}</td>
+    `;
+
+    body.appendChild(row);
+
+  });
+
+}
+
+
+/* =====================================================
+   EDITOR RENDER
+===================================================== */
+
+function renderEditor() {
+
+  const container =
+    document.getElementById("editorContent");
+
+  if (!container) return;
+
+  if (!auth || !auth.currentUser) {
+
+    container.innerHTML = `
+      <div class="notice">
+        Sign in with an authorized account to edit player statistics.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML = "";
+
+  const grid =
+    document.createElement("div");
+
+  grid.className =
+    "editor-grid";
+
+  PLAYER_NAMES.forEach(name => {
+
+    const stats =
+      playerStats[name] || DEFAULT_STATS;
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "player-card";
+
+    card.innerHTML = `
+      <div class="player-title">
+        ${escapeHTML(name)}
+      </div>
+
+      ${makeEditRow(name, "goals", "Goals")}
+      ${makeEditRow(name, "assists", "Assists")}
+      ${makeEditRow(name, "saves", "Goalie Saves")}
+      ${makeEditRow(name, "cleanSheets", "Clean Sheets")}
+      ${makeEditRow(name, "yellowCards", "Yellow Cards")}
+      ${makeEditRow(name, "redCards", "Red Cards")}
+      ${makeEditRow(name, "mvps", "MVPs")}
+
+      <div class="edit-row">
+        <span class="edit-label">
+          G+A
+        </span>
+
+        <span class="ga-value">
+          ${
+            (Number(stats.goals) || 0) +
+            (Number(stats.assists) || 0)
+          }
+        </span>
+      </div>
+    `;
+
+    grid.appendChild(card);
+
+  });
+
+  container.appendChild(grid);
+
+}
+
+
+function makeEditRow(name, stat, label) {
+
+  const value =
+    Number(
+      (playerStats[name] || DEFAULT_STATS)[stat]
+    ) || 0;
+
+  const encoded =
+    encodeURIComponent(name);
+
+  return `
+    <div class="edit-row">
+
+      <span class="edit-label">
+        ${label}
+      </span>
+
+      <div class="counter">
+
+        <button
+          onclick="changeStat('${encoded}','${stat}',-1)"
+        >
+          −
+        </button>
+
+        <span class="counter-value">
+          ${value}
+        </span>
+
+        <button
+          onclick="changeStat('${encoded}','${stat}',1)"
+        >
+          +
+        </button>
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* =====================================================
+   CHANGE STAT
+===================================================== */
+
+window.changeStat =
+function(encodedName, stat, amount) {
+
+  if (!auth || !auth.currentUser) {
+
+    alert(
+      "You must sign in before editing stats."
+    );
+
+    return;
+  }
+
+  const name =
+    decodeURIComponent(encodedName);
+
+  if (!PLAYER_NAMES.includes(name)) {
+    return;
+  }
+
+  if (!playerStats[name]) {
+
+    playerStats[name] = {
+      ...DEFAULT_STATS
+    };
+
+  }
+
+  const oldValue =
+    Number(playerStats[name][stat]) || 0;
+
+  const newValue =
+    Math.max(0, oldValue + amount);
+
+  playerStats[name][stat] =
+    newValue;
+
+  /*
+    Update screen immediately.
+  */
+
+  renderStatBoard();
+  renderEditor();
+
+  /*
+    Save to Firebase.
+  */
+
+  saveStat(name, stat, newValue);
 
 };
 
 
 /* =====================================================
-   CHECK FIREBASE SDK
+   SAVE STAT TO FIREBASE
 ===================================================== */
 
-if (typeof firebase === "undefined") {
-
-  document.getElementById(
-    "firebaseSDKStatus"
-  ).textContent =
-    "❌ Firebase SDK did NOT load.";
-
-  document.getElementById(
-    "firebaseSDKStatus"
-  ).className =
-    "status bad";
-
-  debug(
-    "Firebase object is undefined."
-  );
-
-} else {
-
-  document.getElementById(
-    "firebaseSDKStatus"
-  ).textContent =
-    "✅ Firebase SDK loaded.";
-
-  document.getElementById(
-    "firebaseSDKStatus"
-  ).className =
-    "status good";
-
-  debug(
-    "Firebase SDK loaded successfully."
-  );
-
-
-  /* =====================================================
-     INITIALIZE FIREBASE
-  ===================================================== */
-
-  try {
-
-    if (firebase.apps.length === 0) {
-
-      firebase.initializeApp(
-        firebaseConfig
-      );
-
-      debug(
-        "Firebase app initialized."
-      );
-
-    } else {
-
-      debug(
-        "Firebase app was already initialized."
-      );
-
-    }
-
-
-    /* ===================================================
-       AUTH
-    =================================================== */
-
-    const auth =
-      firebase.auth();
-
-    debug(
-      "Firebase Authentication initialized."
-    );
-
-
-    /* ===================================================
-       DATABASE
-    =================================================== */
-
-    const db =
-      firebase.database();
-
-    debug(
-      "Firebase Realtime Database initialized."
-    );
-
-
-    document.getElementById(
-      "firebaseConnectionStatus"
-    ).textContent =
-      "✅ Firebase initialized successfully.";
-
-    document.getElementById(
-      "firebaseConnectionStatus"
-    ).className =
-      "status good";
-
-
-    /* ===================================================
-       DATABASE CONNECTION TEST
-    =================================================== */
-
-    db.ref(".info/connected").on(
-      "value",
-      function(snapshot) {
-
-        if (snapshot.val() === true) {
-
-          document.getElementById(
-            "databaseStatus"
-          ).textContent =
-            "✅ Connected to Firebase Realtime Database.";
-
-          document.getElementById(
-            "databaseStatus"
-          ).className =
-            "status good";
-
-          debug(
-            "Realtime Database connection = TRUE."
-          );
-
-        } else {
-
-          document.getElementById(
-            "databaseStatus"
-          ).textContent =
-            "⚠️ Firebase loaded, but database is not currently connected.";
-
-          document.getElementById(
-            "databaseStatus"
-          ).className =
-            "status warning";
-
-          debug(
-            "Realtime Database connection = FALSE."
-          );
-
-        }
-
-      }
-    );
-
-
-    /* ===================================================
-       READ PLAYERS
-    =================================================== */
-
-    db.ref("players").once("value")
-
-      .then(function(snapshot) {
-
-        const data =
-          snapshot.val();
-
-        const status =
-          document.getElementById(
-            "playersStatus"
-          );
-
-        const table =
-          document.getElementById(
-            "playersTable"
-          );
-
-
-        if (!data) {
-
-          status.textContent =
-            "⚠️ Firebase connected, but /players is empty.";
-
-          status.className =
-            "status warning";
-
-          debug(
-            "No data found at /players."
-          );
-
-          return;
-        }
-
-
-        status.textContent =
-          "✅ Firebase returned data from /players.";
-
-        status.className =
-          "status good";
-
-
-        debug(
-          "Players data received:"
-        );
-
-        debug(
-          JSON.stringify(data, null, 2)
-        );
-
-
-        /*
-          Display whatever Firebase actually contains.
-        */
-
-        Object.keys(data).forEach(
-          function(name) {
-
-            const row =
-              document.createElement("tr");
-
-            row.innerHTML = `
-              <td>${name}</td>
-              <td>
-                <pre>${JSON.stringify(
-                  data[name],
-                  null,
-                  2
-                )}</pre>
-              </td>
-            `;
-
-            table.appendChild(row);
-
-          }
-        );
-
-      })
-
-      .catch(function(error) {
-
-        document.getElementById(
-          "playersStatus"
-        ).textContent =
-          "❌ Could not read /players: " +
-          error.message;
-
-        document.getElementById(
-          "playersStatus"
-        ).className =
-          "status bad";
-
-        debug(
-          "Players read error: " +
-          error.message
-        );
-
-      });
-
-
-    /* ===================================================
-       AUTH TEST
-    =================================================== */
-
-    auth.onAuthStateChanged(
-      function(user) {
-
-        if (user) {
-
-          debug(
-            "Currently signed in as: " +
-            user.email
-          );
-
-        } else {
-
-          debug(
-            "No user currently signed in."
-          );
-
-        }
-
-      }
-    );
-
-
-  } catch (error) {
-
-    document.getElementById(
-      "firebaseConnectionStatus"
-    ).textContent =
-      "❌ Firebase initialization failed: " +
-      error.message;
-
-    document.getElementById(
-      "firebaseConnectionStatus"
-    ).className =
-      "status bad";
-
-    debug(
-      "Firebase initialization error:"
-    );
-
-    debug(
-      error.stack || error.message
-    );
-
+function saveStat(name, stat, value) {
+
+  if (
+    !firebaseReady ||
+    !db ||
+    !auth ||
+    !auth.currentUser
+  ) {
+    return;
   }
+
+  db.ref(
+    "players/" + name + "/" + stat
+  )
+  .set(value)
+
+  .then(() => {
+
+    setFirebaseStatus(
+      "Firebase connected • Saved",
+      true
+    );
+
+  })
+
+  .catch(error => {
+
+    console.error(
+      "Firebase save error:",
+      error
+    );
+
+    setFirebaseStatus(
+      "Firebase connected • Save failed",
+      false
+    );
+
+  });
 
 }
 
-</script>
 
-</body>
-</html>
+/* =====================================================
+   BALLON D'OR
+===================================================== */
+
+function renderBallonRanking() {
+
+  const container =
+    document.getElementById("ballonRanking");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  ballonRanking.forEach((name, index) => {
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "rank-row";
+
+    row.innerHTML = `
+      <span class="rank-number">
+        ${index + 1}
+      </span>
+
+      <span class="rank-name">
+        ${escapeHTML(name)}
+      </span>
+
+      <button
+        class="arrow-btn"
+        onclick="moveBallon(${index},-1)"
+        ${index === 0 ? "disabled" : ""}
+      >
+        ↑
+      </button>
+
+      <button
+        class="arrow-btn"
+        onclick="moveBallon(${index},1)"
+        ${index === ballonRanking.length - 1 ? "disabled" : ""}
+      >
+        ↓
+      </button>
+    `;
+
+    container.appendChild(row);
+
+  });
+
+}
+
+
+window.moveBallon =
+function(index, direction) {
+
+  if (!auth |
