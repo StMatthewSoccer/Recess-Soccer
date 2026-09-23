@@ -201,6 +201,16 @@ button {
   background: #a52c2c;
 }
 
+.ga {
+  background: rgba(22,131,255,.12);
+  margin-top: 9px;
+  padding: 9px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
 .section-title {
   text-align: center;
   margin: 35px 0 15px;
@@ -275,10 +285,6 @@ th:first-child {
   background: rgba(255,255,255,.04);
 }
 
-.ranking-row input {
-  margin: 0;
-}
-
 .move-buttons {
   display: flex;
   gap: 5px;
@@ -329,10 +335,6 @@ th:first-child {
     grid-template-columns: 35px 1fr;
   }
 
-  .ranking-row input {
-    grid-column: 2;
-  }
-
   .move-buttons {
     grid-column: 2;
   }
@@ -349,11 +351,11 @@ th:first-child {
 
 <div class="container">
 
-  <!-- LOGIN -->
   <div class="login-box" id="loginBox">
     <h2>Editor Login</h2>
 
     <label>Email</label>
+
     <input
       type="email"
       id="emailInput"
@@ -362,6 +364,7 @@ th:first-child {
     >
 
     <label>PIN / Password</label>
+
     <input
       type="password"
       id="passwordInput"
@@ -376,32 +379,45 @@ th:first-child {
     <div id="loginMessage" class="status"></div>
   </div>
 
-  <!-- EDITOR STATUS -->
+
   <div class="editor-box hidden" id="editorBox">
+
     <div>
       Logged in as:
       <span class="editor-name" id="editorName"></span>
     </div>
 
-    <button class="logout-button" onclick="logout()" style="margin-top:10px;">
+    <button
+      class="logout-button"
+      onclick="logout()"
+      style="margin-top:10px;"
+    >
       Logout
     </button>
+
   </div>
 
-  <!-- VIEWER STATUS -->
+
   <div class="viewer-box" id="viewerBox">
     👀 Viewer mode — stats are live.
   </div>
+
 
   <div class="status" id="firebaseStatus">
     Connecting to Firebase...
   </div>
 
-  <!-- SORT -->
-  <div class="controls">
-    <label for="sortSelect">Sort leaderboard by:</label>
 
-    <select id="sortSelect" onchange="changeSort(this.value)">
+  <div class="controls">
+
+    <label for="sortSelect">
+      Sort leaderboard by:
+    </label>
+
+    <select
+      id="sortSelect"
+      onchange="changeSort(this.value)"
+    >
       <option value="ga">Goals + Assists</option>
       <option value="goals">Goals</option>
       <option value="assists">Assists</option>
@@ -411,19 +427,30 @@ th:first-child {
       <option value="yellow">Yellow Cards</option>
       <option value="red">Red Cards</option>
     </select>
+
   </div>
 
-  <!-- PLAYERS -->
-  <h2 class="section-title">Player Stats</h2>
 
-  <div class="players-grid" id="playersGrid"></div>
+  <h2 class="section-title">
+    Player Stats
+  </h2>
 
-  <!-- LEADERBOARD -->
-  <h2 class="section-title">Leaderboard</h2>
+  <div
+    class="players-grid"
+    id="playersGrid"
+  ></div>
+
+
+  <h2 class="section-title">
+    Leaderboard
+  </h2>
 
   <div class="leaderboard">
+
     <table>
+
       <thead>
+
         <tr>
           <th>Player</th>
           <th>G</th>
@@ -435,16 +462,21 @@ th:first-child {
           <th>🟨</th>
           <th>🟥</th>
         </tr>
+
       </thead>
 
       <tbody id="leaderboardBody"></tbody>
+
     </table>
+
   </div>
 
-  <!-- RANKINGS -->
-  <h2 class="section-title">Rankings</h2>
 
-  <!-- GOLDEN DEFENCE -->
+  <h2 class="section-title">
+    Rankings
+  </h2>
+
+
   <div class="ranking-card">
 
     <img
@@ -469,7 +501,7 @@ th:first-child {
 
   </div>
 
-  <!-- BALLON D'OR -->
+
   <div class="ranking-card">
 
     <img
@@ -496,19 +528,23 @@ th:first-child {
 
 </div>
 
+
 <div class="footer">
   Saint Matthews Recess Soccer • Live Stats
 </div>
 
+
 <!-- FIREBASE -->
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
+
 <script>
 
 /* =========================================================
-   FIREBASE CONFIG
+   FIREBASE
 ========================================================= */
 
 const firebaseConfig = {
@@ -525,15 +561,16 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
+
 const db = firebase.database();
 
 const statsRef = db.ref("players");
+
 const rankingsRef = db.ref("rankings");
 
 
 /* =========================================================
-   PLAYER NAMES
-   THESE ARE ALWAYS DISPLAYED
+   14 PLAYER NAMES
 ========================================================= */
 
 const playerNames = [
@@ -555,10 +592,11 @@ const playerNames = [
 
 
 /* =========================================================
-   DEFAULT PLAYER DATA
+   DEFAULT STATS
 ========================================================= */
 
 function defaultPlayer() {
+
   return {
     goals: 0,
     assists: 0,
@@ -568,13 +606,40 @@ function defaultPlayer() {
     yellow: 0,
     red: 0
   };
+
 }
+
+
+/* =========================================================
+   PLAYER DATA
+========================================================= */
 
 let players = {};
 
 playerNames.forEach(function(name) {
+
   players[name] = defaultPlayer();
+
 });
+
+
+/* =========================================================
+   EDITORS
+========================================================= */
+
+const editorEmails = {
+
+  "jmaso12.home@gmail.com": "Jack",
+
+  "jack.mason1@stu.ocsb.ca": "Jack (School)",
+
+  "leonardo.ljubicic@stu.ocsb.ca": "Leonardo",
+
+  "angelo.champagne@stu.ocsb.ca": "Angelo"
+
+};
+
+let isEditor = false;
 
 
 /* =========================================================
@@ -582,35 +647,24 @@ playerNames.forEach(function(name) {
 ========================================================= */
 
 let defenceRanking = [...playerNames];
+
 let ballonRanking = [...playerNames];
 
-let isEditor = false;
 let currentSort = "ga";
 
 
 /* =========================================================
-   EDITOR EMAILS
-========================================================= */
-
-const editorEmails = {
-  "jmaso12.home@gmail.com": "Jack",
-  "jack.mason1@stu.ocsb.ca": "Jack (School)",
-  "leonardo.ljubicic@stu.ocsb.ca": "Leonardo",
-  "angelo.champagne@stu.ocsb.ca": "Angelo"
-};
-
-
-/* =========================================================
-   CREATE MISSING PLAYER DATA
+   MAKE SURE ALL STATS EXIST
 ========================================================= */
 
 function makeSurePlayersExist() {
 
   playerNames.forEach(function(name) {
 
-    if (!players[name] || typeof players[name] !== "object") {
+    if (!players[name]) {
+
       players[name] = defaultPlayer();
-      return;
+
     }
 
     const defaults = defaultPlayer();
@@ -622,9 +676,14 @@ function makeSurePlayersExist() {
         players[name][stat] === null ||
         isNaN(Number(players[name][stat]))
       ) {
+
         players[name][stat] = 0;
+
       } else {
-        players[name][stat] = Number(players[name][stat]);
+
+        players[name][stat] =
+          Number(players[name][stat]);
+
       }
 
     });
@@ -635,324 +694,290 @@ function makeSurePlayersExist() {
 
 
 /* =========================================================
-   LOGIN
+   CHANGE A PLAYER'S STAT
 ========================================================= */
 
-function login() {
+function changeStat(playerName, stat, amount) {
 
-  const email = document
-    .getElementById("emailInput")
-    .value
-    .trim()
-    .toLowerCase();
+  if (!isEditor) {
 
-  const password = document
-    .getElementById("passwordInput")
-    .value;
+    alert(
+      "You must be logged in as an editor to change stats."
+    );
 
-  const message = document.getElementById("loginMessage");
-
-  if (!email || !password) {
-    message.className = "status error";
-    message.textContent = "Enter your email and PIN.";
     return;
-  }
-
-  message.className = "status";
-  message.textContent = "Logging in...";
-
-  auth.signInWithEmailAndPassword(email, password)
-    .then(function() {
-
-      message.className = "status success";
-      message.textContent = "Login successful.";
-
-    })
-    .catch(function(error) {
-
-      console.error(error);
-
-      message.className = "status error";
-      message.textContent =
-        "Login failed: " + error.message;
-
-    });
-
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-function logout() {
-
-  auth.signOut()
-    .then(function() {
-
-      isEditor = false;
-
-      showViewer();
-
-      render();
-
-    })
-    .catch(function(error) {
-
-      console.error(error);
-
-    });
-
-}
-
-
-/* =========================================================
-   AUTH STATE
-========================================================= */
-
-auth.onAuthStateChanged(function(user) {
-
-  if (user && user.email) {
-
-    const email = user.email.toLowerCase();
-
-    if (editorEmails[email]) {
-
-      isEditor = true;
-
-      showEditor(editorEmails[email]);
-
-    } else {
-
-      isEditor = false;
-
-      showViewer();
-
-    }
-
-  } else {
-
-    isEditor = false;
-
-    showViewer();
 
   }
+
+
+  /*
+     IMPORTANT:
+     playerName is the exact player attached
+     to the button that was clicked.
+  */
+
+  if (!players[playerName]) {
+
+    players[playerName] = defaultPlayer();
+
+  }
+
+
+  const oldValue =
+    Number(players[playerName][stat] || 0);
+
+
+  const newValue =
+    Math.max(0, oldValue + Number(amount));
+
+
+  /*
+     Change ONLY this player's stat.
+  */
+
+  players[playerName][stat] = newValue;
+
+
+  /*
+     Immediately update the screen.
+  */
 
   render();
 
-});
-
-
-/* =========================================================
-   SHOW EDITOR
-========================================================= */
-
-function showEditor(name) {
-
-  document
-    .getElementById("loginBox")
-    .classList.add("hidden");
-
-  document
-    .getElementById("viewerBox")
-    .classList.add("hidden");
-
-  document
-    .getElementById("editorBox")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("editorName")
-    .textContent = name;
-
-}
-
-
-/* =========================================================
-   SHOW VIEWER
-========================================================= */
-
-function showViewer() {
-
-  document
-    .getElementById("loginBox")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("viewerBox")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("editorBox")
-    .classList.add("hidden");
-
-}
-
-
-/* =========================================================
-   FIREBASE PLAYER LISTENER
-========================================================= */
-
-statsRef.on(
-  "value",
-
-  function(snapshot) {
-
-    const data = snapshot.val();
-
-    /*
-      IMPORTANT:
-      Even if Firebase is empty, we keep the 14 names
-      because playerNames is the master list.
-    */
-
-    if (data && typeof data === "object") {
-
-      playerNames.forEach(function(name) {
-
-        if (data[name] && typeof data[name] === "object") {
-
-          players[name] = {
-            goals: Number(data[name].goals || 0),
-            assists: Number(data[name].assists || 0),
-            saves: Number(data[name].saves || 0),
-            mvp: Number(data[name].mvp || 0),
-            cleanSheets: Number(data[name].cleanSheets || 0),
-            yellow: Number(data[name].yellow || 0),
-            red: Number(data[name].red || 0)
-          };
-
-        }
-
-      });
-
-    }
-
-    makeSurePlayersExist();
-
-    document.getElementById("firebaseStatus").className =
-      "status success";
-
-    document.getElementById("firebaseStatus").textContent =
-      "🟢 Live • Connected to Firebase";
-
-    render();
-
-  },
-
-  function(error) {
-
-    console.error(error);
-
-    document.getElementById("firebaseStatus").className =
-      "status error";
-
-    document.getElementById("firebaseStatus").textContent =
-      "🔴 Firebase read error: " + error.message;
-
-    /*
-      EVEN IF FIREBASE FAILS, RENDER THE NAMES.
-    */
-
-    makeSurePlayersExist();
-
-    render();
-
-  }
-);
-
-
-/* =========================================================
-   FIREBASE RANKING LISTENER
-========================================================= */
-
-rankingsRef.on(
-  "value",
-
-  function(snapshot) {
-
-    const data = snapshot.val();
-
-    if (data && typeof data === "object") {
-
-      if (data.defence) {
-
-        defenceRanking =
-          normalizeRanking(data.defence);
-
-      }
-
-      if (data.ballon) {
-
-        ballonRanking =
-          normalizeRanking(data.ballon);
-
-      }
-
-    }
-
-    renderRankings();
-
-  },
-
-  function(error) {
-
-    console.error("Ranking read error:", error);
-
-    renderRankings();
-
-  }
-);
-
-
-/* =========================================================
-   NORMALIZE RANKINGS
-========================================================= */
-
-function normalizeRanking(data) {
-
-  let result = [];
-
-  if (Array.isArray(data)) {
-
-    result = data.filter(function(name) {
-      return playerNames.includes(name);
-    });
-
-  } else if (typeof data === "object") {
-
-    result = Object.keys(data)
-      .sort(function(a, b) {
-        return Number(a) - Number(b);
-      })
-      .map(function(key) {
-        return data[key];
-      })
-      .filter(function(name) {
-        return playerNames.includes(name);
-      });
-
-  }
 
   /*
-    Make sure every player appears exactly once.
+     Save ONLY this stat for ONLY this player.
+  */
+
+  const update = {};
+
+  update[stat] = newValue;
+
+
+  statsRef
+    .child(playerName)
+    .update(update)
+
+    .then(function() {
+
+      document.getElementById("firebaseStatus")
+        .className = "status success";
+
+      document.getElementById("firebaseStatus")
+        .textContent =
+          "🟢 Live • " +
+          playerName +
+          " updated";
+
+    })
+
+    .catch(function(error) {
+
+      console.error(
+        "Firebase save error:",
+        error
+      );
+
+      document.getElementById("firebaseStatus")
+        .className = "status error";
+
+      document.getElementById("firebaseStatus")
+        .textContent =
+          "🔴 Could not save: " +
+          error.message;
+
+    });
+
+}
+
+
+/* =========================================================
+   CREATE STAT ROW
+========================================================= */
+
+function createStatRow(playerName, stat, label) {
+
+  const value =
+    Number(players[playerName][stat] || 0);
+
+
+  if (isEditor) {
+
+    return `
+
+      <div class="stat-row">
+
+        <span class="stat-name">
+          ${label}
+        </span>
+
+        <span class="stat-value">
+          ${value}
+        </span>
+
+        <div class="stat-buttons">
+
+          <button
+            class="minus"
+            onclick="changeStat('${playerName}','${stat}',-1)"
+          >
+            −
+          </button>
+
+          <button
+            class="plus"
+            onclick="changeStat('${playerName}','${stat}',1)"
+          >
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  return `
+
+    <div class="stat-row">
+
+      <span class="stat-name">
+        ${label}
+      </span>
+
+      <span class="stat-value">
+        ${value}
+      </span>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   RENDER ALL 14 PLAYER CARDS
+========================================================= */
+
+function renderPlayers() {
+
+  const grid =
+    document.getElementById("playersGrid");
+
+
+  if (!grid) {
+    return;
+  }
+
+
+  let html = "";
+
+
+  /*
+     IMPORTANT:
+     We use playerNames here, NOT leaderboard sorting.
+     Therefore the player cards stay in the same order
+     while you edit stats.
   */
 
   playerNames.forEach(function(name) {
 
-    if (!result.includes(name)) {
-      result.push(name);
-    }
+    const p = players[name];
+
+
+    const ga =
+      Number(p.goals || 0) +
+      Number(p.assists || 0);
+
+
+    html += `
+
+      <div class="player-card">
+
+        <h2>
+          ${name}
+        </h2>
+
+
+        ${createStatRow(
+          name,
+          "goals",
+          "Goals"
+        )}
+
+
+        ${createStatRow(
+          name,
+          "assists",
+          "Assists"
+        )}
+
+
+        <div class="ga">
+
+          <span>
+            Goals + Assists
+          </span>
+
+          <span>
+            ${ga}
+          </span>
+
+        </div>
+
+
+        ${createStatRow(
+          name,
+          "saves",
+          "Goalie Saves"
+        )}
+
+
+        ${createStatRow(
+          name,
+          "mvp",
+          "MVPs"
+        )}
+
+
+        ${createStatRow(
+          name,
+          "cleanSheets",
+          "Clean Sheets"
+        )}
+
+
+        ${createStatRow(
+          name,
+          "yellow",
+          "Yellow Cards"
+        )}
+
+
+        ${createStatRow(
+          name,
+          "red",
+          "Red Cards"
+        )}
+
+      </div>
+
+    `;
 
   });
 
-  return result;
+
+  grid.innerHTML = html;
 
 }
 
 
 /* =========================================================
-   CHANGE SORT
+   LEADERBOARD SORT
 ========================================================= */
 
 function changeSort(sort) {
@@ -965,172 +990,295 @@ function changeSort(sort) {
 
 
 /* =========================================================
-   CHANGE STAT
+   GET SORT VALUE
 ========================================================= */
 
-function changeStat(playerName, stat, amount) {
+function getSortValue(player, sort) {
 
-  if (!isEditor) {
+  if (sort === "ga") {
 
-    alert("You must be logged in as an editor to change stats.");
+    return (
+      Number(player.goals || 0) +
+      Number(player.assists || 0)
+    );
 
+  }
+
+
+  return Number(player[sort] || 0);
+
+}
+
+
+/* =========================================================
+   RENDER LEADERBOARD
+========================================================= */
+
+function renderLeaderboard() {
+
+  const body =
+    document.getElementById("leaderboardBody");
+
+
+  if (!body) {
     return;
-
   }
 
-  if (!players[playerName]) {
-    players[playerName] = defaultPlayer();
-  }
 
-  const currentValue =
-    Number(players[playerName][stat] || 0);
+  const list =
+    playerNames.map(function(name, index) {
 
-  const newValue =
-    Math.max(0, currentValue + amount);
+      return {
 
-  /*
-    Update locally first so the button feels instant.
-  */
+        name: name,
 
-  players[playerName][stat] = newValue;
+        player: players[name],
 
-  render();
+        value: getSortValue(
+          players[name],
+          currentSort
+        ),
 
-  /*
-    Update ONLY that player's stat.
-    This prevents unrelated stats from being overwritten.
-  */
+        originalIndex: index
 
-  const updateObject = {};
-
-  updateObject[stat] = newValue;
-
-  statsRef
-    .child(playerName)
-    .update(updateObject)
-
-    .then(function() {
-
-      console.log(
-        playerName +
-        " " +
-        stat +
-        " saved: " +
-        newValue
-      );
-
-    })
-
-    .catch(function(error) {
-
-      console.error("Firebase save failed:", error);
-
-      alert(
-        "The number changed on screen, but Firebase could not save it.\n\n" +
-        error.message
-      );
+      };
 
     });
 
-}
+
+  /*
+     Sort the leaderboard only.
+     Player cards are NOT affected.
+  */
+
+  list.sort(function(a, b) {
+
+    if (b.value !== a.value) {
+
+      return b.value - a.value;
+
+    }
+
+    return a.originalIndex - b.originalIndex;
+
+  });
 
 
-/* =========================================================
-   STAT LABELS
-========================================================= */
-
-function statLabel(stat) {
-
-  const labels = {
-    goals: "Goals",
-    assists: "Assists",
-    saves: "Goalie Saves",
-    mvp: "MVPs",
-    cleanSheets: "Clean Sheets",
-    yellow: "Yellow Cards",
-    red: "Red Cards"
-  };
-
-  return labels[stat] || stat;
-
-}
+  let html = "";
 
 
-/* =========================================================
-   STAT ROW
-========================================================= */
+  list.forEach(function(item, index) {
 
-function createStatRow(playerName, stat) {
+    const p = item.player;
 
-  const value =
-    Number(players[playerName][stat] || 0);
 
-  let buttons = "";
+    html += `
 
-  if (isEditor) {
+      <tr>
 
-    buttons = `
-      <div class="stat-buttons">
+        <td>
 
-        <button
-          class="minus"
-          onclick="changeStat('${escapeName(playerName)}','${stat}',-1)"
-        >
-          −
-        </button>
+          <span class="rank-number">
+            #${index + 1}
+          </span>
 
-        <button
-          class="plus"
-          onclick="changeStat('${escapeName(playerName)}','${stat}',1)"
-        >
-          +
-        </button>
+          ${item.name}
 
-      </div>
+        </td>
+
+        <td>
+          ${Number(p.goals || 0)}
+        </td>
+
+        <td>
+          ${Number(p.assists || 0)}
+        </td>
+
+        <td>
+          ${
+            Number(p.goals || 0) +
+            Number(p.assists || 0)
+          }
+        </td>
+
+        <td>
+          ${Number(p.saves || 0)}
+        </td>
+
+        <td>
+          ${Number(p.mvp || 0)}
+        </td>
+
+        <td>
+          ${Number(p.cleanSheets || 0)}
+        </td>
+
+        <td>
+          ${Number(p.yellow || 0)}
+        </td>
+
+        <td>
+          ${Number(p.red || 0)}
+        </td>
+
+      </tr>
+
     `;
+
+  });
+
+
+  body.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   FIREBASE PLAYER DATA
+========================================================= */
+
+statsRef.on(
+  "value",
+
+  function(snapshot) {
+
+    const data = snapshot.val();
+
+
+    /*
+       Start with the built-in 14 names.
+    */
+
+    if (data && typeof data === "object") {
+
+      playerNames.forEach(function(name) {
+
+        if (
+          data[name] &&
+          typeof data[name] === "object"
+        ) {
+
+          players[name] = {
+
+            goals:
+              Number(data[name].goals || 0),
+
+            assists:
+              Number(data[name].assists || 0),
+
+            saves:
+              Number(data[name].saves || 0),
+
+            mvp:
+              Number(data[name].mvp || 0),
+
+            cleanSheets:
+              Number(data[name].cleanSheets || 0),
+
+            yellow:
+              Number(data[name].yellow || 0),
+
+            red:
+              Number(data[name].red || 0)
+
+          };
+
+        }
+
+      });
+
+    }
+
+
+    makeSurePlayersExist();
+
+    render();
+
+
+    document.getElementById("firebaseStatus")
+      .className = "status success";
+
+    document.getElementById("firebaseStatus")
+      .textContent =
+        "🟢 Live • Connected to Firebase";
+
+  },
+
+  function(error) {
+
+    console.error(error);
+
+
+    /*
+       Even if Firebase cannot be read,
+       the 14 names are still rendered.
+    */
+
+    makeSurePlayersExist();
+
+    render();
+
+
+    document.getElementById("firebaseStatus")
+      .className = "status error";
+
+    document.getElementById("firebaseStatus")
+      .textContent =
+        "🔴 Firebase error • Names still loaded";
+
+  }
+);
+
+
+/* =========================================================
+   RANKING NORMALIZATION
+========================================================= */
+
+function normalizeRanking(data) {
+
+  let result = [];
+
+
+  if (Array.isArray(data)) {
+
+    result =
+      data.filter(function(name) {
+
+        return playerNames.includes(name);
+
+      });
 
   }
 
-  return `
-    <div class="stat-row">
 
-      <span class="stat-name">
-        ${statLabel(stat)}
-      </span>
+  playerNames.forEach(function(name) {
 
-      <span class="stat-value">
-        ${value}
-      </span>
+    if (!result.includes(name)) {
 
-      ${buttons}
+      result.push(name);
 
-    </div>
-  `;
+    }
+
+  });
+
+
+  return result;
 
 }
 
 
 /* =========================================================
-   ESCAPE PLAYER NAME
+   FIREBASE RANKINGS
 ========================================================= */
 
-function escapeName(name) {
+rankingsRef.on(
+  "value",
 
-  return name
-    .replace(/\\/g, "\\\\")
-    .replace(/'/g, "\\'");
+  function(snapshot) {
 
-}
+    const data = snapshot.val();
 
 
-/* =========================================================
-   RENDER PLAYER CARDS
-   IMPORTANT:
-   THESE NEVER SORT.
-   THEY ALWAYS STAY IN playerNames ORDER.
-========================================================= */
+    if (data && typeof data === "object") {
 
-function renderPlayers() {
-
-  const container =
-    document.ge
+      if (data.defence)
