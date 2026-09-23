@@ -8,87 +8,187 @@
 <title>Saint Matthews Recess Soccer Live Stats</title>
 
 <style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 * {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  color: white;
+  color: #ffffff;
   min-height: 100vh;
+  overflow-x: hidden;
+
   background:
-    linear-gradient(rgba(3,10,20,.86), rgba(3,10,20,.94)),
-    radial-gradient(circle at top, #1d5b91, #06101d 65%);
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(46, 170, 255, 0.35),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      #061522 0%,
+      #071c25 35%,
+      #031016 100%
+    );
+
+  position: relative;
 }
 
-/* =========================
+/* Decorative stadium lights */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(50, 190, 255, 0.10),
+      transparent 22%
+    ),
+    radial-gradient(
+      circle at 85% 25%,
+      rgba(50, 190, 255, 0.08),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(30, 190, 100, 0.10),
+      transparent 35%
+    );
+}
+
+/* =========================================================
    HEADER
-========================= */
+========================================================= */
 
 header {
   position: relative;
   text-align: center;
-  padding: 30px 15px 25px;
-  border-bottom: 1px solid rgba(100,170,230,.25);
+  padding: 35px 15px 32px;
+
   background:
-    linear-gradient(180deg, rgba(15,45,75,.8), rgba(4,12,22,.3));
+    linear-gradient(
+      180deg,
+      rgba(5, 29, 47, 0.96),
+      rgba(4, 18, 28, 0.82)
+    );
+
+  border-bottom: 1px solid rgba(82, 190, 255, 0.25);
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,.35);
+
+  overflow: hidden;
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -90px;
+  transform: translateX(-50%);
+
+  width: 650px;
+  height: 180px;
+
+  border: 2px solid rgba(55, 190, 255, .10);
+  border-radius: 50%;
+
+  pointer-events: none;
 }
 
 .soccer-ball {
-  font-size: 42px;
-  margin-bottom: 5px;
+  font-size: 50px;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.4));
 }
 
 header h1 {
   margin: 0;
-  font-size: 31px;
-  letter-spacing: .3px;
+  font-size: clamp(25px, 5vw, 36px);
+  letter-spacing: .4px;
+  text-shadow: 0 3px 15px rgba(0,0,0,.5);
 }
 
 header p {
-  margin: 8px 0 0;
-  color: #a9c3dd;
+  margin: 9px 0 0;
+  color: #a9cce5;
   font-size: 15px;
 }
 
-/* =========================
+/* =========================================================
    CONTAINER
-========================= */
+========================================================= */
 
 .container {
   width: min(1200px, 94%);
   margin: auto;
 }
 
-/* =========================
-   GENERAL BOXES
-========================= */
+/* =========================================================
+   GENERAL PANELS
+========================================================= */
 
 .login-box,
 .editor-box,
 .viewer-box,
-.ranking-card {
-  background: rgba(9,24,42,.92);
-  border: 1px solid #234866;
-  border-radius: 16px;
-  box-shadow: 0 12px 35px rgba(0,0,0,.3);
+.ranking-card,
+.leaderboard {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(12, 35, 52, .94),
+      rgba(5, 19, 29, .94)
+    );
+
+  border: 1px solid rgba(69, 143, 184, .38);
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.035);
+
+  backdrop-filter: blur(10px);
 }
+
+/* =========================================================
+   LOGIN
+========================================================= */
 
 .login-box {
   max-width: 440px;
-  margin: 25px auto;
-  padding: 22px;
+  margin: 28px auto;
+  padding: 25px;
+  border-radius: 20px;
 }
 
 .login-box h2 {
   text-align: center;
-  margin-top: 0;
+  margin: 0 0 22px;
 }
 
-/* =========================
+.login-icon {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+/* =========================================================
    INPUTS
-========================= */
+========================================================= */
 
 input,
 select,
@@ -99,24 +199,38 @@ button {
 input,
 select {
   width: 100%;
-  padding: 12px;
-  margin: 7px 0 12px;
-  border-radius: 9px;
-  border: 1px solid #365b7e;
-  background: #071525;
+  padding: 13px;
+  margin: 7px 0 14px;
+
+  border-radius: 10px;
+  border: 1px solid #315a75;
+
+  background: rgba(3, 16, 27, .95);
   color: white;
+
   outline: none;
 }
 
 input:focus,
 select:focus {
-  border-color: #2494ff;
-  box-shadow: 0 0 0 2px rgba(36,148,255,.12);
+  border-color: #2aa9ff;
+
+  box-shadow:
+    0 0 0 3px rgba(42,169,255,.12);
 }
 
-/* =========================
+select {
+  cursor: pointer;
+}
+
+select option {
+  background: #071825;
+  color: white;
+}
+
+/* =========================================================
    BUTTONS
-========================= */
+========================================================= */
 
 button {
   border: 0;
@@ -124,52 +238,54 @@ button {
   padding: 9px 13px;
   cursor: pointer;
   font-weight: bold;
-  transition: .15s;
+  transition: transform .12s, filter .12s, background .12s;
+}
+
+button:hover {
+  filter: brightness(1.08);
 }
 
 button:active {
-  transform: scale(.96);
+  transform: scale(.95);
 }
 
 .login-button {
   width: 100%;
-  background: #1683ff;
-  color: white;
-  padding: 12px;
-}
+  padding: 13px;
 
-.login-button:hover {
-  background: #0870dc;
+  background:
+    linear-gradient(
+      135deg,
+      #168cff,
+      #0868c9
+    );
+
+  color: white;
+
+  box-shadow:
+    0 6px 18px rgba(0,110,220,.25);
 }
 
 .logout-button {
-  background: #d43d3d;
+  background: #c83b3b;
   color: white;
 }
 
 .plus {
-  background: #1eaa59;
+  background: #16a85a;
   color: white;
-  min-width: 37px;
-}
-
-.plus:hover {
-  background: #178c49;
+  min-width: 38px;
 }
 
 .minus {
-  background: #c83d3d;
+  background: #c63c3c;
   color: white;
-  min-width: 37px;
+  min-width: 38px;
 }
 
-.minus:hover {
-  background: #aa3030;
-}
-
-/* =========================
+/* =========================================================
    STATUS
-========================= */
+========================================================= */
 
 .status {
   text-align: center;
@@ -183,22 +299,23 @@ button:active {
 }
 
 .success {
-  color: #65e695;
+  color: #63e99a;
 }
 
 .editor-name {
-  color: #65b8ff;
+  color: #55baff;
   font-weight: bold;
 }
 
-/* =========================
+/* =========================================================
    EDITOR / VIEWER
-========================= */
+========================================================= */
 
 .editor-box,
 .viewer-box {
-  padding: 16px 18px;
+  padding: 16px 20px;
   margin: 18px 0;
+  border-radius: 15px;
 }
 
 .editor-box {
@@ -209,13 +326,13 @@ button:active {
 }
 
 .viewer-box {
-  color: #abc1d6;
+  color: #a9c4d9;
   text-align: center;
 }
 
-/* =========================
+/* =========================================================
    CONTROLS
-========================= */
+========================================================= */
 
 .controls {
   display: flex;
@@ -223,92 +340,200 @@ button:active {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin: 25px 0;
+  margin: 28px 0;
 }
 
 .controls label {
   font-weight: bold;
+  color: #d7e8f5;
 }
 
 .controls select {
   width: auto;
-  min-width: 190px;
+  min-width: 210px;
   margin: 0;
 }
 
-/* =========================
+/* =========================================================
    SECTION TITLES
-========================= */
+========================================================= */
 
 .section-title {
   text-align: center;
-  margin: 35px 0 17px;
-  font-size: 25px;
+  margin: 38px 0 18px;
+
+  font-size: 26px;
+
+  text-shadow:
+    0 3px 15px rgba(0,0,0,.4);
 }
 
-/* =========================
+.section-title::after {
+  content: "";
+  display: block;
+
+  width: 60px;
+  height: 3px;
+
+  margin: 9px auto 0;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #168cff,
+      #45d5ff
+    );
+}
+
+/* =========================================================
    PLAYER GRID
-========================= */
+========================================================= */
 
 .players-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(270px, 1fr)
+    );
+
+  gap: 18px;
 }
 
-/* =========================
+/* =========================================================
    PLAYER CARD
-========================= */
+========================================================= */
 
 .player-card {
   position: relative;
+
   background:
-    linear-gradient(145deg, rgba(17,43,70,.98), rgba(6,17,29,.98));
-  border: 1px solid #285274;
-  border-radius: 15px;
-  padding: 17px;
-  box-shadow: 0 9px 25px rgba(0,0,0,.25);
+    linear-gradient(
+      145deg,
+      rgba(15, 45, 66, .97),
+      rgba(5, 19, 29, .98)
+    );
+
+  border: 1px solid rgba(67, 140, 179, .42);
+
+  border-radius: 17px;
+
+  padding: 18px;
+
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.035);
+
   overflow: hidden;
+
+  transition:
+    transform .18s,
+    border-color .18s,
+    box-shadow .18s;
 }
+
+.player-card:hover {
+  transform: translateY(-3px);
+
+  border-color:
+    rgba(75, 180, 235, .65);
+
+  box-shadow:
+    0 18px 35px rgba(0,0,0,.34),
+    0 0 25px rgba(30,150,220,.08);
+}
+
+/* Large background soccer ball */
 
 .player-card::before {
   content: "⚽";
+
   position: absolute;
-  right: -5px;
-  top: -14px;
-  font-size: 70px;
-  opacity: .055;
+
+  right: -15px;
+  top: -20px;
+
+  font-size: 92px;
+
+  opacity: .045;
+
+  pointer-events: none;
+}
+
+/* Green pitch-style line */
+
+.player-card::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  top: 0;
+
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1590ff,
+      #32d5ff,
+      #1590ff
+    );
+
+  opacity: .75;
 }
 
 .player-card h2 {
   margin: 0 0 15px;
-  font-size: 22px;
+
+  font-size: 23px;
+
   position: relative;
+  z-index: 1;
 }
 
-/* =========================
+/* =========================================================
    STAT ROW
-========================= */
+========================================================= */
 
 .stat-row {
   display: grid;
-  grid-template-columns: 1fr 45px auto;
+
+  grid-template-columns:
+    1fr 45px auto;
+
   align-items: center;
+
   gap: 7px;
+
   margin: 7px 0;
   padding: 8px;
-  background: rgba(255,255,255,.035);
-  border-radius: 8px;
+
+  background:
+    rgba(255,255,255,.035);
+
+  border-radius: 9px;
+
+  border: 1px solid
+    rgba(255,255,255,.025);
 }
 
 .stat-name {
-  color: #c8d8e8;
+  color: #c6d9e8;
 }
 
 .stat-value {
   text-align: center;
+
   font-weight: bold;
+
   font-size: 18px;
+
+  color: #ffffff;
 }
 
 .stat-buttons {
@@ -316,55 +541,90 @@ button:active {
   gap: 5px;
 }
 
-/* =========================
+/* =========================================================
    G+A
-========================= */
+========================================================= */
 
 .ga {
   display: flex;
+
   justify-content: space-between;
   align-items: center;
+
   margin: 9px 0;
-  padding: 10px;
-  border-radius: 8px;
-  background: rgba(22,131,255,.12);
-  border: 1px solid rgba(22,131,255,.18);
+
+  padding: 11px;
+
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(22,131,255,.13),
+      rgba(50,190,255,.07)
+    );
+
+  border:
+    1px solid
+    rgba(40,160,255,.20);
+
   font-weight: bold;
 }
 
-/* =========================
+.ga span:last-child {
+  font-size: 20px;
+  color: #56c4ff;
+}
+
+/* =========================================================
    LEADERBOARD
-========================= */
+========================================================= */
 
 .leaderboard {
   overflow-x: auto;
-  background: rgba(9,24,42,.93);
-  border: 1px solid #234866;
-  border-radius: 15px;
-  box-shadow: 0 10px 28px rgba(0,0,0,.25);
+  border-radius: 16px;
 }
 
 table {
   width: 100%;
+
   border-collapse: collapse;
+
   min-width: 720px;
 }
 
 th,
 td {
   padding: 12px 10px;
+
   text-align: center;
-  border-bottom: 1px solid #20384e;
+
+  border-bottom:
+    1px solid #20384e;
 }
 
 th {
-  background: #102a44;
-  color: #9ecbf4;
+  background:
+    linear-gradient(
+      180deg,
+      #12344f,
+      #0d293f
+    );
+
+  color: #a9d7fa;
 }
 
 td:first-child,
 th:first-child {
   text-align: left;
+}
+
+tbody tr {
+  transition: background .15s;
+}
+
+tbody tr:hover {
+  background: rgba(50,160,220,.055);
 }
 
 .rank-number {
@@ -373,40 +633,65 @@ th:first-child {
   margin-right: 7px;
 }
 
-/* =========================
+/* =========================================================
    RANKINGS
-========================= */
+========================================================= */
 
 .ranking-card {
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 21px;
+  margin-bottom: 21px;
+  border-radius: 17px;
 }
 
 .ranking-title {
   text-align: center;
-  font-size: 25px;
+
+  font-size: 26px;
+
   font-weight: bold;
-  margin: 5px 0 17px;
+
+  margin: 5px 0 18px;
 }
 
 .trophy {
   display: block;
-  width: 100px;
-  height: 100px;
+
+  width: 105px;
+  height: 105px;
+
   object-fit: contain;
+
   margin: 0 auto 8px;
+
   border-radius: 10px;
+
+  filter:
+    drop-shadow(
+      0 8px 12px rgba(0,0,0,.35)
+    );
 }
 
 .ranking-row {
   display: grid;
-  grid-template-columns: 45px 1fr auto;
+
+  grid-template-columns:
+    45px 1fr auto;
+
   align-items: center;
+
   gap: 10px;
+
   padding: 10px;
+
   margin: 5px 0;
-  border-radius: 8px;
-  background: rgba(255,255,255,.035);
+
+  border-radius: 9px;
+
+  background:
+    rgba(255,255,255,.035);
+
+  border:
+    1px solid rgba(255,255,255,.025);
 }
 
 .ranking-position {
@@ -431,38 +716,57 @@ th:first-child {
 
 .save-rankings {
   display: block;
+
   margin: 17px auto 0;
-  background: #1683ff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #168cff,
+      #0868c9
+    );
+
   color: white;
 }
+
+/* =========================================================
+   HIDDEN
+========================================================= */
 
 .hidden {
   display: none !important;
 }
 
-/* =========================
+/* =========================================================
    FOOTER
-========================= */
+========================================================= */
 
 .footer {
   text-align: center;
-  color: #71869c;
-  padding: 35px 10px;
+
+  color: #718b9e;
+
+  padding: 38px 10px;
+
   font-size: 13px;
 }
 
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media (max-width: 600px) {
+
+  header {
+    padding: 28px 12px;
+  }
 
   header h1 {
     font-size: 24px;
   }
 
   .soccer-ball {
-    font-size: 34px;
+    font-size: 38px;
   }
 
   .players-grid {
@@ -470,11 +774,13 @@ th:first-child {
   }
 
   .stat-row {
-    grid-template-columns: 1fr 40px auto;
+    grid-template-columns:
+      1fr 40px auto;
   }
 
   .ranking-row {
-    grid-template-columns: 38px 1fr auto;
+    grid-template-columns:
+      38px 1fr auto;
   }
 
   .editor-box {
@@ -486,11 +792,30 @@ th:first-child {
   .logout-button {
     width: 100%;
   }
+
+  .controls {
+    align-items: stretch;
+  }
+
+  .controls label {
+    width: 100%;
+    text-align: center;
+  }
+
+  .controls select {
+    width: 100%;
+  }
+
 }
+
 </style>
 </head>
 
 <body>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
 <header>
 
@@ -503,7 +828,7 @@ th:first-child {
   </h1>
 
   <p>
-    Live player statistics
+    Live player statistics • Updated in real time
   </p>
 
 </header>
@@ -511,26 +836,51 @@ th:first-child {
 
 <div class="container">
 
-<!-- =========================
+
+<!-- =========================================================
      LOGIN
-========================= -->
+========================================================= -->
 
 <div class="login-box" id="loginBox">
 
+  <div class="login-icon">
+    🔐
+  </div>
+
   <h2>
-    🔐 Editor Login
+    Editor Login
   </h2>
 
   <label>
-    Username
+    Editor Username
   </label>
 
-  <input
-    type="text"
-    id="usernameInput"
-    placeholder="Enter username"
-    autocomplete="username"
-  >
+  <!-- USERNAME DROPDOWN -->
+
+  <select id="usernameInput">
+
+    <option value="">
+      Select your username
+    </option>
+
+    <option value="jack">
+      Jack
+    </option>
+
+    <option value="jackschool">
+      Jack (School)
+    </option>
+
+    <option value="leonardo">
+      Leonardo
+    </option>
+
+    <option value="angelo">
+      Angelo
+    </option>
+
+  </select>
+
 
   <label>
     PIN / Password
@@ -543,12 +893,14 @@ th:first-child {
     autocomplete="current-password"
   >
 
+
   <button
     class="login-button"
     onclick="login()"
   >
-    Login
+    🔓 Login
   </button>
+
 
   <div
     id="loginMessage"
@@ -558,9 +910,9 @@ th:first-child {
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      EDITOR
-========================= -->
+========================================================= -->
 
 <div
   class="editor-box hidden"
@@ -568,12 +920,16 @@ th:first-child {
 >
 
   <div>
-    Logged in as:
+
+    ✏️ Logged in as:
+    
     <span
       class="editor-name"
       id="editorName"
     ></span>
+
   </div>
+
 
   <button
     class="logout-button"
@@ -585,9 +941,9 @@ th:first-child {
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      VIEWER
-========================= -->
+========================================================= -->
 
 <div
   class="viewer-box"
@@ -605,9 +961,9 @@ th:first-child {
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      SORT
-========================= -->
+========================================================= -->
 
 <div class="controls">
 
@@ -657,13 +1013,14 @@ th:first-child {
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      PLAYER STATS
-========================= -->
+========================================================= -->
 
 <h2 class="section-title">
   Player Stats
 </h2>
+
 
 <div
   class="players-grid"
@@ -671,13 +1028,14 @@ th:first-child {
 ></div>
 
 
-<!-- =========================
+<!-- =========================================================
      LEADERBOARD
-========================= -->
+========================================================= -->
 
 <h2 class="section-title">
   Leaderboard
 </h2>
+
 
 <div class="leaderboard">
 
@@ -707,9 +1065,9 @@ th:first-child {
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      RANKINGS
-========================= -->
+========================================================= -->
 
 <h2 class="section-title">
   Rankings
@@ -769,17 +1127,22 @@ th:first-child {
 
 </div>
 
+
 </div>
 
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
 
 <div class="footer">
   Saint Matthews Recess Soccer • Live Stats
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      FIREBASE
-========================= -->
+========================================================= -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -838,8 +1201,8 @@ const rankingsRef =
 
 
 /* =========================================================
-   ALL 14 PLAYER NAMES
-   THESE ARE ALWAYS LOADED
+   ALL PLAYER NAMES
+   THESE ARE ALWAYS DISPLAYED
 ========================================================= */
 
 const playerNames = [
@@ -871,17 +1234,11 @@ function defaultPlayer() {
   return {
 
     goals: 0,
-
     assists: 0,
-
     saves: 0,
-
     mvp: 0,
-
     cleanSheets: 0,
-
     yellow: 0,
-
     red: 0
 
   };
@@ -905,35 +1262,49 @@ playerNames.forEach(function(name) {
 
 
 /* =========================================================
-   USERNAME LOGIN
-=========================================================
-
-   The player enters a username.
-
-   Firebase still uses the email account internally,
-   but the user does NOT need to type the email.
+   EDITOR ACCOUNTS
 ========================================================= */
 
 const editorAccounts = {
 
-  "jack": {
-    email: "jmaso12.home@gmail.com",
-    name: "Jack"
+  jack: {
+
+    email:
+      "jmaso12.home@gmail.com",
+
+    name:
+      "Jack"
+
   },
 
-  "jackschool": {
-    email: "jack.mason1@stu.ocsb.ca",
-    name: "Jack (School)"
+  jackschool: {
+
+    email:
+      "jack.mason1@stu.ocsb.ca",
+
+    name:
+      "Jack (School)"
+
   },
 
-  "leonardo": {
-    email: "leonardo.ljubicic@stu.ocsb.ca",
-    name: "Leonardo"
+  leonardo: {
+
+    email:
+      "leonardo.ljubicic@stu.ocsb.ca",
+
+    name:
+      "Leonardo"
+
   },
 
-  "angelo": {
-    email: "angelo.champagne@stu.ocsb.ca",
-    name: "Angelo"
+  angelo: {
+
+    email:
+      "angelo.champagne@stu.ocsb.ca",
+
+    name:
+      "Angelo"
+
   }
 
 };
@@ -958,434 +1329,7 @@ let isEditor =
 
 
 /* =========================================================
-   ENSURE PLAYERS EXIST
+   ENSURE ALL PLAYERS EXIST
 ========================================================= */
 
-function makeSurePlayersExist() {
-
-  playerNames.forEach(function(name) {
-
-    if (
-      !players[name] ||
-      typeof players[name] !== "object"
-    ) {
-
-      players[name] =
-        defaultPlayer();
-
-    }
-
-
-    const defaults =
-      defaultPlayer();
-
-
-    Object.keys(defaults)
-      .forEach(function(stat) {
-
-        const numberValue =
-          Number(players[name][stat]);
-
-
-        if (
-          players[name][stat] === undefined ||
-          players[name][stat] === null ||
-          isNaN(numberValue)
-        ) {
-
-          players[name][stat] = 0;
-
-        } else {
-
-          players[name][stat] =
-            numberValue;
-
-        }
-
-      });
-
-  });
-
-}
-
-
-/* =========================================================
-   STAT LABEL
-========================================================= */
-
-function statLabel(stat) {
-
-  const labels = {
-
-    goals: "Goals",
-
-    assists: "Assists",
-
-    saves: "Goalie Saves",
-
-    mvp: "MVPs",
-
-    cleanSheets: "Clean Sheets",
-
-    yellow: "Yellow Cards",
-
-    red: "Red Cards"
-
-  };
-
-  return labels[stat] || stat;
-
-}
-
-
-/* =========================================================
-   CHANGE STAT
-========================================================= */
-
-function changeStat(
-  playerName,
-  stat,
-  amount
-) {
-
-  if (!isEditor) {
-
-    alert(
-      "You must be logged in as an editor."
-    );
-
-    return;
-
-  }
-
-
-  if (!players[playerName]) {
-
-    players[playerName] =
-      defaultPlayer();
-
-  }
-
-
-  const currentValue =
-    Number(
-      players[playerName][stat] || 0
-    );
-
-
-  const newValue =
-    Math.max(
-      0,
-      currentValue + Number(amount)
-    );
-
-
-  /*
-     ONLY change this player.
-  */
-
-  players[playerName][stat] =
-    newValue;
-
-
-  /*
-     Render immediately.
-  */
-
-  render();
-
-
-  /*
-     Save ONLY this stat.
-  */
-
-  const updateObject = {};
-
-  updateObject[stat] =
-    newValue;
-
-
-  statsRef
-    .child(playerName)
-    .update(updateObject)
-
-    .then(function() {
-
-      document
-        .getElementById("firebaseStatus")
-        .className =
-          "status success";
-
-      document
-        .getElementById("firebaseStatus")
-        .textContent =
-          "🟢 Live • " +
-          playerName +
-          " updated";
-
-    })
-
-    .catch(function(error) {
-
-      console.error(
-        "Firebase save failed:",
-        error
-      );
-
-
-      document
-        .getElementById("firebaseStatus")
-        .className =
-          "status error";
-
-
-      document
-        .getElementById("firebaseStatus")
-        .textContent =
-          "🔴 Firebase save error";
-
-      alert(
-        "The number changed on screen, but Firebase could not save it.\n\n" +
-        error.message
-      );
-
-    });
-
-}
-
-
-/* =========================================================
-   CREATE STAT ROW
-========================================================= */
-
-function createStatRow(
-  playerName,
-  stat
-) {
-
-  const value =
-    Number(
-      players[playerName][stat] || 0
-    );
-
-
-  let buttons = "";
-
-
-  if (isEditor) {
-
-    buttons = `
-
-      <div class="stat-buttons">
-
-        <button
-          class="minus"
-          onclick="changeStat('${playerName}','${stat}',-1)"
-        >
-          −
-        </button>
-
-        <button
-          class="plus"
-          onclick="changeStat('${playerName}','${stat}',1)"
-        >
-          +
-        </button>
-
-      </div>
-
-    `;
-
-  }
-
-
-  return `
-
-    <div class="stat-row">
-
-      <span class="stat-name">
-        ${statLabel(stat)}
-      </span>
-
-      <span class="stat-value">
-        ${value}
-      </span>
-
-      ${buttons}
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================================
-   RENDER PLAYER CARDS
-========================================================= */
-
-function renderPlayers() {
-
-  const grid =
-    document.getElementById(
-      "playersGrid"
-    );
-
-
-  if (!grid) {
-    return;
-  }
-
-
-  let html = "";
-
-
-  /*
-     CRITICAL:
-     This ALWAYS uses playerNames.
-     The cards NEVER get sorted.
-  */
-
-  playerNames.forEach(function(name) {
-
-    const p =
-      players[name];
-
-
-    const goals =
-      Number(p.goals || 0);
-
-
-    const assists =
-      Number(p.assists || 0);
-
-
-    const ga =
-      goals + assists;
-
-
-    html += `
-
-      <div class="player-card">
-
-        <h2>
-          ${name}
-        </h2>
-
-
-        ${createStatRow(
-          name,
-          "goals"
-        )}
-
-
-        ${createStatRow(
-          name,
-          "assists"
-        )}
-
-
-        <div class="ga">
-
-          <span>
-            Goals + Assists
-          </span>
-
-          <span>
-            ${ga}
-          </span>
-
-        </div>
-
-
-        ${createStatRow(
-          name,
-          "saves"
-        )}
-
-
-        ${createStatRow(
-          name,
-          "mvp"
-        )}
-
-
-        ${createStatRow(
-          name,
-          "cleanSheets"
-        )}
-
-
-        ${createStatRow(
-          name,
-          "yellow"
-        )}
-
-
-        ${createStatRow(
-          name,
-          "red"
-        )}
-
-      </div>
-
-    `;
-
-  });
-
-
-  grid.innerHTML =
-    html;
-
-}
-
-
-/* =========================================================
-   LEADERBOARD SORT
-========================================================= */
-
-function getSortValue(
-  player,
-  sort
-) {
-
-  if (sort === "ga") {
-
-    return (
-      Number(player.goals || 0) +
-      Number(player.assists || 0)
-    );
-
-  }
-
-
-  return Number(
-    player[sort] || 0
-  );
-
-}
-
-
-/* =========================================================
-   CHANGE SORT
-========================================================= */
-
-function changeSort(sort) {
-
-  currentSort =
-    sort;
-
-  renderLeaderboard();
-
-}
-
-
-/* =========================================================
-   RENDER LEADERBOARD
-========================================================= */
-
-function renderLeaderboard() {
-
-  const body =
-    document.getElementById(
-      "leaderboardBody"
+function 
