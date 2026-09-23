@@ -15,47 +15,80 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background:
-    radial-gradient(circle at top, #17345f 0%, #08111f 45%, #03070d 100%);
   color: white;
   min-height: 100vh;
+  background:
+    linear-gradient(rgba(3,10,20,.86), rgba(3,10,20,.94)),
+    radial-gradient(circle at top, #1d5b91, #06101d 65%);
 }
 
+/* =========================
+   HEADER
+========================= */
+
 header {
+  position: relative;
   text-align: center;
-  padding: 25px 15px 15px;
+  padding: 30px 15px 25px;
+  border-bottom: 1px solid rgba(100,170,230,.25);
+  background:
+    linear-gradient(180deg, rgba(15,45,75,.8), rgba(4,12,22,.3));
+}
+
+.soccer-ball {
+  font-size: 42px;
+  margin-bottom: 5px;
 }
 
 header h1 {
   margin: 0;
-  font-size: 30px;
+  font-size: 31px;
+  letter-spacing: .3px;
 }
 
 header p {
   margin: 8px 0 0;
-  color: #b9c8dc;
+  color: #a9c3dd;
+  font-size: 15px;
 }
 
+/* =========================
+   CONTAINER
+========================= */
+
 .container {
-  width: min(1200px, 95%);
+  width: min(1200px, 94%);
   margin: auto;
 }
 
+/* =========================
+   GENERAL BOXES
+========================= */
+
 .login-box,
 .editor-box,
-.viewer-box {
-  background: rgba(15, 28, 48, 0.92);
-  border: 1px solid #294566;
-  border-radius: 15px;
-  padding: 18px;
-  margin: 15px 0;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+.viewer-box,
+.ranking-card {
+  background: rgba(9,24,42,.92);
+  border: 1px solid #234866;
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(0,0,0,.3);
 }
 
 .login-box {
-  max-width: 450px;
-  margin: 20px auto;
+  max-width: 440px;
+  margin: 25px auto;
+  padding: 22px;
 }
+
+.login-box h2 {
+  text-align: center;
+  margin-top: 0;
+}
+
+/* =========================
+   INPUTS
+========================= */
 
 input,
 select,
@@ -66,41 +99,83 @@ button {
 input,
 select {
   width: 100%;
-  padding: 11px;
-  margin: 6px 0 10px;
-  border-radius: 8px;
-  border: 1px solid #48698f;
-  background: #0b1728;
+  padding: 12px;
+  margin: 7px 0 12px;
+  border-radius: 9px;
+  border: 1px solid #365b7e;
+  background: #071525;
   color: white;
+  outline: none;
 }
 
+input:focus,
+select:focus {
+  border-color: #2494ff;
+  box-shadow: 0 0 0 2px rgba(36,148,255,.12);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
 button {
-  border: none;
-  border-radius: 8px;
+  border: 0;
+  border-radius: 9px;
   padding: 9px 13px;
   cursor: pointer;
   font-weight: bold;
+  transition: .15s;
+}
+
+button:active {
+  transform: scale(.96);
 }
 
 .login-button {
   width: 100%;
   background: #1683ff;
   color: white;
+  padding: 12px;
 }
 
 .login-button:hover {
-  background: #006bd6;
+  background: #0870dc;
 }
 
 .logout-button {
-  background: #d83b3b;
+  background: #d43d3d;
   color: white;
 }
+
+.plus {
+  background: #1eaa59;
+  color: white;
+  min-width: 37px;
+}
+
+.plus:hover {
+  background: #178c49;
+}
+
+.minus {
+  background: #c83d3d;
+  color: white;
+  min-width: 37px;
+}
+
+.minus:hover {
+  background: #aa3030;
+}
+
+/* =========================
+   STATUS
+========================= */
 
 .status {
   text-align: center;
   margin: 12px 0;
-  color: #9fc7ff;
+  color: #9fc7ed;
+  font-size: 14px;
 }
 
 .error {
@@ -108,21 +183,47 @@ button {
 }
 
 .success {
-  color: #62e68a;
+  color: #65e695;
 }
 
 .editor-name {
-  color: #68b5ff;
+  color: #65b8ff;
   font-weight: bold;
 }
+
+/* =========================
+   EDITOR / VIEWER
+========================= */
+
+.editor-box,
+.viewer-box {
+  padding: 16px 18px;
+  margin: 18px 0;
+}
+
+.editor-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.viewer-box {
+  color: #abc1d6;
+  text-align: center;
+}
+
+/* =========================
+   CONTROLS
+========================= */
 
 .controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
   justify-content: center;
-  margin: 20px 0;
+  align-items: center;
+  gap: 10px;
+  margin: 25px 0;
 }
 
 .controls label {
@@ -131,46 +232,80 @@ button {
 
 .controls select {
   width: auto;
-  min-width: 180px;
+  min-width: 190px;
   margin: 0;
 }
+
+/* =========================
+   SECTION TITLES
+========================= */
+
+.section-title {
+  text-align: center;
+  margin: 35px 0 17px;
+  font-size: 25px;
+}
+
+/* =========================
+   PLAYER GRID
+========================= */
 
 .players-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
+  gap: 16px;
 }
 
+/* =========================
+   PLAYER CARD
+========================= */
+
 .player-card {
-  background: linear-gradient(145deg, #10233c, #091522);
-  border: 1px solid #294b70;
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,.22);
+  position: relative;
+  background:
+    linear-gradient(145deg, rgba(17,43,70,.98), rgba(6,17,29,.98));
+  border: 1px solid #285274;
+  border-radius: 15px;
+  padding: 17px;
+  box-shadow: 0 9px 25px rgba(0,0,0,.25);
+  overflow: hidden;
+}
+
+.player-card::before {
+  content: "⚽";
+  position: absolute;
+  right: -5px;
+  top: -14px;
+  font-size: 70px;
+  opacity: .055;
 }
 
 .player-card h2 {
-  margin: 0 0 14px;
+  margin: 0 0 15px;
   font-size: 22px;
+  position: relative;
 }
 
+/* =========================
+   STAT ROW
+========================= */
+
 .stat-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 45px auto;
   align-items: center;
-  gap: 8px;
-  margin: 8px 0;
+  gap: 7px;
+  margin: 7px 0;
   padding: 8px;
-  background: rgba(255,255,255,.04);
+  background: rgba(255,255,255,.035);
   border-radius: 8px;
 }
 
 .stat-name {
-  color: #c9d7e8;
+  color: #c8d8e8;
 }
 
 .stat-value {
-  min-width: 35px;
   text-align: center;
   font-weight: bold;
   font-size: 18px;
@@ -181,65 +316,50 @@ button {
   gap: 5px;
 }
 
-.plus {
-  background: #20a957;
-  color: white;
-  min-width: 35px;
-}
-
-.minus {
-  background: #c83b3b;
-  color: white;
-  min-width: 35px;
-}
-
-.plus:hover {
-  background: #168543;
-}
-
-.minus:hover {
-  background: #a52c2c;
-}
+/* =========================
+   G+A
+========================= */
 
 .ga {
-  background: rgba(22,131,255,.12);
-  margin-top: 9px;
-  padding: 9px;
-  border-radius: 6px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin: 9px 0;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(22,131,255,.12);
+  border: 1px solid rgba(22,131,255,.18);
   font-weight: bold;
 }
 
-.section-title {
-  text-align: center;
-  margin: 35px 0 15px;
-  font-size: 25px;
-}
+/* =========================
+   LEADERBOARD
+========================= */
 
 .leaderboard {
   overflow-x: auto;
-  background: rgba(15, 28, 48, .9);
-  border-radius: 14px;
-  border: 1px solid #294566;
+  background: rgba(9,24,42,.93);
+  border: 1px solid #234866;
+  border-radius: 15px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.25);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 650px;
+  min-width: 720px;
 }
 
 th,
 td {
   padding: 12px 10px;
   text-align: center;
-  border-bottom: 1px solid #263c57;
+  border-bottom: 1px solid #20384e;
 }
 
 th {
-  background: #102944;
-  color: #9dc8f5;
+  background: #102a44;
+  color: #9ecbf4;
 }
 
 td:first-child,
@@ -248,50 +368,55 @@ th:first-child {
 }
 
 .rank-number {
+  color: #69b5ff;
   font-weight: bold;
-  color: #72b7ff;
+  margin-right: 7px;
 }
 
+/* =========================
+   RANKINGS
+========================= */
+
 .ranking-card {
-  background: rgba(15, 28, 48, .92);
-  border: 1px solid #294566;
-  border-radius: 14px;
-  padding: 18px;
+  padding: 20px;
   margin-bottom: 20px;
 }
 
 .ranking-title {
   text-align: center;
-  font-size: 24px;
-  margin: 5px 0 15px;
+  font-size: 25px;
+  font-weight: bold;
+  margin: 5px 0 17px;
 }
 
 .trophy {
   display: block;
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
-  margin: 0 auto 10px;
+  margin: 0 auto 8px;
+  border-radius: 10px;
 }
 
 .ranking-row {
   display: grid;
-  grid-template-columns: 45px 1fr 80px 80px;
-  gap: 8px;
+  grid-template-columns: 45px 1fr auto;
   align-items: center;
+  gap: 10px;
   padding: 10px;
   margin: 5px 0;
   border-radius: 8px;
-  background: rgba(255,255,255,.04);
+  background: rgba(255,255,255,.035);
+}
+
+.ranking-position {
+  color: #70baff;
+  font-weight: bold;
 }
 
 .move-buttons {
   display: flex;
   gap: 5px;
-}
-
-.move-buttons button {
-  padding: 7px 10px;
 }
 
 .up {
@@ -306,7 +431,7 @@ th:first-child {
 
 .save-rankings {
   display: block;
-  margin: 15px auto 0;
+  margin: 17px auto 0;
   background: #1683ff;
   color: white;
 }
@@ -315,28 +440,51 @@ th:first-child {
   display: none !important;
 }
 
+/* =========================
+   FOOTER
+========================= */
+
 .footer {
   text-align: center;
-  color: #73869e;
+  color: #71869c;
   padding: 35px 10px;
   font-size: 13px;
 }
 
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width: 600px) {
+
   header h1 {
     font-size: 24px;
+  }
+
+  .soccer-ball {
+    font-size: 34px;
   }
 
   .players-grid {
     grid-template-columns: 1fr;
   }
 
-  .ranking-row {
-    grid-template-columns: 35px 1fr;
+  .stat-row {
+    grid-template-columns: 1fr 40px auto;
   }
 
-  .move-buttons {
-    grid-column: 2;
+  .ranking-row {
+    grid-template-columns: 38px 1fr auto;
+  }
+
+  .editor-box {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .logout-button {
+    width: 100%;
   }
 }
 </style>
@@ -345,186 +493,281 @@ th:first-child {
 <body>
 
 <header>
-  <h1>⚽ Saint Matthews Recess Soccer Live Stats</h1>
-  <p>Live player statistics</p>
+
+  <div class="soccer-ball">
+    ⚽
+  </div>
+
+  <h1>
+    Saint Matthews Recess Soccer Live Stats
+  </h1>
+
+  <p>
+    Live player statistics
+  </p>
+
 </header>
+
 
 <div class="container">
 
-  <div class="login-box" id="loginBox">
-    <h2>Editor Login</h2>
+<!-- =========================
+     LOGIN
+========================= -->
 
-    <label>Email</label>
+<div class="login-box" id="loginBox">
 
-    <input
-      type="email"
-      id="emailInput"
-      placeholder="Enter your email"
-      autocomplete="username"
-    >
-
-    <label>PIN / Password</label>
-
-    <input
-      type="password"
-      id="passwordInput"
-      placeholder="Enter your PIN"
-      autocomplete="current-password"
-    >
-
-    <button class="login-button" onclick="login()">
-      Login
-    </button>
-
-    <div id="loginMessage" class="status"></div>
-  </div>
-
-
-  <div class="editor-box hidden" id="editorBox">
-
-    <div>
-      Logged in as:
-      <span class="editor-name" id="editorName"></span>
-    </div>
-
-    <button
-      class="logout-button"
-      onclick="logout()"
-      style="margin-top:10px;"
-    >
-      Logout
-    </button>
-
-  </div>
-
-
-  <div class="viewer-box" id="viewerBox">
-    👀 Viewer mode — stats are live.
-  </div>
-
-
-  <div class="status" id="firebaseStatus">
-    Connecting to Firebase...
-  </div>
-
-
-  <div class="controls">
-
-    <label for="sortSelect">
-      Sort leaderboard by:
-    </label>
-
-    <select
-      id="sortSelect"
-      onchange="changeSort(this.value)"
-    >
-      <option value="ga">Goals + Assists</option>
-      <option value="goals">Goals</option>
-      <option value="assists">Assists</option>
-      <option value="saves">Goalie Saves</option>
-      <option value="mvp">MVPs</option>
-      <option value="cleanSheets">Clean Sheets</option>
-      <option value="yellow">Yellow Cards</option>
-      <option value="red">Red Cards</option>
-    </select>
-
-  </div>
-
-
-  <h2 class="section-title">
-    Player Stats
+  <h2>
+    🔐 Editor Login
   </h2>
+
+  <label>
+    Username
+  </label>
+
+  <input
+    type="text"
+    id="usernameInput"
+    placeholder="Enter username"
+    autocomplete="username"
+  >
+
+  <label>
+    PIN / Password
+  </label>
+
+  <input
+    type="password"
+    id="passwordInput"
+    placeholder="Enter your PIN"
+    autocomplete="current-password"
+  >
+
+  <button
+    class="login-button"
+    onclick="login()"
+  >
+    Login
+  </button>
 
   <div
-    class="players-grid"
-    id="playersGrid"
+    id="loginMessage"
+    class="status"
   ></div>
 
+</div>
 
-  <h2 class="section-title">
-    Leaderboard
-  </h2>
 
-  <div class="leaderboard">
+<!-- =========================
+     EDITOR
+========================= -->
 
-    <table>
+<div
+  class="editor-box hidden"
+  id="editorBox"
+>
 
-      <thead>
-
-        <tr>
-          <th>Player</th>
-          <th>G</th>
-          <th>A</th>
-          <th>G+A</th>
-          <th>Saves</th>
-          <th>MVP</th>
-          <th>CS</th>
-          <th>🟨</th>
-          <th>🟥</th>
-        </tr>
-
-      </thead>
-
-      <tbody id="leaderboardBody"></tbody>
-
-    </table>
-
+  <div>
+    Logged in as:
+    <span
+      class="editor-name"
+      id="editorName"
+    ></span>
   </div>
 
+  <button
+    class="logout-button"
+    onclick="logout()"
+  >
+    Logout
+  </button>
 
-  <h2 class="section-title">
-    Rankings
-  </h2>
+</div>
 
 
-  <div class="ranking-card">
+<!-- =========================
+     VIEWER
+========================= -->
 
-    <img
-      class="trophy"
-      src="Screenshot_20260826-003116.png"
-      alt="Golden Defence Trophy"
-      onerror="this.style.display='none';"
-    >
+<div
+  class="viewer-box"
+  id="viewerBox"
+>
+  👀 Viewer mode — stats are live.
+</div>
 
-    <div class="ranking-title">
-      🛡️ Golden Defence
-    </div>
 
-    <div id="defenceRanking"></div>
+<div
+  class="status"
+  id="firebaseStatus"
+>
+  Connecting to Firebase...
+</div>
 
-    <button
-      class="save-rankings editor-only hidden"
-      onclick="saveRankings()"
-    >
-      Save Defence Ranking
-    </button>
 
+<!-- =========================
+     SORT
+========================= -->
+
+<div class="controls">
+
+  <label for="sortSelect">
+    Sort leaderboard by:
+  </label>
+
+  <select
+    id="sortSelect"
+    onchange="changeSort(this.value)"
+  >
+
+    <option value="ga">
+      Goals + Assists
+    </option>
+
+    <option value="goals">
+      Goals
+    </option>
+
+    <option value="assists">
+      Assists
+    </option>
+
+    <option value="saves">
+      Goalie Saves
+    </option>
+
+    <option value="mvp">
+      MVPs
+    </option>
+
+    <option value="cleanSheets">
+      Clean Sheets
+    </option>
+
+    <option value="yellow">
+      Yellow Cards
+    </option>
+
+    <option value="red">
+      Red Cards
+    </option>
+
+  </select>
+
+</div>
+
+
+<!-- =========================
+     PLAYER STATS
+========================= -->
+
+<h2 class="section-title">
+  Player Stats
+</h2>
+
+<div
+  class="players-grid"
+  id="playersGrid"
+></div>
+
+
+<!-- =========================
+     LEADERBOARD
+========================= -->
+
+<h2 class="section-title">
+  Leaderboard
+</h2>
+
+<div class="leaderboard">
+
+<table>
+
+<thead>
+
+<tr>
+  <th>Player</th>
+  <th>G</th>
+  <th>A</th>
+  <th>G+A</th>
+  <th>Saves</th>
+  <th>MVP</th>
+  <th>CS</th>
+  <th>🟨</th>
+  <th>🟥</th>
+</tr>
+
+</thead>
+
+<tbody id="leaderboardBody">
+</tbody>
+
+</table>
+
+</div>
+
+
+<!-- =========================
+     RANKINGS
+========================= -->
+
+<h2 class="section-title">
+  Rankings
+</h2>
+
+
+<!-- GOLDEN DEFENCE -->
+
+<div class="ranking-card">
+
+  <img
+    class="trophy"
+    src="Screenshot_20260826-003116.png"
+    alt="Golden Defence Trophy"
+    onerror="this.style.display='none';"
+  >
+
+  <div class="ranking-title">
+    🛡️ Golden Defence
   </div>
 
+  <div id="defenceRanking"></div>
 
-  <div class="ranking-card">
+  <button
+    class="save-rankings editor-only hidden"
+    onclick="saveRankings()"
+  >
+    Save Defence Ranking
+  </button>
 
-    <img
-      class="trophy"
-      src="Screenshot_20260826-003131.png"
-      alt="Ballon d'Or Trophy"
-      onerror="this.style.display='none';"
-    >
+</div>
 
-    <div class="ranking-title">
-      🏆 Ballon d'Or
-    </div>
 
-    <div id="ballonRanking"></div>
+<!-- BALLON D'OR -->
 
-    <button
-      class="save-rankings editor-only hidden"
-      onclick="saveRankings()"
-    >
-      Save Ballon d'Or Ranking
-    </button>
+<div class="ranking-card">
 
+  <img
+    class="trophy"
+    src="Screenshot_20260826-003131.png"
+    alt="Ballon d'Or Trophy"
+    onerror="this.style.display='none';"
+  >
+
+  <div class="ranking-title">
+    🏆 Ballon d'Or
   </div>
+
+  <div id="ballonRanking"></div>
+
+  <button
+    class="save-rankings editor-only hidden"
+    onclick="saveRankings()"
+  >
+    Save Ballon d'Or Ranking
+  </button>
+
+</div>
 
 </div>
 
@@ -534,7 +777,9 @@ th:first-child {
 </div>
 
 
-<!-- FIREBASE -->
+<!-- =========================
+     FIREBASE
+========================= -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -544,36 +789,61 @@ th:first-child {
 <script>
 
 /* =========================================================
-   FIREBASE
+   FIREBASE CONFIG
 ========================================================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
-  authDomain: "recess-soccer.firebaseapp.com",
-  databaseURL: "https://recess-soccer-default-rtdb.firebaseio.com",
-  projectId: "recess-soccer",
-  storageBucket: "recess-soccer.firebasestorage.app",
-  messagingSenderId: "872558689342",
-  appId: "1:872558689342:web:a4dca17e1d6b963ed6656f",
-  measurementId: "G-HJ16JSL5Q2"
+
+  apiKey:
+    "AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
+
+  authDomain:
+    "recess-soccer.firebaseapp.com",
+
+  databaseURL:
+    "https://recess-soccer-default-rtdb.firebaseio.com",
+
+  projectId:
+    "recess-soccer",
+
+  storageBucket:
+    "recess-soccer.firebasestorage.app",
+
+  messagingSenderId:
+    "872558689342",
+
+  appId:
+    "1:872558689342:web:a4dca17e1d6b963ed6656f",
+
+  measurementId:
+    "G-HJ16JSL5Q2"
+
 };
+
 
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
 
-const db = firebase.database();
+const auth =
+  firebase.auth();
 
-const statsRef = db.ref("players");
+const db =
+  firebase.database();
 
-const rankingsRef = db.ref("rankings");
+const statsRef =
+  db.ref("players");
+
+const rankingsRef =
+  db.ref("rankings");
 
 
 /* =========================================================
-   14 PLAYER NAMES
+   ALL 14 PLAYER NAMES
+   THESE ARE ALWAYS LOADED
 ========================================================= */
 
 const playerNames = [
+
   "Adi",
   "Aidan",
   "Artin",
@@ -588,105 +858,151 @@ const playerNames = [
   "Sami",
   "Nathan",
   "Theo"
+
 ];
 
 
 /* =========================================================
-   DEFAULT STATS
+   DEFAULT PLAYER
 ========================================================= */
 
 function defaultPlayer() {
 
   return {
+
     goals: 0,
+
     assists: 0,
+
     saves: 0,
+
     mvp: 0,
+
     cleanSheets: 0,
+
     yellow: 0,
+
     red: 0
+
   };
 
 }
 
 
 /* =========================================================
-   PLAYER DATA
+   LOCAL PLAYER DATA
 ========================================================= */
 
 let players = {};
 
+
 playerNames.forEach(function(name) {
 
-  players[name] = defaultPlayer();
+  players[name] =
+    defaultPlayer();
 
 });
 
 
 /* =========================================================
-   EDITORS
+   USERNAME LOGIN
+=========================================================
+
+   The player enters a username.
+
+   Firebase still uses the email account internally,
+   but the user does NOT need to type the email.
 ========================================================= */
 
-const editorEmails = {
+const editorAccounts = {
 
-  "jmaso12.home@gmail.com": "Jack",
+  "jack": {
+    email: "jmaso12.home@gmail.com",
+    name: "Jack"
+  },
 
-  "jack.mason1@stu.ocsb.ca": "Jack (School)",
+  "jackschool": {
+    email: "jack.mason1@stu.ocsb.ca",
+    name: "Jack (School)"
+  },
 
-  "leonardo.ljubicic@stu.ocsb.ca": "Leonardo",
+  "leonardo": {
+    email: "leonardo.ljubicic@stu.ocsb.ca",
+    name: "Leonardo"
+  },
 
-  "angelo.champagne@stu.ocsb.ca": "Angelo"
+  "angelo": {
+    email: "angelo.champagne@stu.ocsb.ca",
+    name: "Angelo"
+  }
 
 };
-
-let isEditor = false;
 
 
 /* =========================================================
    RANKINGS
 ========================================================= */
 
-let defenceRanking = [...playerNames];
+let defenceRanking =
+  [...playerNames];
 
-let ballonRanking = [...playerNames];
+let ballonRanking =
+  [...playerNames];
 
-let currentSort = "ga";
+
+let currentSort =
+  "ga";
+
+let isEditor =
+  false;
 
 
 /* =========================================================
-   MAKE SURE ALL STATS EXIST
+   ENSURE PLAYERS EXIST
 ========================================================= */
 
 function makeSurePlayersExist() {
 
   playerNames.forEach(function(name) {
 
-    if (!players[name]) {
+    if (
+      !players[name] ||
+      typeof players[name] !== "object"
+    ) {
 
-      players[name] = defaultPlayer();
+      players[name] =
+        defaultPlayer();
 
     }
 
-    const defaults = defaultPlayer();
 
-    Object.keys(defaults).forEach(function(stat) {
+    const defaults =
+      defaultPlayer();
 
-      if (
-        players[name][stat] === undefined ||
-        players[name][stat] === null ||
-        isNaN(Number(players[name][stat]))
-      ) {
 
-        players[name][stat] = 0;
+    Object.keys(defaults)
+      .forEach(function(stat) {
 
-      } else {
-
-        players[name][stat] =
+        const numberValue =
           Number(players[name][stat]);
 
-      }
 
-    });
+        if (
+          players[name][stat] === undefined ||
+          players[name][stat] === null ||
+          isNaN(numberValue)
+        ) {
+
+          players[name][stat] = 0;
+
+        } else {
+
+          players[name][stat] =
+            numberValue;
+
+        }
+
+      });
 
   });
 
@@ -694,15 +1010,48 @@ function makeSurePlayersExist() {
 
 
 /* =========================================================
-   CHANGE A PLAYER'S STAT
+   STAT LABEL
 ========================================================= */
 
-function changeStat(playerName, stat, amount) {
+function statLabel(stat) {
+
+  const labels = {
+
+    goals: "Goals",
+
+    assists: "Assists",
+
+    saves: "Goalie Saves",
+
+    mvp: "MVPs",
+
+    cleanSheets: "Clean Sheets",
+
+    yellow: "Yellow Cards",
+
+    red: "Red Cards"
+
+  };
+
+  return labels[stat] || stat;
+
+}
+
+
+/* =========================================================
+   CHANGE STAT
+========================================================= */
+
+function changeStat(
+  playerName,
+  stat,
+  amount
+) {
 
   if (!isEditor) {
 
     alert(
-      "You must be logged in as an editor to change stats."
+      "You must be logged in as an editor."
     );
 
     return;
@@ -710,60 +1059,65 @@ function changeStat(playerName, stat, amount) {
   }
 
 
-  /*
-     IMPORTANT:
-     playerName is the exact player attached
-     to the button that was clicked.
-  */
-
   if (!players[playerName]) {
 
-    players[playerName] = defaultPlayer();
+    players[playerName] =
+      defaultPlayer();
 
   }
 
 
-  const oldValue =
-    Number(players[playerName][stat] || 0);
+  const currentValue =
+    Number(
+      players[playerName][stat] || 0
+    );
 
 
   const newValue =
-    Math.max(0, oldValue + Number(amount));
+    Math.max(
+      0,
+      currentValue + Number(amount)
+    );
 
 
   /*
-     Change ONLY this player's stat.
+     ONLY change this player.
   */
 
-  players[playerName][stat] = newValue;
+  players[playerName][stat] =
+    newValue;
 
 
   /*
-     Immediately update the screen.
+     Render immediately.
   */
 
   render();
 
 
   /*
-     Save ONLY this stat for ONLY this player.
+     Save ONLY this stat.
   */
 
-  const update = {};
+  const updateObject = {};
 
-  update[stat] = newValue;
+  updateObject[stat] =
+    newValue;
 
 
   statsRef
     .child(playerName)
-    .update(update)
+    .update(updateObject)
 
     .then(function() {
 
-      document.getElementById("firebaseStatus")
-        .className = "status success";
+      document
+        .getElementById("firebaseStatus")
+        .className =
+          "status success";
 
-      document.getElementById("firebaseStatus")
+      document
+        .getElementById("firebaseStatus")
         .textContent =
           "🟢 Live • " +
           playerName +
@@ -774,17 +1128,26 @@ function changeStat(playerName, stat, amount) {
     .catch(function(error) {
 
       console.error(
-        "Firebase save error:",
+        "Firebase save failed:",
         error
       );
 
-      document.getElementById("firebaseStatus")
-        .className = "status error";
 
-      document.getElementById("firebaseStatus")
+      document
+        .getElementById("firebaseStatus")
+        .className =
+          "status error";
+
+
+      document
+        .getElementById("firebaseStatus")
         .textContent =
-          "🔴 Could not save: " +
-          error.message;
+          "🔴 Firebase save error";
+
+      alert(
+        "The number changed on screen, but Firebase could not save it.\n\n" +
+        error.message
+      );
 
     });
 
@@ -795,43 +1158,39 @@ function changeStat(playerName, stat, amount) {
    CREATE STAT ROW
 ========================================================= */
 
-function createStatRow(playerName, stat, label) {
+function createStatRow(
+  playerName,
+  stat
+) {
 
   const value =
-    Number(players[playerName][stat] || 0);
+    Number(
+      players[playerName][stat] || 0
+    );
+
+
+  let buttons = "";
 
 
   if (isEditor) {
 
-    return `
+    buttons = `
 
-      <div class="stat-row">
+      <div class="stat-buttons">
 
-        <span class="stat-name">
-          ${label}
-        </span>
+        <button
+          class="minus"
+          onclick="changeStat('${playerName}','${stat}',-1)"
+        >
+          −
+        </button>
 
-        <span class="stat-value">
-          ${value}
-        </span>
-
-        <div class="stat-buttons">
-
-          <button
-            class="minus"
-            onclick="changeStat('${playerName}','${stat}',-1)"
-          >
-            −
-          </button>
-
-          <button
-            class="plus"
-            onclick="changeStat('${playerName}','${stat}',1)"
-          >
-            +
-          </button>
-
-        </div>
+        <button
+          class="plus"
+          onclick="changeStat('${playerName}','${stat}',1)"
+        >
+          +
+        </button>
 
       </div>
 
@@ -845,12 +1204,14 @@ function createStatRow(playerName, stat, label) {
     <div class="stat-row">
 
       <span class="stat-name">
-        ${label}
+        ${statLabel(stat)}
       </span>
 
       <span class="stat-value">
         ${value}
       </span>
+
+      ${buttons}
 
     </div>
 
@@ -860,13 +1221,15 @@ function createStatRow(playerName, stat, label) {
 
 
 /* =========================================================
-   RENDER ALL 14 PLAYER CARDS
+   RENDER PLAYER CARDS
 ========================================================= */
 
 function renderPlayers() {
 
   const grid =
-    document.getElementById("playersGrid");
+    document.getElementById(
+      "playersGrid"
+    );
 
 
   if (!grid) {
@@ -878,20 +1241,27 @@ function renderPlayers() {
 
 
   /*
-     IMPORTANT:
-     We use playerNames here, NOT leaderboard sorting.
-     Therefore the player cards stay in the same order
-     while you edit stats.
+     CRITICAL:
+     This ALWAYS uses playerNames.
+     The cards NEVER get sorted.
   */
 
   playerNames.forEach(function(name) {
 
-    const p = players[name];
+    const p =
+      players[name];
+
+
+    const goals =
+      Number(p.goals || 0);
+
+
+    const assists =
+      Number(p.assists || 0);
 
 
     const ga =
-      Number(p.goals || 0) +
-      Number(p.assists || 0);
+      goals + assists;
 
 
     html += `
@@ -905,15 +1275,13 @@ function renderPlayers() {
 
         ${createStatRow(
           name,
-          "goals",
-          "Goals"
+          "goals"
         )}
 
 
         ${createStatRow(
           name,
-          "assists",
-          "Assists"
+          "assists"
         )}
 
 
@@ -932,36 +1300,31 @@ function renderPlayers() {
 
         ${createStatRow(
           name,
-          "saves",
-          "Goalie Saves"
+          "saves"
         )}
 
 
         ${createStatRow(
           name,
-          "mvp",
-          "MVPs"
+          "mvp"
         )}
 
 
         ${createStatRow(
           name,
-          "cleanSheets",
-          "Clean Sheets"
+          "cleanSheets"
         )}
 
 
         ${createStatRow(
           name,
-          "yellow",
-          "Yellow Cards"
+          "yellow"
         )}
 
 
         ${createStatRow(
           name,
-          "red",
-          "Red Cards"
+          "red"
         )}
 
       </div>
@@ -971,7 +1334,8 @@ function renderPlayers() {
   });
 
 
-  grid.innerHTML = html;
+  grid.innerHTML =
+    html;
 
 }
 
@@ -980,20 +1344,10 @@ function renderPlayers() {
    LEADERBOARD SORT
 ========================================================= */
 
-function changeSort(sort) {
-
-  currentSort = sort;
-
-  renderLeaderboard();
-
-}
-
-
-/* =========================================================
-   GET SORT VALUE
-========================================================= */
-
-function getSortValue(player, sort) {
+function getSortValue(
+  player,
+  sort
+) {
 
   if (sort === "ga") {
 
@@ -1005,7 +1359,23 @@ function getSortValue(player, sort) {
   }
 
 
-  return Number(player[sort] || 0);
+  return Number(
+    player[sort] || 0
+  );
+
+}
+
+
+/* =========================================================
+   CHANGE SORT
+========================================================= */
+
+function changeSort(sort) {
+
+  currentSort =
+    sort;
+
+  renderLeaderboard();
 
 }
 
@@ -1017,268 +1387,5 @@ function getSortValue(player, sort) {
 function renderLeaderboard() {
 
   const body =
-    document.getElementById("leaderboardBody");
-
-
-  if (!body) {
-    return;
-  }
-
-
-  const list =
-    playerNames.map(function(name, index) {
-
-      return {
-
-        name: name,
-
-        player: players[name],
-
-        value: getSortValue(
-          players[name],
-          currentSort
-        ),
-
-        originalIndex: index
-
-      };
-
-    });
-
-
-  /*
-     Sort the leaderboard only.
-     Player cards are NOT affected.
-  */
-
-  list.sort(function(a, b) {
-
-    if (b.value !== a.value) {
-
-      return b.value - a.value;
-
-    }
-
-    return a.originalIndex - b.originalIndex;
-
-  });
-
-
-  let html = "";
-
-
-  list.forEach(function(item, index) {
-
-    const p = item.player;
-
-
-    html += `
-
-      <tr>
-
-        <td>
-
-          <span class="rank-number">
-            #${index + 1}
-          </span>
-
-          ${item.name}
-
-        </td>
-
-        <td>
-          ${Number(p.goals || 0)}
-        </td>
-
-        <td>
-          ${Number(p.assists || 0)}
-        </td>
-
-        <td>
-          ${
-            Number(p.goals || 0) +
-            Number(p.assists || 0)
-          }
-        </td>
-
-        <td>
-          ${Number(p.saves || 0)}
-        </td>
-
-        <td>
-          ${Number(p.mvp || 0)}
-        </td>
-
-        <td>
-          ${Number(p.cleanSheets || 0)}
-        </td>
-
-        <td>
-          ${Number(p.yellow || 0)}
-        </td>
-
-        <td>
-          ${Number(p.red || 0)}
-        </td>
-
-      </tr>
-
-    `;
-
-  });
-
-
-  body.innerHTML = html;
-
-}
-
-
-/* =========================================================
-   FIREBASE PLAYER DATA
-========================================================= */
-
-statsRef.on(
-  "value",
-
-  function(snapshot) {
-
-    const data = snapshot.val();
-
-
-    /*
-       Start with the built-in 14 names.
-    */
-
-    if (data && typeof data === "object") {
-
-      playerNames.forEach(function(name) {
-
-        if (
-          data[name] &&
-          typeof data[name] === "object"
-        ) {
-
-          players[name] = {
-
-            goals:
-              Number(data[name].goals || 0),
-
-            assists:
-              Number(data[name].assists || 0),
-
-            saves:
-              Number(data[name].saves || 0),
-
-            mvp:
-              Number(data[name].mvp || 0),
-
-            cleanSheets:
-              Number(data[name].cleanSheets || 0),
-
-            yellow:
-              Number(data[name].yellow || 0),
-
-            red:
-              Number(data[name].red || 0)
-
-          };
-
-        }
-
-      });
-
-    }
-
-
-    makeSurePlayersExist();
-
-    render();
-
-
-    document.getElementById("firebaseStatus")
-      .className = "status success";
-
-    document.getElementById("firebaseStatus")
-      .textContent =
-        "🟢 Live • Connected to Firebase";
-
-  },
-
-  function(error) {
-
-    console.error(error);
-
-
-    /*
-       Even if Firebase cannot be read,
-       the 14 names are still rendered.
-    */
-
-    makeSurePlayersExist();
-
-    render();
-
-
-    document.getElementById("firebaseStatus")
-      .className = "status error";
-
-    document.getElementById("firebaseStatus")
-      .textContent =
-        "🔴 Firebase error • Names still loaded";
-
-  }
-);
-
-
-/* =========================================================
-   RANKING NORMALIZATION
-========================================================= */
-
-function normalizeRanking(data) {
-
-  let result = [];
-
-
-  if (Array.isArray(data)) {
-
-    result =
-      data.filter(function(name) {
-
-        return playerNames.includes(name);
-
-      });
-
-  }
-
-
-  playerNames.forEach(function(name) {
-
-    if (!result.includes(name)) {
-
-      result.push(name);
-
-    }
-
-  });
-
-
-  return result;
-
-}
-
-
-/* =========================================================
-   FIREBASE RANKINGS
-========================================================= */
-
-rankingsRef.on(
-  "value",
-
-  function(snapshot) {
-
-    const data = snapshot.val();
-
-
-    if (data && typeof data === "object") {
-
-      if (data.defence)
+    document.getElementById(
+      "leaderboardBody"
