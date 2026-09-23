@@ -24,52 +24,35 @@ html {
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  color: #ffffff;
+  color: white;
   min-height: 100vh;
-  overflow-x: hidden;
 
   background:
     radial-gradient(
       circle at 50% -10%,
-      rgba(46, 170, 255, 0.35),
+      rgba(40,170,255,.32),
       transparent 38%
+    ),
+    radial-gradient(
+      circle at 10% 35%,
+      rgba(25,180,110,.10),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 60%,
+      rgba(20,120,220,.12),
+      transparent 30%
     ),
     linear-gradient(
       180deg,
-      #061522 0%,
-      #071c25 35%,
-      #031016 100%
+      #061521 0%,
+      #071d25 45%,
+      #030e14 100%
     );
 
-  position: relative;
+  background-attachment: fixed;
 }
 
-/* Decorative stadium lights */
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-
-  background:
-    radial-gradient(
-      circle at 15% 20%,
-      rgba(50, 190, 255, 0.10),
-      transparent 22%
-    ),
-    radial-gradient(
-      circle at 85% 25%,
-      rgba(50, 190, 255, 0.08),
-      transparent 24%
-    ),
-    radial-gradient(
-      circle at 50% 100%,
-      rgba(30, 190, 100, 0.10),
-      transparent 35%
-    );
-}
 
 /* =========================================================
    HEADER
@@ -78,69 +61,87 @@ body::before {
 header {
   position: relative;
   text-align: center;
-  padding: 35px 15px 32px;
+  padding: 34px 15px 30px;
 
   background:
     linear-gradient(
       180deg,
-      rgba(5, 29, 47, 0.96),
-      rgba(4, 18, 28, 0.82)
+      rgba(8,38,60,.96),
+      rgba(4,18,28,.88)
     );
 
-  border-bottom: 1px solid rgba(82, 190, 255, 0.25);
+  border-bottom:
+    1px solid rgba(75,180,235,.25);
 
   box-shadow:
-    0 10px 40px rgba(0,0,0,.35);
+    0 12px 35px rgba(0,0,0,.35);
 
   overflow: hidden;
 }
 
-header::after {
+header:after {
   content: "";
+
   position: absolute;
+
   left: 50%;
-  bottom: -90px;
+  bottom: -100px;
+
   transform: translateX(-50%);
 
-  width: 650px;
-  height: 180px;
+  width: 700px;
+  height: 190px;
 
-  border: 2px solid rgba(55, 190, 255, .10);
+  border:
+    2px solid
+    rgba(70,190,255,.08);
+
   border-radius: 50%;
-
-  pointer-events: none;
 }
 
 .soccer-ball {
-  font-size: 50px;
-  margin-bottom: 8px;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,.4));
+  font-size: 48px;
+  margin-bottom: 7px;
+
+  filter:
+    drop-shadow(
+      0 5px 12px rgba(0,0,0,.5)
+    );
 }
 
 header h1 {
   margin: 0;
-  font-size: clamp(25px, 5vw, 36px);
+
+  font-size:
+    clamp(24px,5vw,36px);
+
   letter-spacing: .4px;
-  text-shadow: 0 3px 15px rgba(0,0,0,.5);
+
+  text-shadow:
+    0 3px 15px rgba(0,0,0,.5);
 }
 
 header p {
   margin: 9px 0 0;
-  color: #a9cce5;
+
+  color: #a8cbe2;
+
   font-size: 15px;
 }
+
 
 /* =========================================================
    CONTAINER
 ========================================================= */
 
 .container {
-  width: min(1200px, 94%);
+  width: min(1200px,94%);
   margin: auto;
 }
 
+
 /* =========================================================
-   GENERAL PANELS
+   PANELS
 ========================================================= */
 
 .login-box,
@@ -148,43 +149,60 @@ header p {
 .viewer-box,
 .ranking-card,
 .leaderboard {
+
   background:
     linear-gradient(
       145deg,
-      rgba(12, 35, 52, .94),
-      rgba(5, 19, 29, .94)
+      rgba(12,37,54,.95),
+      rgba(4,18,28,.95)
     );
 
-  border: 1px solid rgba(69, 143, 184, .38);
+  border:
+    1px solid
+    rgba(70,145,185,.38);
 
   box-shadow:
-    0 15px 40px rgba(0,0,0,.28),
-    inset 0 1px 0 rgba(255,255,255,.035);
+    0 14px 40px rgba(0,0,0,.30),
+    inset 0 1px 0
+    rgba(255,255,255,.035);
 
-  backdrop-filter: blur(10px);
+  backdrop-filter:
+    blur(10px);
 }
+
 
 /* =========================================================
    LOGIN
 ========================================================= */
 
 .login-box {
-  max-width: 440px;
-  margin: 28px auto;
-  padding: 25px;
-  border-radius: 20px;
-}
 
-.login-box h2 {
-  text-align: center;
-  margin: 0 0 22px;
+  max-width: 440px;
+
+  margin:
+    28px auto;
+
+  padding: 25px;
+
+  border-radius: 20px;
 }
 
 .login-icon {
   text-align: center;
-  font-size: 36px;
-  margin-bottom: 8px;
+
+  font-size: 38px;
+
+  margin-bottom: 7px;
 }
+
+.login-box h2 {
+
+  text-align: center;
+
+  margin:
+    0 0 22px;
+}
+
 
 /* =========================================================
    INPUTS
@@ -198,14 +216,22 @@ button {
 
 input,
 select {
+
   width: 100%;
+
   padding: 13px;
-  margin: 7px 0 14px;
+
+  margin:
+    7px 0 14px;
 
   border-radius: 10px;
-  border: 1px solid #315a75;
 
-  background: rgba(3, 16, 27, .95);
+  border:
+    1px solid #315a75;
+
+  background:
+    rgba(3,16,27,.96);
+
   color: white;
 
   outline: none;
@@ -213,10 +239,13 @@ select {
 
 input:focus,
 select:focus {
-  border-color: #2aa9ff;
+
+  border-color:
+    #2aa9ff;
 
   box-shadow:
-    0 0 0 3px rgba(42,169,255,.12);
+    0 0 0 3px
+    rgba(42,169,255,.12);
 }
 
 select {
@@ -228,17 +257,27 @@ select option {
   color: white;
 }
 
+
 /* =========================================================
    BUTTONS
 ========================================================= */
 
 button {
+
   border: 0;
+
   border-radius: 9px;
-  padding: 9px 13px;
+
+  padding:
+    9px 13px;
+
   cursor: pointer;
+
   font-weight: bold;
-  transition: transform .12s, filter .12s, background .12s;
+
+  transition:
+    transform .12s,
+    filter .12s;
 }
 
 button:hover {
@@ -250,7 +289,9 @@ button:active {
 }
 
 .login-button {
+
   width: 100%;
+
   padding: 13px;
 
   background:
@@ -263,7 +304,8 @@ button:active {
   color: white;
 
   box-shadow:
-    0 6px 18px rgba(0,110,220,.25);
+    0 6px 18px
+    rgba(0,110,220,.25);
 }
 
 .logout-button {
@@ -283,14 +325,30 @@ button:active {
   min-width: 38px;
 }
 
+.up {
+  background: #238a4b;
+  color: white;
+}
+
+.down {
+  background: #a83939;
+  color: white;
+}
+
+
 /* =========================================================
    STATUS
 ========================================================= */
 
 .status {
+
   text-align: center;
-  margin: 12px 0;
+
+  margin:
+    12px 0;
+
   color: #9fc7ed;
+
   font-size: 14px;
 }
 
@@ -303,9 +361,12 @@ button:active {
 }
 
 .editor-name {
+
   color: #55baff;
+
   font-weight: bold;
 }
+
 
 /* =========================================================
    EDITOR / VIEWER
@@ -313,69 +374,102 @@ button:active {
 
 .editor-box,
 .viewer-box {
-  padding: 16px 20px;
-  margin: 18px 0;
+
+  padding:
+    16px 20px;
+
+  margin:
+    18px 0;
+
   border-radius: 15px;
 }
 
 .editor-box {
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   gap: 10px;
 }
 
 .viewer-box {
+
   color: #a9c4d9;
+
   text-align: center;
 }
+
 
 /* =========================================================
    CONTROLS
 ========================================================= */
 
 .controls {
+
   display: flex;
+
   flex-wrap: wrap;
+
   justify-content: center;
+
   align-items: center;
+
   gap: 10px;
-  margin: 28px 0;
+
+  margin:
+    28px 0;
 }
 
 .controls label {
+
   font-weight: bold;
+
   color: #d7e8f5;
 }
 
 .controls select {
+
   width: auto;
+
   min-width: 210px;
+
   margin: 0;
 }
 
+
 /* =========================================================
-   SECTION TITLES
+   TITLES
 ========================================================= */
 
 .section-title {
+
   text-align: center;
-  margin: 38px 0 18px;
+
+  margin:
+    38px 0 18px;
 
   font-size: 26px;
 
   text-shadow:
-    0 3px 15px rgba(0,0,0,.4);
+    0 3px 15px
+    rgba(0,0,0,.4);
 }
 
-.section-title::after {
+.section-title:after {
+
   content: "";
+
   display: block;
 
   width: 60px;
+
   height: 3px;
 
-  margin: 9px auto 0;
+  margin:
+    9px auto 0;
 
   border-radius: 20px;
 
@@ -387,68 +481,73 @@ button:active {
     );
 }
 
+
 /* =========================================================
    PLAYER GRID
 ========================================================= */
 
 .players-grid {
+
   display: grid;
 
   grid-template-columns:
     repeat(
       auto-fit,
-      minmax(270px, 1fr)
+      minmax(270px,1fr)
     );
 
   gap: 18px;
 }
+
 
 /* =========================================================
    PLAYER CARD
 ========================================================= */
 
 .player-card {
+
   position: relative;
 
   background:
     linear-gradient(
       145deg,
-      rgba(15, 45, 66, .97),
-      rgba(5, 19, 29, .98)
+      rgba(15,46,67,.97),
+      rgba(5,19,29,.98)
     );
 
-  border: 1px solid rgba(67, 140, 179, .42);
+  border:
+    1px solid
+    rgba(67,140,179,.42);
 
   border-radius: 17px;
 
   padding: 18px;
 
   box-shadow:
-    0 12px 28px rgba(0,0,0,.28),
-    inset 0 1px 0 rgba(255,255,255,.035);
+    0 12px 28px
+    rgba(0,0,0,.28),
+
+    inset 0 1px 0
+    rgba(255,255,255,.035);
 
   overflow: hidden;
 
   transition:
     transform .18s,
-    border-color .18s,
-    box-shadow .18s;
+    border-color .18s;
 }
 
 .player-card:hover {
-  transform: translateY(-3px);
+
+  transform:
+    translateY(-3px);
 
   border-color:
-    rgba(75, 180, 235, .65);
-
-  box-shadow:
-    0 18px 35px rgba(0,0,0,.34),
-    0 0 25px rgba(30,150,220,.08);
+    rgba(75,180,235,.65);
 }
 
-/* Large background soccer ball */
+.player-card:before {
 
-.player-card::before {
   content: "⚽";
 
   position: absolute;
@@ -463,9 +562,8 @@ button:active {
   pointer-events: none;
 }
 
-/* Green pitch-style line */
+.player-card:after {
 
-.player-card::after {
   content: "";
 
   position: absolute;
@@ -488,19 +586,24 @@ button:active {
 }
 
 .player-card h2 {
-  margin: 0 0 15px;
+
+  margin:
+    0 0 15px;
 
   font-size: 23px;
 
   position: relative;
+
   z-index: 1;
 }
+
 
 /* =========================================================
    STAT ROW
 ========================================================= */
 
 .stat-row {
+
   display: grid;
 
   grid-template-columns:
@@ -510,7 +613,9 @@ button:active {
 
   gap: 7px;
 
-  margin: 7px 0;
+  margin:
+    7px 0;
+
   padding: 8px;
 
   background:
@@ -518,7 +623,8 @@ button:active {
 
   border-radius: 9px;
 
-  border: 1px solid
+  border:
+    1px solid
     rgba(255,255,255,.025);
 }
 
@@ -527,31 +633,36 @@ button:active {
 }
 
 .stat-value {
+
   text-align: center;
 
   font-weight: bold;
 
   font-size: 18px;
-
-  color: #ffffff;
 }
 
 .stat-buttons {
+
   display: flex;
+
   gap: 5px;
 }
 
+
 /* =========================================================
-   G+A
+   GOALS + ASSISTS
 ========================================================= */
 
 .ga {
+
   display: flex;
 
   justify-content: space-between;
+
   align-items: center;
 
-  margin: 9px 0;
+  margin:
+    9px 0;
 
   padding: 11px;
 
@@ -572,20 +683,26 @@ button:active {
 }
 
 .ga span:last-child {
+
   font-size: 20px;
+
   color: #56c4ff;
 }
+
 
 /* =========================================================
    LEADERBOARD
 ========================================================= */
 
 .leaderboard {
+
   overflow-x: auto;
+
   border-radius: 16px;
 }
 
 table {
+
   width: 100%;
 
   border-collapse: collapse;
@@ -595,7 +712,9 @@ table {
 
 th,
 td {
-  padding: 12px 10px;
+
+  padding:
+    12px 10px;
 
   text-align: center;
 
@@ -604,6 +723,7 @@ td {
 }
 
 th {
+
   background:
     linear-gradient(
       180deg,
@@ -619,41 +739,48 @@ th:first-child {
   text-align: left;
 }
 
-tbody tr {
-  transition: background .15s;
-}
-
 tbody tr:hover {
-  background: rgba(50,160,220,.055);
+  background:
+    rgba(50,160,220,.055);
 }
 
 .rank-number {
+
   color: #69b5ff;
+
   font-weight: bold;
+
   margin-right: 7px;
 }
+
 
 /* =========================================================
    RANKINGS
 ========================================================= */
 
 .ranking-card {
+
   padding: 21px;
+
   margin-bottom: 21px;
+
   border-radius: 17px;
 }
 
 .ranking-title {
+
   text-align: center;
 
   font-size: 26px;
 
   font-weight: bold;
 
-  margin: 5px 0 18px;
+  margin:
+    5px 0 18px;
 }
 
 .trophy {
+
   display: block;
 
   width: 105px;
@@ -661,17 +788,20 @@ tbody tr:hover {
 
   object-fit: contain;
 
-  margin: 0 auto 8px;
+  margin:
+    0 auto 8px;
 
   border-radius: 10px;
 
   filter:
     drop-shadow(
-      0 8px 12px rgba(0,0,0,.35)
+      0 8px 12px
+      rgba(0,0,0,.35)
     );
 }
 
 .ranking-row {
+
   display: grid;
 
   grid-template-columns:
@@ -689,35 +819,28 @@ tbody tr:hover {
 
   background:
     rgba(255,255,255,.035);
-
-  border:
-    1px solid rgba(255,255,255,.025);
 }
 
 .ranking-position {
+
   color: #70baff;
+
   font-weight: bold;
 }
 
 .move-buttons {
+
   display: flex;
+
   gap: 5px;
 }
 
-.up {
-  background: #238a4b;
-  color: white;
-}
-
-.down {
-  background: #a83939;
-  color: white;
-}
-
 .save-rankings {
+
   display: block;
 
-  margin: 17px auto 0;
+  margin:
+    17px auto 0;
 
   background:
     linear-gradient(
@@ -729,6 +852,7 @@ tbody tr:hover {
   color: white;
 }
 
+
 /* =========================================================
    HIDDEN
 ========================================================= */
@@ -737,28 +861,33 @@ tbody tr:hover {
   display: none !important;
 }
 
+
 /* =========================================================
    FOOTER
 ========================================================= */
 
 .footer {
+
   text-align: center;
 
   color: #718b9e;
 
-  padding: 38px 10px;
+  padding:
+    38px 10px;
 
   font-size: 13px;
 }
+
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width:600px) {
 
   header {
-    padding: 28px 12px;
+    padding:
+      28px 12px;
   }
 
   header h1 {
@@ -773,19 +902,12 @@ tbody tr:hover {
     grid-template-columns: 1fr;
   }
 
-  .stat-row {
-    grid-template-columns:
-      1fr 40px auto;
-  }
-
-  .ranking-row {
-    grid-template-columns:
-      38px 1fr auto;
-  }
-
   .editor-box {
+
     flex-direction: column;
+
     align-items: stretch;
+
     text-align: center;
   }
 
@@ -794,11 +916,14 @@ tbody tr:hover {
   }
 
   .controls {
+
     align-items: stretch;
   }
 
   .controls label {
+
     width: 100%;
+
     text-align: center;
   }
 
@@ -808,10 +933,35 @@ tbody tr:hover {
 
 }
 
+
+/* =========================================================
+   SMALL PHONE
+========================================================= */
+
+@media (max-width:380px) {
+
+  .stat-row {
+
+    grid-template-columns:
+      1fr 35px auto;
+  }
+
+  .stat-buttons button {
+
+    min-width: 34px;
+
+    padding:
+      8px 9px;
+  }
+
+}
+
 </style>
 </head>
 
+
 <body>
+
 
 <!-- =========================================================
      HEADER
@@ -851,11 +1001,11 @@ tbody tr:hover {
     Editor Login
   </h2>
 
+
   <label>
     Editor Username
   </label>
 
-  <!-- USERNAME DROPDOWN -->
 
   <select id="usernameInput">
 
@@ -886,6 +1036,7 @@ tbody tr:hover {
     PIN / Password
   </label>
 
+
   <input
     type="password"
     id="passwordInput"
@@ -911,7 +1062,7 @@ tbody tr:hover {
 
 
 <!-- =========================================================
-     EDITOR
+     EDITOR BAR
 ========================================================= -->
 
 <div
@@ -922,7 +1073,7 @@ tbody tr:hover {
   <div>
 
     ✏️ Logged in as:
-    
+
     <span
       class="editor-name"
       id="editorName"
@@ -949,7 +1100,9 @@ tbody tr:hover {
   class="viewer-box"
   id="viewerBox"
 >
+
   👀 Viewer mode — stats are live.
+
 </div>
 
 
@@ -970,6 +1123,7 @@ tbody tr:hover {
   <label for="sortSelect">
     Sort leaderboard by:
   </label>
+
 
   <select
     id="sortSelect"
@@ -1044,21 +1198,31 @@ tbody tr:hover {
 <thead>
 
 <tr>
+
   <th>Player</th>
+
   <th>G</th>
+
   <th>A</th>
+
   <th>G+A</th>
+
   <th>Saves</th>
+
   <th>MVP</th>
+
   <th>CS</th>
+
   <th>🟨</th>
+
   <th>🟥</th>
+
 </tr>
 
 </thead>
 
-<tbody id="leaderboardBody">
-</tbody>
+
+<tbody id="leaderboardBody"></tbody>
 
 </table>
 
@@ -1085,11 +1249,14 @@ tbody tr:hover {
     onerror="this.style.display='none';"
   >
 
+
   <div class="ranking-title">
     🛡️ Golden Defence
   </div>
 
+
   <div id="defenceRanking"></div>
+
 
   <button
     class="save-rankings editor-only hidden"
@@ -1112,11 +1279,14 @@ tbody tr:hover {
     onerror="this.style.display='none';"
   >
 
+
   <div class="ranking-title">
     🏆 Ballon d'Or
   </div>
 
+
   <div id="ballonRanking"></div>
+
 
   <button
     class="save-rankings editor-only hidden"
@@ -1131,12 +1301,10 @@ tbody tr:hover {
 </div>
 
 
-<!-- =========================================================
-     FOOTER
-========================================================= -->
-
 <div class="footer">
+
   Saint Matthews Recess Soccer • Live Stats
+
 </div>
 
 
@@ -1145,7 +1313,9 @@ tbody tr:hover {
 ========================================================= -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 
@@ -1190,39 +1360,128 @@ firebase.initializeApp(firebaseConfig);
 const auth =
   firebase.auth();
 
+
 const db =
   firebase.database();
 
+
 const statsRef =
   db.ref("players");
+
 
 const rankingsRef =
   db.ref("rankings");
 
 
 /* =========================================================
-   ALL PLAYER NAMES
-   THESE ARE ALWAYS DISPLAYED
+   PLAYER LIST
+=========================================================
+
+   IMPORTANT:
+
+   "id" = Firebase-safe internal ID
+
+   "name" = name shown on website
+
+   The buttons use ID, NOT the display name.
+
 ========================================================= */
 
-const playerNames = [
+const playerList = [
 
-  "Adi",
-  "Aidan",
-  "Artin",
-  "Angelo",
-  "Bryson",
-  "Cameron",
-  "Jack",
-  "John",
-  "Leonardo",
-  "Marc",
-  "Matthew",
-  "Sami",
-  "Nathan",
-  "Theo"
+  {
+    id: "adi",
+    name: "Adi"
+  },
+
+  {
+    id: "aidan",
+    name: "Aidan"
+  },
+
+  {
+    id: "artin",
+    name: "Artin"
+  },
+
+  {
+    id: "angelo",
+    name: "Angelo"
+  },
+
+  {
+    id: "bryson",
+    name: "Bryson"
+  },
+
+  {
+    id: "cameron",
+    name: "Cameron"
+  },
+
+  {
+    id: "jack",
+    name: "Jack"
+  },
+
+  {
+    id: "john",
+    name: "John"
+  },
+
+  {
+    id: "leonardo",
+    name: "Leonardo"
+  },
+
+  {
+    id: "marc",
+    name: "Marc"
+  },
+
+  {
+    id: "matthew",
+    name: "Matthew"
+  },
+
+  {
+    id: "sami",
+    name: "Sami"
+  },
+
+  {
+    id: "nathan",
+    name: "Nathan"
+  },
+
+  {
+    id: "theo",
+    name: "Theo"
+  }
 
 ];
+
+
+/* =========================================================
+   QUICK LOOKUP
+========================================================= */
+
+const playerNames =
+  playerList.map(
+    player => player.name
+  );
+
+
+const playerById = {};
+
+playerList.forEach(
+  player => {
+
+    playerById[player.id] =
+      player;
+
+  }
+);
 
 
 /* =========================================================
@@ -1234,11 +1493,17 @@ function defaultPlayer() {
   return {
 
     goals: 0,
+
     assists: 0,
+
     saves: 0,
+
     mvp: 0,
+
     cleanSheets: 0,
+
     yellow: 0,
+
     red: 0
 
   };
@@ -1247,18 +1512,20 @@ function defaultPlayer() {
 
 
 /* =========================================================
-   LOCAL PLAYER DATA
+   PLAYER DATA
 ========================================================= */
 
 let players = {};
 
 
-playerNames.forEach(function(name) {
+playerList.forEach(
+  player => {
 
-  players[name] =
-    defaultPlayer();
+    players[player.id] =
+      defaultPlayer();
 
-});
+  }
+);
 
 
 /* =========================================================
@@ -1282,54 +1549,4 @@ const editorAccounts = {
     email:
       "jack.mason1@stu.ocsb.ca",
 
-    name:
-      "Jack (School)"
-
-  },
-
-  leonardo: {
-
-    email:
-      "leonardo.ljubicic@stu.ocsb.ca",
-
-    name:
-      "Leonardo"
-
-  },
-
-  angelo: {
-
-    email:
-      "angelo.champagne@stu.ocsb.ca",
-
-    name:
-      "Angelo"
-
-  }
-
-};
-
-
-/* =========================================================
-   RANKINGS
-========================================================= */
-
-let defenceRanking =
-  [...playerNames];
-
-let ballonRanking =
-  [...playerNames];
-
-
-let currentSort =
-  "ga";
-
-let isEditor =
-  false;
-
-
-/* =========================================================
-   ENSURE ALL PLAYERS EXIST
-========================================================= */
-
-function 
+   
