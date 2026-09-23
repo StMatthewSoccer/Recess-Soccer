@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,1546 +6,1043 @@
 
 <title>Saint Matthews Recess Soccer Live Stats</title>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <style>
-
-/* =========================================================
-   GLOBAL
-========================================================= */
-
 * {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
+:root {
+  --green: #19c37d;
+  --green-dark: #087f52;
+  --blue: #28a9ff;
+  --dark: #07131d;
+  --card: rgba(11, 29, 39, 0.86);
+  --border: rgba(255,255,255,0.10);
+  --text: #f5f8fa;
+  --muted: #9eb0bb;
 }
 
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  color: white;
+  color: var(--text);
   min-height: 100vh;
 
   background:
-    radial-gradient(
-      circle at 50% -10%,
-      rgba(40,170,255,.32),
-      transparent 38%
-    ),
-    radial-gradient(
-      circle at 10% 35%,
-      rgba(25,180,110,.10),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 90% 60%,
-      rgba(20,120,220,.12),
-      transparent 30%
-    ),
-    linear-gradient(
-      180deg,
-      #061521 0%,
-      #071d25 45%,
-      #030e14 100%
-    );
-
-  background-attachment: fixed;
+    radial-gradient(circle at 10% 10%, rgba(25,195,125,.18), transparent 28%),
+    radial-gradient(circle at 90% 20%, rgba(40,169,255,.14), transparent 30%),
+    linear-gradient(135deg, #041018, #071a20 50%, #041017);
 }
 
-
-/* =========================================================
-   HEADER
-========================================================= */
+/* Soccer-field style background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .12;
+  background:
+    linear-gradient(90deg, transparent 49.7%, white 49.7%, white 50.3%, transparent 50.3%),
+    radial-gradient(circle at center, transparent 10%, white 10.3%, transparent 10.7%);
+}
 
 header {
-  position: relative;
   text-align: center;
-  padding: 34px 15px 30px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(8,38,60,.96),
-      rgba(4,18,28,.88)
-    );
-
-  border-bottom:
-    1px solid rgba(75,180,235,.25);
-
-  box-shadow:
-    0 12px 35px rgba(0,0,0,.35);
-
-  overflow: hidden;
+  padding: 30px 15px 20px;
 }
 
-header:after {
-  content: "";
-
-  position: absolute;
-
-  left: 50%;
-  bottom: -100px;
-
-  transform: translateX(-50%);
-
-  width: 700px;
-  height: 190px;
-
-  border:
-    2px solid
-    rgba(70,190,255,.08);
-
-  border-radius: 50%;
-}
-
-.soccer-ball {
+.logo {
   font-size: 48px;
-  margin-bottom: 7px;
-
-  filter:
-    drop-shadow(
-      0 5px 12px rgba(0,0,0,.5)
-    );
+  margin-bottom: 5px;
 }
 
-header h1 {
+h1 {
   margin: 0;
-
-  font-size:
-    clamp(24px,5vw,36px);
-
-  letter-spacing: .4px;
-
-  text-shadow:
-    0 3px 15px rgba(0,0,0,.5);
+  font-size: clamp(26px, 6vw, 46px);
+  font-weight: 900;
 }
 
-header p {
-  margin: 9px 0 0;
-
-  color: #a8cbe2;
-
+.subtitle {
+  color: var(--muted);
+  margin-top: 8px;
   font-size: 15px;
 }
 
-
-/* =========================================================
-   CONTAINER
-========================================================= */
-
 .container {
-  width: min(1200px,94%);
+  width: min(1200px, 94%);
   margin: auto;
 }
 
-
-/* =========================================================
-   PANELS
-========================================================= */
-
-.login-box,
-.editor-box,
-.viewer-box,
-.ranking-card,
-.leaderboard {
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(12,37,54,.95),
-      rgba(4,18,28,.95)
-    );
-
-  border:
-    1px solid
-    rgba(70,145,185,.38);
-
-  box-shadow:
-    0 14px 40px rgba(0,0,0,.30),
-    inset 0 1px 0
-    rgba(255,255,255,.035);
-
-  backdrop-filter:
-    blur(10px);
-}
-
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-.login-box {
-
-  max-width: 440px;
-
-  margin:
-    28px auto;
-
-  padding: 25px;
-
+/* LOGIN */
+.login-card {
+  max-width: 430px;
+  margin: 20px auto;
+  padding: 22px;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 20px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 15px 50px rgba(0,0,0,.30);
 }
 
-.login-icon {
+.login-card h2 {
+  margin-top: 0;
   text-align: center;
-
-  font-size: 38px;
-
-  margin-bottom: 7px;
 }
 
-.login-box h2 {
-
-  text-align: center;
-
-  margin:
-    0 0 22px;
-}
-
-
-/* =========================================================
-   INPUTS
-========================================================= */
-
-input,
 select,
-button {
-  font: inherit;
-}
-
-input,
-select {
-
+input {
   width: 100%;
-
   padding: 13px;
-
-  margin:
-    7px 0 14px;
-
+  margin: 7px 0;
   border-radius: 10px;
-
-  border:
-    1px solid #315a75;
-
-  background:
-    rgba(3,16,27,.96);
-
+  border: 1px solid var(--border);
+  background: #10232e;
   color: white;
-
-  outline: none;
+  font-size: 15px;
 }
-
-input:focus,
-select:focus {
-
-  border-color:
-    #2aa9ff;
-
-  box-shadow:
-    0 0 0 3px
-    rgba(42,169,255,.12);
-}
-
-select {
-  cursor: pointer;
-}
-
-select option {
-  background: #071825;
-  color: white;
-}
-
-
-/* =========================================================
-   BUTTONS
-========================================================= */
 
 button {
-
   border: 0;
-
-  border-radius: 9px;
-
-  padding:
-    9px 13px;
-
   cursor: pointer;
-
+  border-radius: 10px;
   font-weight: bold;
-
-  transition:
-    transform .12s,
-    filter .12s;
 }
 
-button:hover {
-  filter: brightness(1.08);
-}
-
-button:active {
-  transform: scale(.95);
-}
-
-.login-button {
-
+.login-btn {
   width: 100%;
-
   padding: 13px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #168cff,
-      #0868c9
-    );
-
-  color: white;
-
-  box-shadow:
-    0 6px 18px
-    rgba(0,110,220,.25);
+  margin-top: 8px;
+  background: var(--green);
+  color: #03130d;
 }
 
-.logout-button {
-  background: #c83b3b;
+.logout-btn {
+  padding: 9px 14px;
+  background: #243945;
   color: white;
 }
-
-.plus {
-  background: #16a85a;
-  color: white;
-  min-width: 38px;
-}
-
-.minus {
-  background: #c63c3c;
-  color: white;
-  min-width: 38px;
-}
-
-.up {
-  background: #238a4b;
-  color: white;
-}
-
-.down {
-  background: #a83939;
-  color: white;
-}
-
-
-/* =========================================================
-   STATUS
-========================================================= */
 
 .status {
-
   text-align: center;
-
-  margin:
-    12px 0;
-
-  color: #9fc7ed;
-
-  font-size: 14px;
+  font-size: 13px;
+  margin-top: 10px;
+  color: var(--muted);
 }
 
-.error {
-  color: #ff7777;
-}
-
-.success {
-  color: #63e99a;
-}
-
-.editor-name {
-
-  color: #55baff;
-
-  font-weight: bold;
-}
-
-
-/* =========================================================
-   EDITOR / VIEWER
-========================================================= */
-
-.editor-box,
-.viewer-box {
-
-  padding:
-    16px 20px;
-
-  margin:
-    18px 0;
-
-  border-radius: 15px;
-}
-
-.editor-box {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 10px;
-}
-
-.viewer-box {
-
-  color: #a9c4d9;
-
+.firebase-status {
   text-align: center;
+  margin: 12px auto;
+  padding: 9px 14px;
+  width: fit-content;
+  max-width: 95%;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  color: #cbd7dc;
+  font-size: 13px;
 }
 
+.firebase-status.connected {
+  color: #72f2b5;
+  background: rgba(25,195,125,.10);
+}
 
-/* =========================================================
-   CONTROLS
-========================================================= */
+.firebase-status.error {
+  color: #ff8e8e;
+  background: rgba(255,60,60,.10);
+}
 
+/* CONTROLS */
 .controls {
-
   display: flex;
-
-  flex-wrap: wrap;
-
-  justify-content: center;
-
-  align-items: center;
-
   gap: 10px;
-
-  margin:
-    28px 0;
-}
-
-.controls label {
-
-  font-weight: bold;
-
-  color: #d7e8f5;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 25px 0;
 }
 
 .controls select {
-
   width: auto;
-
-  min-width: 210px;
-
-  margin: 0;
+  min-width: 180px;
 }
 
-
-/* =========================================================
-   TITLES
-========================================================= */
-
-.section-title {
-
-  text-align: center;
-
-  margin:
-    38px 0 18px;
-
-  font-size: 26px;
-
-  text-shadow:
-    0 3px 15px
-    rgba(0,0,0,.4);
-}
-
-.section-title:after {
-
-  content: "";
-
-  display: block;
-
-  width: 60px;
-
-  height: 3px;
-
-  margin:
-    9px auto 0;
-
-  border-radius: 20px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #168cff,
-      #45d5ff
-    );
-}
-
-
-/* =========================================================
-   PLAYER GRID
-========================================================= */
-
+/* PLAYERS */
 .players-grid {
-
   display: grid;
-
-  grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(270px,1fr)
-    );
-
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
 }
-
-
-/* =========================================================
-   PLAYER CARD
-========================================================= */
 
 .player-card {
-
-  position: relative;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(15,46,67,.97),
-      rgba(5,19,29,.98)
-    );
-
-  border:
-    1px solid
-    rgba(67,140,179,.42);
-
-  border-radius: 17px;
-
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
   padding: 18px;
-
-  box-shadow:
-    0 12px 28px
-    rgba(0,0,0,.28),
-
-    inset 0 1px 0
-    rgba(255,255,255,.035);
-
-  overflow: hidden;
-
-  transition:
-    transform .18s,
-    border-color .18s;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 12px 35px rgba(0,0,0,.22);
+  transition: transform .2s, border-color .2s;
 }
 
 .player-card:hover {
-
-  transform:
-    translateY(-3px);
-
-  border-color:
-    rgba(75,180,235,.65);
+  transform: translateY(-3px);
+  border-color: rgba(25,195,125,.35);
 }
 
-.player-card:before {
-
-  content: "⚽";
-
-  position: absolute;
-
-  right: -15px;
-  top: -20px;
-
-  font-size: 92px;
-
-  opacity: .045;
-
-  pointer-events: none;
-}
-
-.player-card:after {
-
-  content: "";
-
-  position: absolute;
-
-  left: 0;
-  right: 0;
-  top: 0;
-
-  height: 3px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #1590ff,
-      #32d5ff,
-      #1590ff
-    );
-
-  opacity: .75;
-}
-
-.player-card h2 {
-
-  margin:
-    0 0 15px;
-
+.player-name {
   font-size: 23px;
-
-  position: relative;
-
-  z-index: 1;
+  font-weight: 900;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-
-/* =========================================================
-   STAT ROW
-========================================================= */
+.player-number {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--green), var(--blue));
+  color: #00150e;
+  font-size: 14px;
+}
 
 .stat-row {
-
-  display: grid;
-
-  grid-template-columns:
-    1fr 45px auto;
-
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-
-  gap: 7px;
-
-  margin:
-    7px 0;
-
-  padding: 8px;
-
-  background:
-    rgba(255,255,255,.035);
-
-  border-radius: 9px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.025);
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
 }
 
-.stat-name {
-  color: #c6d9e8;
+.stat-row:last-child {
+  border-bottom: 0;
+}
+
+.stat-label {
+  color: #c7d3d8;
+  font-size: 14px;
+}
+
+.stat-controls {
+  display: flex;
+  align-items: center;
+  gap: 7px;
 }
 
 .stat-value {
-
+  min-width: 30px;
   text-align: center;
+  font-weight: 900;
+  font-size: 17px;
+}
 
-  font-weight: bold;
-
+.stat-btn {
+  width: 29px;
+  height: 29px;
+  background: #18333e;
+  color: white;
   font-size: 18px;
 }
 
-.stat-buttons {
-
-  display: flex;
-
-  gap: 5px;
+.stat-btn:hover {
+  background: var(--green-dark);
 }
 
-
-/* =========================================================
-   GOALS + ASSISTS
-========================================================= */
-
-.ga {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  margin:
-    9px 0;
-
-  padding: 11px;
-
-  border-radius: 9px;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(22,131,255,.13),
-      rgba(50,190,255,.07)
-    );
-
-  border:
-    1px solid
-    rgba(40,160,255,.20);
-
-  font-weight: bold;
+.stat-btn:disabled {
+  opacity: .25;
+  cursor: not-allowed;
 }
 
-.ga span:last-child {
-
-  font-size: 20px;
-
-  color: #56c4ff;
+/* RANKINGS */
+.section {
+  margin: 45px 0;
 }
 
-
-/* =========================================================
-   LEADERBOARD
-========================================================= */
-
-.leaderboard {
-
-  overflow-x: auto;
-
-  border-radius: 16px;
-}
-
-table {
-
-  width: 100%;
-
-  border-collapse: collapse;
-
-  min-width: 720px;
-}
-
-th,
-td {
-
-  padding:
-    12px 10px;
-
+.section-title {
   text-align: center;
-
-  border-bottom:
-    1px solid #20384e;
-}
-
-th {
-
-  background:
-    linear-gradient(
-      180deg,
-      #12344f,
-      #0d293f
-    );
-
-  color: #a9d7fa;
-}
-
-td:first-child,
-th:first-child {
-  text-align: left;
-}
-
-tbody tr:hover {
-  background:
-    rgba(50,160,220,.055);
-}
-
-.rank-number {
-
-  color: #69b5ff;
-
-  font-weight: bold;
-
-  margin-right: 7px;
-}
-
-
-/* =========================================================
-   RANKINGS
-========================================================= */
-
-.ranking-card {
-
-  padding: 21px;
-
-  margin-bottom: 21px;
-
-  border-radius: 17px;
-}
-
-.ranking-title {
-
-  text-align: center;
-
-  font-size: 26px;
-
-  font-weight: bold;
-
-  margin:
-    5px 0 18px;
+  font-size: 30px;
+  margin-bottom: 18px;
 }
 
 .trophy {
-
   display: block;
-
-  width: 105px;
-  height: 105px;
-
+  width: 80px;
+  height: 80px;
   object-fit: contain;
-
-  margin:
-    0 auto 8px;
-
-  border-radius: 10px;
-
-  filter:
-    drop-shadow(
-      0 8px 12px
-      rgba(0,0,0,.35)
-    );
+  margin: 0 auto 10px;
+  border-radius: 12px;
 }
 
-.ranking-row {
-
-  display: grid;
-
-  grid-template-columns:
-    45px 1fr auto;
-
-  align-items: center;
-
-  gap: 10px;
-
+.ranking-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
   padding: 10px;
-
-  margin: 5px 0;
-
-  border-radius: 9px;
-
-  background:
-    rgba(255,255,255,.035);
+  margin-bottom: 12px;
 }
 
-.ranking-position {
-
-  color: #70baff;
-
-  font-weight: bold;
+.rank-row {
+  display: grid;
+  grid-template-columns: 45px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 11px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
 }
 
-.move-buttons {
+.rank-row:last-child {
+  border-bottom: 0;
+}
 
+.rank-number {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.movement {
   display: flex;
-
   gap: 5px;
 }
 
-.save-rankings {
-
-  display: block;
-
-  margin:
-    17px auto 0;
-
-  background:
-    linear-gradient(
-      135deg,
-      #168cff,
-      #0868c9
-    );
-
+.move-btn {
+  width: 30px;
+  height: 30px;
+  background: #18333e;
   color: white;
 }
 
-
-/* =========================================================
-   HIDDEN
-========================================================= */
+.save-ranking {
+  display: block;
+  margin: 14px auto 5px;
+  padding: 11px 20px;
+  background: var(--green);
+  color: #00150e;
+}
 
 .hidden {
   display: none !important;
 }
 
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-.footer {
-
+.viewer-note {
   text-align: center;
-
-  color: #718b9e;
-
-  padding:
-    38px 10px;
-
+  color: var(--muted);
+  margin: 15px 0;
   font-size: 13px;
 }
 
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width:600px) {
-
-  header {
-    padding:
-      28px 12px;
-  }
-
-  header h1 {
-    font-size: 24px;
-  }
-
-  .soccer-ball {
-    font-size: 38px;
-  }
-
+@media (max-width: 600px) {
   .players-grid {
     grid-template-columns: 1fr;
   }
 
-  .editor-box {
-
-    flex-direction: column;
-
-    align-items: stretch;
-
-    text-align: center;
-  }
-
-  .logout-button {
-    width: 100%;
-  }
-
   .controls {
-
-    align-items: stretch;
-  }
-
-  .controls label {
-
-    width: 100%;
-
-    text-align: center;
+    flex-direction: column;
   }
 
   .controls select {
     width: 100%;
   }
-
 }
-
-
-/* =========================================================
-   SMALL PHONE
-========================================================= */
-
-@media (max-width:380px) {
-
-  .stat-row {
-
-    grid-template-columns:
-      1fr 35px auto;
-  }
-
-  .stat-buttons button {
-
-    min-width: 34px;
-
-    padding:
-      8px 9px;
-  }
-
-}
-
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =========================================================
-     HEADER
-========================================================= -->
-
 <header>
-
-  <div class="soccer-ball">
-    ⚽
-  </div>
-
-  <h1>
-    Saint Matthews Recess Soccer Live Stats
-  </h1>
-
-  <p>
-    Live player statistics • Updated in real time
-  </p>
-
+  <div class="logo">⚽</div>
+  <h1>Saint Matthews Recess Soccer</h1>
+  <div class="subtitle">Live Stats • Rankings • MVPs</div>
 </header>
-
 
 <div class="container">
 
-
-<!-- =========================================================
-     LOGIN
-========================================================= -->
-
-<div class="login-box" id="loginBox">
-
-  <div class="login-icon">
-    🔐
+  <div id="firebaseStatus" class="firebase-status">
+    Connecting to Firebase...
   </div>
 
-  <h2>
-    Editor Login
-  </h2>
+  <!-- LOGIN -->
+  <div class="login-card">
+    <h2>Editor Login</h2>
 
+    <select id="usernameSelect">
+      <option value="">Select editor username</option>
+      <option value="jack">jack</option>
+      <option value="jackschool">jackschool</option>
+      <option value="leonardo">leonardo</option>
+      <option value="angelo">angelo</option>
+    </select>
 
-  <label>
-    Editor Username
-  </label>
+    <input
+      id="passwordInput"
+      type="password"
+      placeholder="Enter PIN / password"
+      autocomplete="current-password"
+    >
 
+    <button class="login-btn" id="loginButton">
+      Sign In
+    </button>
 
-  <select id="usernameInput">
-
-    <option value="">
-      Select your username
-    </option>
-
-    <option value="jack">
-      Jack
-    </option>
-
-    <option value="jackschool">
-      Jack (School)
-    </option>
-
-    <option value="leonardo">
-      Leonardo
-    </option>
-
-    <option value="angelo">
-      Angelo
-    </option>
-
-  </select>
-
-
-  <label>
-    PIN / Password
-  </label>
-
-
-  <input
-    type="password"
-    id="passwordInput"
-    placeholder="Enter your PIN"
-    autocomplete="current-password"
-  >
-
-
-  <button
-    class="login-button"
-    onclick="login()"
-  >
-    🔓 Login
-  </button>
-
-
-  <div
-    id="loginMessage"
-    class="status"
-  ></div>
-
-</div>
-
-
-<!-- =========================================================
-     EDITOR BAR
-========================================================= -->
-
-<div
-  class="editor-box hidden"
-  id="editorBox"
->
-
-  <div>
-
-    ✏️ Logged in as:
-
-    <span
-      class="editor-name"
-      id="editorName"
-    ></span>
-
+    <div id="loginStatus" class="status">
+      Viewer mode — stats are view only.
+    </div>
   </div>
 
-
-  <button
-    class="logout-button"
-    onclick="logout()"
-  >
-    Logout
-  </button>
-
-</div>
-
-
-<!-- =========================================================
-     VIEWER
-========================================================= -->
-
-<div
-  class="viewer-box"
-  id="viewerBox"
->
-
-  👀 Viewer mode — stats are live.
-
-</div>
-
-
-<div
-  class="status"
-  id="firebaseStatus"
->
-  Connecting to Firebase...
-</div>
-
-
-<!-- =========================================================
-     SORT
-========================================================= -->
-
-<div class="controls">
-
-  <label for="sortSelect">
-    Sort leaderboard by:
-  </label>
-
-
-  <select
-    id="sortSelect"
-    onchange="changeSort(this.value)"
-  >
-
-    <option value="ga">
-      Goals + Assists
-    </option>
-
-    <option value="goals">
-      Goals
-    </option>
-
-    <option value="assists">
-      Assists
-    </option>
-
-    <option value="saves">
-      Goalie Saves
-    </option>
-
-    <option value="mvp">
-      MVPs
-    </option>
-
-    <option value="cleanSheets">
-      Clean Sheets
-    </option>
-
-    <option value="yellow">
-      Yellow Cards
-    </option>
-
-    <option value="red">
-      Red Cards
-    </option>
-
+  <div class="controls">
+    <select id="sortSelect">
+      <option value="original">Player Order</option>
+      <option value="goals">Sort by Goals</option>
+      <option value="assists">Sort by Assists</option>
+      <option value="ga">Sort by G+A</option>
+      <option value="saves">Sort by Goalie Saves</option>
+      <option value="cleanSheets">Sort by Clean Sheets</option>
+      <option value="mvps">Sort by MVPs</option>
   </select>
 
+  <button
+    id="logoutButton"
+    class="logout-btn hidden"
+  >
+    Sign Out
+  </button>
 </div>
 
-
-<!-- =========================================================
-     PLAYER STATS
-========================================================= -->
-
-<h2 class="section-title">
-  Player Stats
-</h2>
-
-
-<div
-  class="players-grid"
-  id="playersGrid"
-></div>
-
-
-<!-- =========================================================
-     LEADERBOARD
-========================================================= -->
-
-<h2 class="section-title">
-  Leaderboard
-</h2>
-
-
-<div class="leaderboard">
-
-<table>
-
-<thead>
-
-<tr>
-
-  <th>Player</th>
-
-  <th>G</th>
-
-  <th>A</th>
-
-  <th>G+A</th>
-
-  <th>Saves</th>
-
-  <th>MVP</th>
-
-  <th>CS</th>
-
-  <th>🟨</th>
-
-  <th>🟥</th>
-
-</tr>
-
-</thead>
-
-
-<tbody id="leaderboardBody"></tbody>
-
-</table>
-
+<div class="viewer-note">
+  Stats update live for everyone viewing the website.
 </div>
 
-
-<!-- =========================================================
-     RANKINGS
-========================================================= -->
-
-<h2 class="section-title">
-  Rankings
-</h2>
-
+<!-- PLAYER CARDS -->
+<div id="playersGrid" class="players-grid"></div>
 
 <!-- GOLDEN DEFENCE -->
-
-<div class="ranking-card">
-
+<section class="section">
   <img
     class="trophy"
     src="Screenshot_20260826-003116.png"
-    alt="Golden Defence Trophy"
-    onerror="this.style.display='none';"
+    alt="Golden Defence trophy"
   >
 
+  <h2 class="section-title">Golden Defence</h2>
 
-  <div class="ranking-title">
-    🛡️ Golden Defence
-  </div>
-
-
-  <div id="defenceRanking"></div>
-
+  <div id="defenceRanking" class="ranking-card"></div>
 
   <button
-    class="save-rankings editor-only hidden"
-    onclick="saveRankings()"
+    id="saveDefence"
+    class="save-ranking hidden"
   >
-    Save Defence Ranking
+    Save Golden Defence
   </button>
-
-</div>
-
+</section>
 
 <!-- BALLON D'OR -->
-
-<div class="ranking-card">
-
+<section class="section">
   <img
     class="trophy"
     src="Screenshot_20260826-003131.png"
-    alt="Ballon d'Or Trophy"
-    onerror="this.style.display='none';"
+    alt="Ballon d'Or trophy"
   >
 
+  <h2 class="section-title">Ballon d'Or</h2>
 
-  <div class="ranking-title">
-    🏆 Ballon d'Or
-  </div>
-
-
-  <div id="ballonRanking"></div>
-
+  <div id="ballonRanking" class="ranking-card"></div>
 
   <button
-    class="save-rankings editor-only hidden"
-    onclick="saveRankings()"
+    id="saveBallon"
+    class="save-ranking hidden"
   >
-    Save Ballon d'Or Ranking
+    Save Ballon d'Or
   </button>
-
-</div>
-
-
-</div>
-
-
-<div class="footer">
-
-  Saint Matthews Recess Soccer • Live Stats
-
-</div>
-
-
-<!-- =========================================================
-     FIREBASE
-========================================================= -->
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
+</section>
 
 <script>
-
 /* =========================================================
    FIREBASE CONFIG
 ========================================================= */
 
 const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
-
-  authDomain:
-    "recess-soccer.firebaseapp.com",
-
-  databaseURL:
-    "https://recess-soccer-default-rtdb.firebaseio.com",
-
-  projectId:
-    "recess-soccer",
-
-  storageBucket:
-    "recess-soccer.firebasestorage.app",
-
-  messagingSenderId:
-    "872558689342",
-
-  appId:
-    "1:872558689342:web:a4dca17e1d6b963ed6656f",
-
-  measurementId:
-    "G-HJ16JSL5Q2"
-
+  apiKey: "AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
+  authDomain: "recess-soccer.firebaseapp.com",
+  databaseURL: "https://recess-soccer-default-rtdb.firebaseio.com",
+  projectId: "recess-soccer",
+  storageBucket: "recess-soccer.firebasestorage.app",
+  messagingSenderId: "872558689342",
+  appId: "1:872558689342:web:a4dca17e1d6b963ed6656f",
+  measurementId: "G-HJ16JSL5Q2"
 };
-
 
 firebase.initializeApp(firebaseConfig);
 
+const auth = firebase.auth();
+const db = firebase.database();
 
-const auth =
-  firebase.auth();
-
-
-const db =
-  firebase.database();
-
-
-const statsRef =
-  db.ref("players");
-
-
-const rankingsRef =
-  db.ref("rankings");
+const statsRef = db.ref("players");
+const rankingsRef = db.ref("rankings");
 
 
 /* =========================================================
-   PLAYER LIST
-=========================================================
-
    IMPORTANT:
-
-   "id" = Firebase-safe internal ID
-
-   "name" = name shown on website
-
-   The buttons use ID, NOT the display name.
-
+   THESE NAMES ARE ALWAYS SHOWN.
+   THEY DO NOT COME FROM FIREBASE.
 ========================================================= */
 
-const playerList = [
-
-  {
-    id: "adi",
-    name: "Adi"
-  },
-
-  {
-    id: "aidan",
-    name: "Aidan"
-  },
-
-  {
-    id: "artin",
-    name: "Artin"
-  },
-
-  {
-    id: "angelo",
-    name: "Angelo"
-  },
-
-  {
-    id: "bryson",
-    name: "Bryson"
-  },
-
-  {
-    id: "cameron",
-    name: "Cameron"
-  },
-
-  {
-    id: "jack",
-    name: "Jack"
-  },
-
-  {
-    id: "john",
-    name: "John"
-  },
-
-  {
-    id: "leonardo",
-    name: "Leonardo"
-  },
-
-  {
-    id: "marc",
-    name: "Marc"
-  },
-
-  {
-    id: "matthew",
-    name: "Matthew"
-  },
-
-  {
-    id: "sami",
-    name: "Sami"
-  },
-
-  {
-    id: "nathan",
-    name: "Nathan"
-  },
-
-  {
-    id: "theo",
-    name: "Theo"
-  }
-
+const PLAYER_NAMES = [
+  "Adi",
+  "Aidan",
+  "Artin",
+  "Angelo",
+  "Bryson",
+  "Cameron",
+  "Jack",
+  "John",
+  "Leonardo",
+  "Marc",
+  "Matthew",
+  "Sami",
+  "Nathan",
+  "Theo"
 ];
-
-
-/* =========================================================
-   QUICK LOOKUP
-========================================================= */
-
-const playerNames =
-  playerList.map(
-    player => player.name
-  );
-
-
-const playerById = {};
-
-playerList.forEach(
-  player => {
-
-    playerById[player.id] =
-      player;
-
-  }
-);
-
-
-/* =========================================================
-   DEFAULT PLAYER
-========================================================= */
-
-function defaultPlayer() {
-
-  return {
-
-    goals: 0,
-
-    assists: 0,
-
-    saves: 0,
-
-    mvp: 0,
-
-    cleanSheets: 0,
-
-    yellow: 0,
-
-    red: 0
-
-  };
-
-}
-
-
-/* =========================================================
-   PLAYER DATA
-========================================================= */
-
-let players = {};
-
-
-playerList.forEach(
-  player => {
-
-    players[player.id] =
-      defaultPlayer();
-
-  }
-);
 
 
 /* =========================================================
    EDITOR ACCOUNTS
 ========================================================= */
 
-const editorAccounts = {
-
+const EDITORS = {
   jack: {
-
-    email:
-      "jmaso12.home@gmail.com",
-
-    name:
-      "Jack"
-
+    email: "jmaso12.home@gmail.com",
+    name: "Jack"
   },
 
   jackschool: {
+    email: "jack.mason1@stu.ocsb.ca",
+    name: "Jack (School)"
+  },
 
-    email:
-      "jack.mason1@stu.ocsb.ca",
+  leonardo: {
+    email: "leonardo.ljubicic@stu.ocsb.ca",
+    name: "Leonardo"
+  },
 
-   
+  angelo: {
+    email: "angelo.champagne@stu.ocsb.ca",
+    name: "Angelo"
+  }
+};
+
+
+/* =========================================================
+   DEFAULT PLAYER STATS
+========================================================= */
+
+const DEFAULT_STATS = {
+  goals: 0,
+  assists: 0,
+  saves: 0,
+  cleanSheets: 0,
+  yellowCards: 0,
+  redCards: 0,
+  mvps: 0
+};
+
+
+/* =========================================================
+   LOCAL STATE
+========================================================= */
+
+let players = {};
+let isEditor = false;
+let currentEditor = null;
+
+let defenceRanking = [...PLAYER_NAMES];
+let ballonRanking = [...PLAYER_NAMES];
+
+
+/* =========================================================
+   CREATE ALL PLAYERS IMMEDIATELY
+   THIS FIXES THE NAME PROBLEM
+========================================================= */
+
+function initializePlayers() {
+
+  PLAYER_NAMES.forEach(name => {
+
+    players[name] = {
+      ...DEFAULT_STATS
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   FIREBASE STATUS
+========================================================= */
+
+function setFirebaseStatus(message, type = "") {
+
+  const element = document.getElementById("firebaseStatus");
+
+  element.textContent = message;
+
+  element.className = "firebase-status";
+
+  if (type) {
+    element.classList.add(type);
+  }
+}
+
+
+/* =========================================================
+   RENDER PLAYERS
+========================================================= */
+
+function renderPlayers() {
+
+  const grid = document.getElementById("playersGrid");
+
+  grid.innerHTML = "";
+
+  let names = [...PLAYER_NAMES];
+
+  const sortType = document.getElementById("sortSelect").value;
+
+  if (sortType !== "original") {
+
+    names.sort((a, b) => {
+
+      const A = players[a];
+      const B = players[b];
+
+      let aValue = 0;
+      let bValue = 0;
+
+      if (sortType === "goals") {
+        aValue = A.goals;
+        bValue = B.goals;
+      }
+
+      if (sortType === "assists") {
+        aValue = A.assists;
+        bValue = B.assists;
+      }
+
+      if (sortType === "ga") {
+        aValue = A.goals + A.assists;
+        bValue = B.goals + B.assists;
+      }
+
+      if (sortType === "saves") {
+        aValue = A.saves;
+        bValue = B.saves;
+      }
+
+      if (sortType === "cleanSheets") {
+        aValue = A.cleanSheets;
+        bValue = B.cleanSheets;
+      }
+
+      if (sortType === "mvps") {
+        aValue = A.mvps;
+        bValue = B.mvps;
+      }
+
+      return bValue - aValue;
+    });
+  }
+
+
+  names.forEach((name, index) => {
+
+    const stats = players[name];
+
+    const card = document.createElement("div");
+
+    card.className = "player-card";
+
+    card.innerHTML = `
+      <div class="player-name">
+        <span class="player-number">${index + 1}</span>
+        <span>${escapeHTML(name)}</span>
+      </div>
+
+      ${createStatRow(name, "goals", "Goals", stats.goals)}
+      ${createStatRow(name, "assists", "Assists", stats.assists)}
+
+      <div class="stat-row">
+        <span class="stat-label">G+A</span>
+        <div class="stat-controls">
+          <span class="stat-value">${stats.goals + stats.assists}</span>
+        </div>
+      </div>
+
+      ${createStatRow(name, "saves", "Goalie Saves", stats.saves)}
+      ${createStatRow(name, "cleanSheets", "Clean Sheets", stats.cleanSheets)}
+      ${createStatRow(name, "yellowCards", "Yellow Cards", stats.yellowCards)}
+      ${createStatRow(name, "redCards", "Red Cards", stats.redCards)}
+      ${createStatRow(name, "mvps", "MVPs", stats.mvps)}
+    `;
+
+    grid.appendChild(card);
+  });
+
+}
+
+
+/* =========================================================
+   STAT ROW
+   ALL STATS ARE VISIBLE
+========================================================= */
+
+function createStatRow(playerName, stat, label, value) {
+
+  const disabled = isEditor ? "" : "disabled";
+
+  return `
+    <div class="stat-row">
+
+      <span class="stat-label">
+        ${label}
+      </span>
+
+      <div class="stat-controls">
+
+        <button
+          class="stat-btn"
+          ${disabled}
+          onclick="changeStat('${escapeAttribute(playerName)}','${stat}',-1)"
+        >
+          −
+        </button>
+
+        <span class="stat-value">
+          ${value}
+        </span>
+
+        <button
+          class="stat-btn"
+          ${disabled}
+          onclick="changeStat('${escapeAttribute(playerName)}','${stat}',1)"
+        >
+          +
+        </button>
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* =========================================================
+   CHANGE STAT
+========================================================= */
+
+window.changeStat = async function(playerName, stat, amount) {
+
+  if (!isEditor) {
+    return;
+  }
+
+  if (!players[playerName]) {
+    console.error("Player does not exist:", playerName);
+    return;
+  }
+
+  const oldValue = Number(players[playerName][stat]) || 0;
+
+  const newValue = Math.max(
+    0,
+    oldValue + amount
+  );
+
+  players[playerName][stat] = newValue;
+
+  renderPlayers();
+
+  try {
+
+    await statsRef
+      .child(playerName)
+      .update({
+        [stat]: newValue
+      });
+
+    setFirebaseStatus(
+      "Firebase connected • Stats saved",
+      "connected"
+    );
+
+  } catch (error) {
+
+    console.error("Firebase save error:", error);
+
+    players[playerName][stat] = oldValue;
+
+    renderPlayers();
+
+    setFirebaseStatus(
+      "Firebase could not save: " + error.code,
+      "error"
+    );
+  }
+
+};
+
+
+/* =========================================================
+   LOAD STATS FROM FIREBASE
+========================================================= */
+
+statsRef.on(
+  "value",
+
+  snapshot => {
+
+    const data = snapshot.val() || {};
+
+    /*
+      IMPORTANT:
+      Start with ALL hardcoded names,
+      then merge Firebase data into them.
+    */
+
+    PLAYER_NAMES.forEach(name => {
+
+      players[name] = {
+        ...DEFAULT_STATS,
+        ...(data[name] || {})
+      };
+
+    });
+
+    renderPlayers();
+
+    setFirebaseStatus(
+      "Firebase connected • Live stats active",
+      "connected"
+    );
+
+  },
+
+  error => {
+
+    console.error("Firebase read error:", error);
+
+    /*
+      Even if Firebase fails,
+      the player names STILL remain visible.
+    */
+
+    renderPlayers();
+
+    setFirebaseStatus(
+      "Firebase connection problem: " + error.code,
+      "error"
+    );
+
+  }
+);
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+document.getElementById("loginButton").addEventListener(
+  "click",
+  async () => {
+
+    const username =
+      document.getElementById("usernameSelect").value;
+
+    const password =
+      document.getElementById("passwordInput").value;
+
+    const status =
+      document.getElementById("loginStatus");
+
+    if (!username) {
+
+      status.textContent =
+        "Please select your username.";
+
+      return;
+    }
+
+    if (!password) {
+
+      status.textContent =
+        "Please enter your PIN/password.";
+
+      return;
+    }
+
+    const account = EDITORS[username];
+
+    if (!account) {
+
+      status.textContent =
+        "Invalid editor.";
+
+      return;
+    }
+
+    status.textContent =
+      "Signing in...";
+
+    try {
+
+      await auth.signInWithEmailAndPassword(
+        account.email,
+        password
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      status.textContent =
+        "Login failed: " + error.code;
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+auth.onAuthStateChanged(user => {
+
+  if (user) {
+
+    const foundEditor =
+      Object.entries(EDITORS).find(
+        ([username, account]) =>
+          account.email.toLowerCase() ===
+          user.email.toLowerCase()
+      );
+
+    if (foundEditor) {
+
+      currentEditor = foundEditor[0];
+      isEditor = true;
+
+      document.getElementById("loginStatus").textContent =
+        "Signed in as " +
+        EDITORS[currentEditor].name +
+        " • Editing enabled";
+
+      document.getElementById("logoutButton")
+        .classList.remove("hidden");
+
+      document.getElementById("saveDefence")
+        .classList.remove("hidden");
+
+      document.getElementById("saveBallon")
+        .classList.remove("hidden");
+
+    } else {
+
+      isEditor = false;
+
+      document.getElementById("loginStatus").textContent =
+        "Account authenticated, but it is not an editor.";
+
+    }
+
+  } else {
+
+    isEditor = false;
+    currentEditor = null;
+
+    document.getElementById("loginStatus").textContent =
+      "Viewer mode — stats are view only.";
+
+    document.getElementById("logoutButton")
+      .classList.add("hidden");
+
+    document.getElementById("saveDefence")
+      .classList.add("hidden");
+
+    document.getElementById("saveBallon")
+      .classList.add("hidden");
+  }
+
+  renderPlayers();
+
+});
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+document.getElementById("logoutButton")
+  .addEventListener("click", async () => {
+
+    await auth.signOut();
+
+  });
+
+
+/* =========================================================
+   SORTING
+========================================================= */
+
+document.getElementById("sortSelect")
+  .addEventListener("change", renderPlayers);
+
+
+/* =========================================================
+   RANKINGS
+========================================================= */
+
+function renderRanking(containerId, ranking) {
+
+  const container =
+    document.getElementById(containerId);
+
+  container.innerHTML = "";
+
+  ranking.forEach((name, index) => {
+
+    const row = document.createElement("div");
+
+    row.className = "rank-row";
+
+    row.innerHTML = `
+      <span class="rank-number">
+        ${index + 1}
+      </span>
+
+      <strong>
+        ${escapeHTML(name)}
+      </strong>
+
+      ${
+        isEditor
+        ?
+        `
+        <div class="movement">
+
+          <button
+            class="move-btn"
+            onclick="moveRanking('${containerId}',${index},-1)"
+          >
+            ↑
+          </button>
+
+          <button
+            class="move-btn"
+            onclick="moveRanking('${conta
