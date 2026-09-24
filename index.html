@@ -21,7 +21,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background:
     radial-gradient(circle at top, #173b5e 0%, #07111d 45%, #03070d 100%);
-  color: #fff;
+  color: white;
   min-height: 100vh;
 }
 
@@ -40,7 +40,6 @@ header h1 {
   margin: 0;
   font-size: clamp(28px, 5vw, 46px);
   font-weight: 900;
-  letter-spacing: .5px;
 }
 
 header p {
@@ -49,7 +48,7 @@ header p {
 }
 
 .card {
-  background: rgba(10, 25, 40, .84);
+  background: rgba(10, 25, 40, .88);
   border: 1px solid rgba(255,255,255,.12);
   border-radius: 20px;
   padding: 22px;
@@ -141,6 +140,15 @@ button:disabled {
   color: #b9cde0;
 }
 
+.user-bar {
+  margin-top: 12px;
+}
+
+.user-status {
+  color: #9fd4f6;
+  font-weight: 700;
+}
+
 .table-wrap {
   overflow-x: auto;
   border-radius: 14px;
@@ -164,7 +172,6 @@ th {
   color: #a8c2d8;
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: .5px;
 }
 
 td:first-child,
@@ -218,10 +225,6 @@ th:first-child {
   font-size: 23px;
 }
 
-.player-card small {
-  color: #8fa9bd;
-}
-
 .stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -245,7 +248,6 @@ th:first-child {
 
 .big-stat .value {
   font-size: 32px;
-  line-height: 1;
   font-weight: 900;
   margin: 4px 0 12px;
 }
@@ -264,8 +266,11 @@ th:first-child {
 }
 
 .total-stat {
-  background: linear-gradient(145deg, rgba(22,119,200,.25), rgba(0,0,0,.2));
-  border-color: rgba(58,163,230,.3);
+  background: linear-gradient(
+    145deg,
+    rgba(22,119,200,.25),
+    rgba(0,0,0,.2)
+  );
 }
 
 .total-stat .value {
@@ -331,19 +336,6 @@ th:first-child {
   text-align: center;
 }
 
-.user-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.user-status {
-  color: #9fd4f6;
-  font-weight: 700;
-}
-
 @media (max-width: 600px) {
   .container {
     width: 96%;
@@ -352,7 +344,6 @@ th:first-child {
 
   .card {
     padding: 15px;
-    border-radius: 16px;
   }
 
   .players-grid {
@@ -361,18 +352,6 @@ th:first-child {
 
   .stats-grid {
     grid-template-columns: 1fr 1fr;
-  }
-
-  .big-stat {
-    padding: 14px 8px;
-  }
-
-  .big-stat .value {
-    font-size: 30px;
-  }
-
-  .big-stat button {
-    width: 45px;
   }
 }
 </style>
@@ -389,13 +368,15 @@ th:first-child {
 
 <!-- LOGIN -->
 <div class="card">
+
   <h2 class="section-title">Editor Login</h2>
 
   <div class="status" id="firebaseStatus">
-    Connecting to Firebase...
+    Starting...
   </div>
 
   <div class="login-box">
+
     <input
       id="username"
       type="text"
@@ -422,6 +403,7 @@ th:first-child {
     >
       Sign Out
     </button>
+
   </div>
 
   <div class="login-message" id="loginMessage">
@@ -433,27 +415,59 @@ th:first-child {
       Viewer Mode
     </div>
   </div>
+
 </div>
 
 
-<!-- MAIN STAT BOARD -->
+<!-- STAT BOARD -->
 <div class="card">
+
   <h2 class="section-title">📊 Stat Board</h2>
 
   <div class="sort-buttons">
-    <button class="sort-button active" data-sort="default">Players</button>
-    <button class="sort-button" data-sort="goals">Goals</button>
-    <button class="sort-button" data-sort="assists">Assists</button>
-    <button class="sort-button" data-sort="ga">G+A</button>
-    <button class="sort-button" data-sort="saves">Saves</button>
-    <button class="sort-button" data-sort="cleanSheets">Clean Sheets</button>
-    <button class="sort-button" data-sort="yellow">Yellow</button>
-    <button class="sort-button" data-sort="red">Red</button>
-    <button class="sort-button" data-sort="mvps">MVPs</button>
+
+    <button class="sort-button active" data-sort="default">
+      Players
+    </button>
+
+    <button class="sort-button" data-sort="goals">
+      Goals
+    </button>
+
+    <button class="sort-button" data-sort="assists">
+      Assists
+    </button>
+
+    <button class="sort-button" data-sort="ga">
+      G+A
+    </button>
+
+    <button class="sort-button" data-sort="saves">
+      Saves
+    </button>
+
+    <button class="sort-button" data-sort="cleanSheets">
+      Clean Sheets
+    </button>
+
+    <button class="sort-button" data-sort="yellow">
+      Yellow
+    </button>
+
+    <button class="sort-button" data-sort="red">
+      Red
+    </button>
+
+    <button class="sort-button" data-sort="mvps">
+      MVPs
+    </button>
+
   </div>
 
   <div class="table-wrap">
+
     <table>
+
       <thead>
         <tr>
           <th>Player</th>
@@ -469,25 +483,36 @@ th:first-child {
       </thead>
 
       <tbody id="statBoard"></tbody>
+
     </table>
+
   </div>
+
 </div>
 
 
-<!-- INDIVIDUAL STATS -->
+<!-- INDIVIDUAL PLAYER STATS -->
 <div class="card">
-  <h2 class="section-title">👤 Individual Player Stats</h2>
 
-  <div class="players-grid" id="playersGrid"></div>
+  <h2 class="section-title">
+    👤 Individual Player Stats
+  </h2>
+
+  <div
+    class="players-grid"
+    id="playersGrid"
+  ></div>
 
   <div class="viewer-note">
     Only authorized editors can change stats.
   </div>
+
 </div>
 
 
 <!-- BALLON D'OR -->
 <div class="card">
+
   <img
     class="trophy"
     src="Screenshot_20260826-003131.png"
@@ -495,11 +520,17 @@ th:first-child {
     onerror="this.style.display='none'"
   >
 
-  <h2 class="section-title" style="text-align:center;">
+  <h2
+    class="section-title"
+    style="text-align:center;"
+  >
     🏆 Ballon d'Or Ranking
   </h2>
 
-  <div class="ranking" id="ballonRanking"></div>
+  <div
+    class="ranking"
+    id="ballonRanking"
+  ></div>
 
   <button
     id="saveBallon"
@@ -508,11 +539,13 @@ th:first-child {
   >
     Save Ballon d'Or Ranking
   </button>
+
 </div>
 
 
 <!-- GOLDEN DEFENCE -->
 <div class="card">
+
   <img
     class="trophy"
     src="Screenshot_20260826-003116.png"
@@ -520,11 +553,17 @@ th:first-child {
     onerror="this.style.display='none'"
   >
 
-  <h2 class="section-title" style="text-align:center;">
+  <h2
+    class="section-title"
+    style="text-align:center;"
+  >
     🛡️ Golden Defence Ranking
   </h2>
 
-  <div class="ranking" id="defenceRanking"></div>
+  <div
+    class="ranking"
+    id="defenceRanking"
+  ></div>
 
   <button
     id="saveDefence"
@@ -533,18 +572,14 @@ th:first-child {
   >
     Save Golden Defence Ranking
   </button>
-</div>
 
 </div>
 
-
-<script>
-/* =========================================================
-   FIREBASE CONFIG
-========================================================= */
+    </div>
+    <script>
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCyXvJ6kIxdE5Nj-J0YEfipH7CMNZa_RUI",
+  apiKey: "AIzaSyCyXvJ6kIxdE5Nj-J-0YEfipH7CMNZa_RUI",
   authDomain: "recess-soccer.firebaseapp.com",
   databaseURL: "https://recess-soccer-default-rtdb.firebaseio.com",
   projectId: "recess-soccer",
@@ -555,9 +590,9 @@ const firebaseConfig = {
 };
 
 
-/* =========================================================
-   PLAYER NAMES
-========================================================= */
+/* =========================
+   ALL PLAYER NAMES
+========================= */
 
 const PLAYER_NAMES = [
   "Adi",
@@ -577,9 +612,9 @@ const PLAYER_NAMES = [
 ];
 
 
-/* =========================================================
-   LOGIN USERNAMES
-========================================================= */
+/* =========================
+   USERNAMES
+========================= */
 
 const USERNAME_EMAILS = {
   jack: "jmaso12.home@gmail.com",
@@ -589,9 +624,9 @@ const USERNAME_EMAILS = {
 };
 
 
-/* =========================================================
-   AUTHORIZED EDITOR UIDS
-========================================================= */
+/* =========================
+   EDITOR UIDS
+========================= */
 
 const EDITOR_UIDS = new Set([
   "OQZynBXwJ8RH6tPaAm7YhLXDrpD2",
@@ -601,9 +636,9 @@ const EDITOR_UIDS = new Set([
 ]);
 
 
-/* =========================================================
-   DEFAULT PLAYER STATS
-========================================================= */
+/* =========================
+   DEFAULT STATS
+========================= */
 
 const DEFAULT_STATS = {
   goals: 0,
@@ -616,9 +651,9 @@ const DEFAULT_STATS = {
 };
 
 
-/* =========================================================
-   APP STATE
-========================================================= */
+/* =========================
+   APP VARIABLES
+========================= */
 
 let playerStats = {};
 let ballonRanking = [...PLAYER_NAMES];
@@ -632,35 +667,57 @@ let auth = null;
 let database = null;
 
 
-/* =========================================================
-   HELPERS
-========================================================= */
+/* =========================
+   CREATE PLAYER DATA
+========================= */
 
 function createDefaultStats() {
+
   const result = {};
 
   PLAYER_NAMES.forEach(name => {
+
     result[name] = {
-      ...DEFAULT_STATS
+      goals: 0,
+      assists: 0,
+      saves: 0,
+      cleanSheets: 0,
+      yellow: 0,
+      red: 0,
+      mvps: 0
     };
+
   });
 
   return result;
 }
 
 
+/* =========================
+   NUMBER CLEANER
+========================= */
+
 function cleanNumber(value) {
+
   const number = Number(value);
 
-  if (!Number.isFinite(number) || number < 0) {
+  if (!Number.isFinite(number)) {
     return 0;
   }
 
-  return Math.floor(number);
+  return Math.max(
+    0,
+    Math.floor(number)
+  );
 }
 
 
+/* =========================
+   CLEAN FIREBASE PLAYER DATA
+========================= */
+
 function cleanPlayerStats(data) {
+
   const result = createDefaultStats();
 
   if (!data || typeof data !== "object") {
@@ -668,308 +725,497 @@ function cleanPlayerStats(data) {
   }
 
   PLAYER_NAMES.forEach(name => {
-    if (data[name]) {
-      result[name] = {
-        goals: cleanNumber(data[name].goals),
-        assists: cleanNumber(data[name].assists),
-        saves: cleanNumber(data[name].saves),
-        cleanSheets: cleanNumber(data[name].cleanSheets),
-        yellow: cleanNumber(data[name].yellow),
-        red: cleanNumber(data[name].red),
-        mvps: cleanNumber(data[name].mvps)
-      };
+
+    const saved = data[name];
+
+    if (!saved) {
+      return;
     }
+
+    result[name] = {
+      goals: cleanNumber(saved.goals),
+      assists: cleanNumber(saved.assists),
+      saves: cleanNumber(saved.saves),
+      cleanSheets: cleanNumber(saved.cleanSheets),
+      yellow: cleanNumber(saved.yellow),
+      red: cleanNumber(saved.red),
+      mvps: cleanNumber(saved.mvps)
+    };
+
   });
 
   return result;
 }
 
 
+/* =========================
+   GOALS + ASSISTS
+========================= */
+
 function totalGA(stats) {
-  return cleanNumber(stats.goals) + cleanNumber(stats.assists);
+
+  return (
+    cleanNumber(stats.goals) +
+    cleanNumber(stats.assists)
+  );
+
 }
 
 
+/* =========================
+   STATUS MESSAGE
+========================= */
+
 function setStatus(message, type = "") {
-  const element = document.getElementById("firebaseStatus");
+
+  const element =
+    document.getElementById(
+      "firebaseStatus"
+    );
+
+  if (!element) return;
 
   element.textContent = message;
+
   element.className = "status";
 
   if (type) {
     element.classList.add(type);
   }
+
 }
 
 
-/* =========================================================
+/* =========================
    STAT BOARD
-========================================================= */
+========================= */
 
 function renderStatBoard() {
-  const tbody = document.getElementById("statBoard");
+
+  const tbody =
+    document.getElementById(
+      "statBoard"
+    );
 
   if (!tbody) return;
 
   let names = [...PLAYER_NAMES];
 
+
   if (currentSort !== "default") {
+
     names.sort((a, b) => {
-      const A = playerStats[a] || DEFAULT_STATS;
-      const B = playerStats[b] || DEFAULT_STATS;
+
+      const A =
+        playerStats[a] ||
+        DEFAULT_STATS;
+
+      const B =
+        playerStats[b] ||
+        DEFAULT_STATS;
 
       let aValue = 0;
       let bValue = 0;
 
-      if (currentSort === "goals") {
-        aValue = A.goals;
-        bValue = B.goals;
-      }
 
-      if (currentSort === "assists") {
-        aValue = A.assists;
-        bValue = B.assists;
-      }
+      switch (currentSort) {
 
-      if (currentSort === "ga") {
-        aValue = totalGA(A);
-        bValue = totalGA(B);
-      }
+        case "goals":
+          aValue = A.goals;
+          bValue = B.goals;
+          break;
 
-      if (currentSort === "saves") {
-        aValue = A.saves;
-        bValue = B.saves;
-      }
+        case "assists":
+          aValue = A.assists;
+          bValue = B.assists;
+          break;
 
-      if (currentSort === "cleanSheets") {
-        aValue = A.cleanSheets;
-        bValue = B.cleanSheets;
-      }
+        case "ga":
+          aValue = totalGA(A);
+          bValue = totalGA(B);
+          break;
 
-      if (currentSort === "yellow") {
-        aValue = A.yellow;
-        bValue = B.yellow;
-      }
+        case "saves":
+          aValue = A.saves;
+          bValue = B.saves;
+          break;
 
-      if (currentSort === "red") {
-        aValue = A.red;
-        bValue = B.red;
-      }
+        case "cleanSheets":
+          aValue = A.cleanSheets;
+          bValue = B.cleanSheets;
+          break;
 
-      if (currentSort === "mvps") {
-        aValue = A.mvps;
-        bValue = B.mvps;
+        case "yellow":
+          aValue = A.yellow;
+          bValue = B.yellow;
+          break;
+
+        case "red":
+          aValue = A.red;
+          bValue = B.red;
+          break;
+
+        case "mvps":
+          aValue = A.mvps;
+          bValue = B.mvps;
+          break;
+
       }
 
       return bValue - aValue;
+
     });
+
   }
+
 
   tbody.innerHTML = "";
 
-  names.forEach(name => {
-    const s = playerStats[name] || DEFAULT_STATS;
 
-    const row = document.createElement("tr");
+  names.forEach(name => {
+
+    const s =
+      playerStats[name] ||
+      DEFAULT_STATS;
+
+    const row =
+      document.createElement("tr");
 
     row.innerHTML = `
-      <td class="player-name">${name}</td>
-      <td class="stat-number">${s.goals}</td>
-      <td class="stat-number">${s.assists}</td>
-      <td class="stat-number">${totalGA(s)}</td>
-      <td class="stat-number">${s.saves}</td>
-      <td class="stat-number">${s.cleanSheets}</td>
-      <td class="stat-number">${s.yellow}</td>
-      <td class="stat-number">${s.red}</td>
-      <td class="stat-number">${s.mvps}</td>
+      <td class="player-name">
+        ${name}
+      </td>
+
+      <td class="stat-number">
+        ${s.goals}
+      </td>
+
+      <td class="stat-number">
+        ${s.assists}
+      </td>
+
+      <td class="stat-number">
+        ${totalGA(s)}
+      </td>
+
+      <td class="stat-number">
+        ${s.saves}
+      </td>
+
+      <td class="stat-number">
+        ${s.cleanSheets}
+      </td>
+
+      <td class="stat-number">
+        ${s.yellow}
+      </td>
+
+      <td class="stat-number">
+        ${s.red}
+      </td>
+
+      <td class="stat-number">
+        ${s.mvps}
+      </td>
     `;
 
     tbody.appendChild(row);
+
   });
+
 }
 
 
-/* =========================================================
-   INDIVIDUAL PLAYER CARDS
-========================================================= */
+/* =========================
+   INDIVIDUAL STATS
+========================= */
 
 const STAT_LABELS = {
+
   goals: "Goals",
+
   assists: "Assists",
+
   saves: "Goalie Saves",
+
   cleanSheets: "Clean Sheets",
+
   yellow: "Yellow Cards",
+
   red: "Red Cards",
+
   mvps: "MVPs"
+
 };
 
 
 function renderPlayers() {
-  const container = document.getElementById("playersGrid");
+
+  const container =
+    document.getElementById(
+      "playersGrid"
+    );
 
   if (!container) return;
 
   container.innerHTML = "";
 
-  PLAYER_NAMES.forEach(name => {
-    const s = playerStats[name] || DEFAULT_STATS;
 
-    const card = document.createElement("div");
-    card.className = "player-card";
+  PLAYER_NAMES.forEach(name => {
+
+    const s =
+      playerStats[name] ||
+      DEFAULT_STATS;
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "player-card";
+
 
     let statsHTML = "";
 
-    Object.keys(STAT_LABELS).forEach(stat => {
-      statsHTML += `
-        <div class="big-stat">
-          <div class="label">${STAT_LABELS[stat]}</div>
 
-          <div class="value" id="${stat}-${name}">
-            ${s[stat]}
+    Object.keys(STAT_LABELS)
+      .forEach(stat => {
+
+        statsHTML += `
+
+          <div class="big-stat">
+
+            <div class="label">
+              ${STAT_LABELS[stat]}
+            </div>
+
+            <div class="value">
+              ${s[stat]}
+            </div>
+
+            <div class="controls">
+
+              <button
+                type="button"
+                class="minus-button"
+                data-player="${name}"
+                data-stat="${stat}"
+                ${isEditor ? "" : "disabled"}
+              >
+                −
+              </button>
+
+              <button
+                type="button"
+                class="plus-button"
+                data-player="${name}"
+                data-stat="${stat}"
+                ${isEditor ? "" : "disabled"}
+              >
+                +
+              </button>
+
+            </div>
+
           </div>
 
-          <div class="controls">
-            <button
-              type="button"
-              class="minus-button"
-              data-player="${name}"
-              data-stat="${stat}"
-              ${isEditor ? "" : "disabled"}
-            >
-              −
-            </button>
+        `;
 
-            <button
-              type="button"
-              class="plus-button"
-              data-player="${name}"
-              data-stat="${stat}"
-              ${isEditor ? "" : "disabled"}
-            >
-              +
-            </button>
-          </div>
-        </div>
-      `;
-    });
+      });
+
 
     card.innerHTML = `
-      <h3>${name}</h3>
+
+      <h3>
+        ${name}
+      </h3>
 
       <div class="stats-grid">
 
         <div class="big-stat total-stat">
-          <div class="label">Goals + Assists</div>
-          <div class="value">${totalGA(s)}</div>
-          <div style="color:#7895aa;font-size:12px;">
+
+          <div class="label">
+            Goals + Assists
+          </div>
+
+          <div class="value">
+            ${totalGA(s)}
+          </div>
+
+          <div style="
+            color:#7895aa;
+            font-size:12px;
+          ">
             Automatic total
           </div>
+
         </div>
 
         ${statsHTML}
 
       </div>
+
     `;
 
+
     container.appendChild(card);
+
   });
 
-  document.querySelectorAll(".plus-button").forEach(button => {
-    button.addEventListener("click", () => {
-      changeStat(
-        button.dataset.player,
-        button.dataset.stat,
-        1
-      );
-    });
-  });
 
-  document.querySelectorAll(".minus-button").forEach(button => {
-    button.addEventListener("click", () => {
-      changeStat(
-        button.dataset.player,
-        button.dataset.stat,
-        -1
+  document
+    .querySelectorAll(".plus-button")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          changeStat(
+            button.dataset.player,
+            button.dataset.stat,
+            1
+          );
+
+        }
       );
+
     });
-  });
+
+
+  document
+    .querySelectorAll(".minus-button")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          changeStat(
+            button.dataset.player,
+            button.dataset.stat,
+            -1
+          );
+
+        }
+      );
+
+    });
+
 }
+      /* =========================
+   CHANGE A STAT
+========================= */
 
+async function changeStat(
+  player,
+  stat,
+  amount
+) {
 
-/* =========================================================
-   CHANGE STATS
-========================================================= */
-
-async function changeStat(player, stat, amount) {
   if (!isEditor) {
     return;
   }
 
+
   if (!playerStats[player]) {
+
     playerStats[player] = {
       ...DEFAULT_STATS
     };
+
   }
 
-  const current = cleanNumber(playerStats[player][stat]);
 
-  const newValue = Math.max(
-    0,
-    current + amount
-  );
+  const current =
+    cleanNumber(
+      playerStats[player][stat]
+    );
 
-  playerStats[player][stat] = newValue;
+
+  playerStats[player][stat] =
+    Math.max(
+      0,
+      current + amount
+    );
+
 
   renderPlayers();
+
   renderStatBoard();
 
+
   try {
-    await database.ref("players").set(playerStats);
+
+    await database
+      .ref("players")
+      .set(playerStats);
+
 
     setStatus(
       "Stats saved to Firebase.",
       "success"
     );
+
   } catch (error) {
+
     console.error(error);
 
     setStatus(
       "Firebase could not save the change.",
       "error"
     );
+
   }
+
 }
 
 
-/* =========================================================
-   RANKINGS
-========================================================= */
+/* =========================
+   RANKING CLEANER
+========================= */
 
 function normalizeRanking(list) {
+
   const result = [];
 
+
   if (Array.isArray(list)) {
+
     list.forEach(name => {
+
       if (
         PLAYER_NAMES.includes(name) &&
         !result.includes(name)
       ) {
+
         result.push(name);
+
       }
+
     });
+
   }
 
+
   PLAYER_NAMES.forEach(name => {
+
     if (!result.includes(name)) {
       result.push(name);
     }
+
   });
+
 
   return result;
 }
 
 
+/* =========================
+   RENDER RANKING
+========================= */
+
 function renderRanking(type) {
+
   const container =
     document.getElementById(
       type === "ballon"
@@ -977,108 +1223,164 @@ function renderRanking(type) {
         : "defenceRanking"
     );
 
-  if (!container) return;
+
+  if (!container) {
+    return;
+  }
+
 
   const ranking =
     type === "ballon"
       ? ballonRanking
       : defenceRanking;
 
+
   container.innerHTML = "";
 
-  ranking.forEach((name, index) => {
-    const row = document.createElement("div");
-    row.className = "rank-row";
 
-    const upDisabled =
-      !isEditor || index === 0;
+  ranking.forEach(
+    (name, index) => {
 
-    const downDisabled =
-      !isEditor || index === ranking.length - 1;
+      const row =
+        document.createElement("div");
 
-    row.innerHTML = `
-      <div class="rank-number">
-        ${index + 1}
-      </div>
+      row.className =
+        "rank-row";
 
-      <div class="rank-name">
-        ${name}
-      </div>
 
-      <div class="rank-controls">
+      const upDisabled =
+        !isEditor ||
+        index === 0;
 
-        <button
-          type="button"
-          class="up-button"
-          data-type="${type}"
-          data-index="${index}"
-          ${upDisabled ? "disabled" : ""}
-        >
-          ▲
-        </button>
 
-        <button
-          type="button"
-          class="down-button"
-          data-type="${type}"
-          data-index="${index}"
-          ${downDisabled ? "disabled" : ""}
-        >
-          ▼
-        </button>
+      const downDisabled =
+        !isEditor ||
+        index === ranking.length - 1;
 
-      </div>
-    `;
 
-    container.appendChild(row);
-  });
+      row.innerHTML = `
+
+        <div class="rank-number">
+          ${index + 1}
+        </div>
+
+        <div class="rank-name">
+          ${name}
+        </div>
+
+        <div class="rank-controls">
+
+          <button
+            type="button"
+            class="up-button"
+            data-type="${type}"
+            data-index="${index}"
+            ${upDisabled ? "disabled" : ""}
+          >
+            ▲
+          </button>
+
+          <button
+            type="button"
+            class="down-button"
+            data-type="${type}"
+            data-index="${index}"
+            ${downDisabled ? "disabled" : ""}
+          >
+            ▼
+          </button>
+
+        </div>
+
+      `;
+
+
+      container.appendChild(row);
+
+    }
+  );
+
 
   container
     .querySelectorAll(".up-button")
     .forEach(button => {
-      button.addEventListener("click", () => {
-        moveRanking(
-          button.dataset.type,
-          Number(button.dataset.index),
-          -1
-        );
-      });
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          moveRanking(
+            button.dataset.type,
+            Number(
+              button.dataset.index
+            ),
+            -1
+          );
+
+        }
+      );
+
     });
+
 
   container
     .querySelectorAll(".down-button")
     .forEach(button => {
-      button.addEventListener("click", () => {
-        moveRanking(
-          button.dataset.type,
-          Number(button.dataset.index),
-          1
-        );
-      });
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          moveRanking(
+            button.dataset.type,
+            Number(
+              button.dataset.index
+            ),
+            1
+          );
+
+        }
+      );
+
     });
+
 }
 
 
-/* =========================================================
+/* =========================
    MOVE RANKING
-========================================================= */
+========================= */
 
-function moveRanking(type, index, direction) {
-  if (!isEditor) return;
+function moveRanking(
+  type,
+  index,
+  direction
+) {
+
+  if (!isEditor) {
+    return;
+  }
+
 
   const ranking =
     type === "ballon"
       ? ballonRanking
       : defenceRanking;
 
-  const newIndex = index + direction;
+
+  const newIndex =
+    index + direction;
+
 
   if (
     newIndex < 0 ||
     newIndex >= ranking.length
   ) {
+
     return;
+
   }
+
 
   [
     ranking[index],
@@ -1088,69 +1390,43 @@ function moveRanking(type, index, direction) {
     ranking[index]
   ];
 
+
   renderRanking(type);
+
 }
 
 
-/* =========================================================
-   SAVE RANKINGS
-========================================================= */
-
-
-/* =========================================================
-   MOVE RANKING
-========================================================= */
-
-function moveRanking(type, index, direction) {
-  if (!isEditor) return;
-
-  const ranking =
-    type === "ballon"
-      ? ballonRanking
-      : defenceRanking;
-
-  const newIndex = index + direction;
-
-  if (
-    newIndex < 0 ||
-    newIndex >= ranking.length
-  ) {
-    return;
-  }
-
-  [
-    ranking[index],
-    ranking[newIndex]
-  ] = [
-    ranking[newIndex],
-    ranking[index]
-  ];
-
-  renderRanking(type);
-}
-
-
-/* =========================================================
-   SAVE RANKINGS
-========================================================= */
+/* =========================
+   SAVE RANKING
+========================= */
 
 async function saveRanking(type) {
-  if (!isEditor) return;
+
+  if (!isEditor) {
+    return;
+  }
+
+
+  const data =
+    type === "ballon"
+      ? ballonRanking
+      : defenceRanking;
+
+
+  const key =
+    type === "ballon"
+      ? "ballonRanking"
+      : "defenceRanking";
+
 
   try {
-    const data =
-      type === "ballon"
-        ? ballonRanking
-        : defenceRanking;
-
-    const key =
-      type === "ballon"
-        ? "ballonRanking"
-        : "defenceRanking";
 
     await database
-      .ref("rankings/" + key)
+      .ref(
+        "rankings/" + key
+      )
       .set(data);
+
 
     setStatus(
       "Ranking saved to Firebase.",
@@ -1158,21 +1434,25 @@ async function saveRanking(type) {
     );
 
   } catch (error) {
+
     console.error(error);
 
     setStatus(
       "Firebase could not save the ranking.",
       "error"
     );
+
   }
+
 }
 
 
-/* =========================================================
-   LOAD FIREBASE DATA
-========================================================= */
+/* =========================
+   FIREBASE LISTENERS
+========================= */
 
 function startDatabaseListeners() {
+
 
   database
     .ref("players")
@@ -1180,12 +1460,14 @@ function startDatabaseListeners() {
       "value",
       snapshot => {
 
-        const data = snapshot.val();
-
         playerStats =
-          cleanPlayerStats(data);
+          cleanPlayerStats(
+            snapshot.val()
+          );
+
 
         renderPlayers();
+
         renderStatBoard();
 
       },
@@ -1208,12 +1490,15 @@ function startDatabaseListeners() {
       "value",
       snapshot => {
 
-        const data = snapshot.val();
-
         ballonRanking =
-          normalizeRanking(data);
+          normalizeRanking(
+            snapshot.val()
+          );
 
-        renderRanking("ballon");
+
+        renderRanking(
+          "ballon"
+        );
 
       }
     );
@@ -1225,52 +1510,69 @@ function startDatabaseListeners() {
       "value",
       snapshot => {
 
-        const data = snapshot.val();
-
         defenceRanking =
-          normalizeRanking(data);
+          normalizeRanking(
+            snapshot.val()
+          );
 
-        renderRanking("defence");
+
+        renderRanking(
+          "defence"
+        );
 
       }
     );
+
 }
 
 
-/* =========================================================
+/* =========================
    AUTH UI
-========================================================= */
+========================= */
 
 function updateAuthUI() {
 
   const userStatus =
-    document.getElementById("userStatus");
+    document.getElementById(
+      "userStatus"
+    );
 
   const loginButton =
-    document.getElementById("loginButton");
+    document.getElementById(
+      "loginButton"
+    );
 
   const logoutButton =
-    document.getElementById("logoutButton");
+    document.getElementById(
+      "logoutButton"
+    );
 
 
   if (!currentUser) {
 
     isEditor = false;
 
+
     userStatus.textContent =
       "Viewer Mode";
+
 
     loginButton.style.display =
       "inline-block";
 
+
     logoutButton.style.display =
       "none";
 
+
     renderPlayers();
+
     renderRanking("ballon");
+
     renderRanking("defence");
 
     return;
+
   }
 
 
@@ -1285,6 +1587,7 @@ function updateAuthUI() {
     userStatus.textContent =
       "🟢 Editor Mode";
 
+
     setStatus(
       "Signed in. You can edit stats.",
       "success"
@@ -1295,29 +1598,35 @@ function updateAuthUI() {
     userStatus.textContent =
       "Viewer Mode";
 
+
     setStatus(
       "Signed in, but this account is not an authorized editor.",
       "error"
     );
+
   }
 
 
   loginButton.style.display =
     "none";
 
+
   logoutButton.style.display =
     "inline-block";
 
 
   renderPlayers();
+
   renderRanking("ballon");
+
   renderRanking("defence");
+
 }
 
 
-/* =========================================================
+/* =========================
    LOGIN
-========================================================= */
+========================= */
 
 async function login() {
 
@@ -1328,8 +1637,12 @@ async function login() {
       .trim()
       .toLowerCase();
 
+
   const pin =
-    document.getElementById("pin").value;
+    document.getElementById(
+      "pin"
+    ).value;
+
 
   const message =
     document.getElementById(
@@ -1343,6 +1656,7 @@ async function login() {
       "Enter your username and PIN.";
 
     return;
+
   }
 
 
@@ -1356,6 +1670,7 @@ async function login() {
       "Username not recognized.";
 
     return;
+
   }
 
 
@@ -1365,21 +1680,26 @@ async function login() {
       "Signing in...";
 
 
-    await auth.signInWithEmailAndPassword(
-      email,
-      pin
-    );
+    await auth
+      .signInWithEmailAndPassword(
+        email,
+        pin
+      );
 
 
     message.textContent =
       "Successfully signed in.";
 
-    document.getElementById("pin").value = "";
+
+    document.getElementById(
+      "pin"
+    ).value = "";
 
 
   } catch (error) {
 
     console.error(error);
+
 
     if (
       error.code ===
@@ -1389,48 +1709,29 @@ async function login() {
       message.textContent =
         "Incorrect username or PIN.";
 
-    } else if (
-      error.code ===
-      "auth/user-not-found"
-    ) {
-
-      message.textContent =
-        "That account does not exist in Firebase.";
-
-    } else if (
-      error.code ===
-      "auth/wrong-password"
-    ) {
-
-      message.textContent =
-        "Incorrect PIN.";
-
-    } else if (
-      error.code ===
-      "auth/api-key-not-valid"
-    ) {
-
-      message.textContent =
-        "Firebase API key is not valid.";
-
     } else {
 
       message.textContent =
-        "Login error: " + error.message;
+        "Login error: " +
+        error.message;
+
     }
+
   }
+
 }
 
 
-/* =========================================================
+/* =========================
    LOGOUT
-========================================================= */
+========================= */
 
 async function logout() {
 
   try {
 
     await auth.signOut();
+
 
     document.getElementById(
       "loginMessage"
@@ -1442,17 +1743,20 @@ async function logout() {
     console.error(error);
 
   }
+
 }
 
 
-/* =========================================================
+/* =========================
    SORTING
-========================================================= */
+========================= */
 
 function setupSorting() {
 
   document
-    .querySelectorAll(".sort-button")
+    .querySelectorAll(
+      ".sort-button"
+    )
     .forEach(button => {
 
       button.addEventListener(
@@ -1462,13 +1766,24 @@ function setupSorting() {
           currentSort =
             button.dataset.sort;
 
+
           document
-            .querySelectorAll(".sort-button")
+            .querySelectorAll(
+              ".sort-button"
+            )
             .forEach(btn => {
-              btn.classList.remove("active");
+
+              btn.classList.remove(
+                "active"
+              );
+
             });
 
-          button.classList.add("active");
+
+          button.classList.add(
+            "active"
+          );
+
 
           renderStatBoard();
 
@@ -1476,12 +1791,13 @@ function setupSorting() {
       );
 
     });
+
 }
 
 
-/* =========================================================
-   INITIALIZE FIREBASE
-========================================================= */
+/* =========================
+   START FIREBASE
+========================= */
 
 function initializeFirebase() {
 
@@ -1491,8 +1807,10 @@ function initializeFirebase() {
       firebaseConfig
     );
 
+
     auth =
       firebase.auth();
+
 
     database =
       firebase.database();
@@ -1522,6 +1840,7 @@ function initializeFirebase() {
 
     console.error(error);
 
+
     setStatus(
       "Firebase failed to start: " +
       error.message,
@@ -1529,15 +1848,18 @@ function initializeFirebase() {
     );
 
   }
+
 }
 
 
-/* =========================================================
+/* =========================
    BUTTONS
-========================================================= */
+========================= */
 
 document
-  .getElementById("loginButton")
+  .getElementById(
+    "loginButton"
+  )
   .addEventListener(
     "click",
     login
@@ -1545,7 +1867,9 @@ document
 
 
 document
-  .getElementById("logoutButton")
+  .getElementById(
+    "logoutButton"
+  )
   .addEventListener(
     "click",
     logout
@@ -1553,7 +1877,9 @@ document
 
 
 document
-  .getElementById("saveBallon")
+  .getElementById(
+    "saveBallon"
+  )
   .addEventListener(
     "click",
     () => saveRanking("ballon")
@@ -1561,7 +1887,9 @@ document
 
 
 document
-  .getElementById("saveDefence")
+  .getElementById(
+    "saveDefence"
+  )
   .addEventListener(
     "click",
     () => saveRanking("defence")
@@ -1569,7 +1897,9 @@ document
 
 
 document
-  .getElementById("pin")
+  .getElementById(
+    "pin"
+  )
   .addEventListener(
     "keydown",
     event => {
@@ -1582,12 +1912,13 @@ document
   );
 
 
-/* =========================================================
-   START
-========================================================= */
+/* =========================
+   INITIAL PAGE
+========================= */
 
 playerStats =
   createDefaultStats();
+
 
 renderPlayers();
 
@@ -1599,4 +1930,13 @@ renderRanking("defence");
 
 setupSorting();
 
+
+/* =========================
+   FIREBASE
+========================= */
+
 initializeFirebase();
+
+</script>
+</body>
+</html>
