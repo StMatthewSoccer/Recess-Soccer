@@ -266,16 +266,20 @@ th:first-child {
   font-size: 13px;
 }
   .stats-grid {
-  grid-template-columns: 1fr 1fr;
-  }
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+}
 
 .big-stat {
   background: rgba(0,0,0,.22);
   border: 1px solid rgba(255,255,255,.08);
   border-radius: 10px;
-  padding: 9px 4px;
+  padding: 10px 3px;
   text-align: center;
   min-width: 0;
+  width: 100%;
 }
 
 .big-stat .label {
