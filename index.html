@@ -1059,84 +1059,42 @@ function renderRanking(type) {
 }
 
 
+/* =========================================================
+   MOVE RANKING
+========================================================= */
+
 function moveRanking(type, index, direction) {
   if (!isEditor) return;
 
   const ranking =
-  type === "ballon"
-    ? ballonRanking
-    : defenceRanking;
-  ranking.forEach((name, index) => {
-  const row = document.createElement("div");
-  row.className = "rank-row";
+    type === "ballon"
+      ? ballonRanking
+      : defenceRanking;
 
-  const upDisabled =
-    !isEditor || index === 0;
+  const newIndex = index + direction;
 
-  const downDisabled =
-    !isEditor || index === ranking.length - 1;
+  if (
+    newIndex < 0 ||
+    newIndex >= ranking.length
+  ) {
+    return;
+  }
 
-  row.innerHTML = `
-    <div class="rank-number">
-      ${index + 1}
-    </div>
+  [
+    ranking[index],
+    ranking[newIndex]
+  ] = [
+    ranking[newIndex],
+    ranking[index]
+  ];
 
-    <div class="rank-name">
-      ${name}
-    </div>
-
-    <div class="rank-controls">
-
-      <button
-        type="button"
-        class="up-button"
-        data-type="${type}"
-        data-index="${index}"
-        ${upDisabled ? "disabled" : ""}
-      >
-        ▲
-      </button>
-
-      <button
-        type="button"
-        class="down-button"
-        data-type="${type}"
-        data-index="${index}"
-        ${downDisabled ? "disabled" : ""}
-      >
-        ▼
-      </button>
-
-    </div>
-  `;
-
-  container.appendChild(row);
-});
-
-container
-  .querySelectorAll(".up-button")
-  .forEach(button => {
-    button.addEventListener("click", () => {
-      moveRanking(
-        button.dataset.type,
-        Number(button.dataset.index),
-        -1
-      );
-    });
-  });
-
-container
-  .querySelectorAll(".down-button")
-  .forEach(button => {
-    button.addEventListener("click", () => {
-      moveRanking(
-        button.dataset.type,
-        Number(button.dataset.index),
-        1
-      );
-    });
-  });
+  renderRanking(type);
 }
+
+
+/* =========================================================
+   SAVE RANKINGS
+========================================================= */
 
 
 /* =========================================================
