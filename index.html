@@ -266,7 +266,10 @@ th:first-child {
   font-size: 13px;
 }
   .stats-grid {
-  grid-template-columns: 1fr 1fr;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
   }
 
 .big-stat {
@@ -391,9 +394,7 @@ th:first-child {
     grid-template-columns: 1fr;
   }
 
-  .stats-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+  
 }
 </style>
 </head>
