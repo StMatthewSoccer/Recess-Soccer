@@ -377,12 +377,13 @@ th:first-child {
 
   <div class="login-box">
 
-    <input
-      id="username"
-      type="text"
-      placeholder="Username"
-      autocomplete="username"
-    >
+    <select id="username" required>
+  <option value="" selected disabled>Select your name</option>
+  <option value="jack">Jack</option>
+  <option value="jackschool">Jack (School)</option>
+  <option value="leonardo">Leonardo</option>
+  <option value="angelo">Angelo</option>
+    </select>
 
     <input
       id="pin"
